@@ -38,11 +38,24 @@ Distinguish drafts, approved content and published content. Approval of one vers
 
 Keep canonical content in this repository. Adaptations for external platforms must preserve its meaning and identify the original publication when appropriate.
 
+## Editorial skills and rationale units
+
+Repository-owned skills live under `.42p/.agents/skills/`. Read the relevant `SKILL.md` before performing its operation; a skill does not override the standards or grant editorial authority.
+
+- [`42p-capture`](.42p/.agents/skills/42p-capture/SKILL.md): create or reconcile a compact, non-authoritative Capture of one coherent editorial exploration. Store it in `.42p/rationale/<unit-slug>/capture.md`; retain the unit slug as a stable identity, independent of article titles. Captures are not decisions, archives, or automatic publication approval.
+- [`editorial-write`](.42p/.agents/skills/editorial-write/SKILL.md): draft, revise, or translate an article using the applicable Captures, editorial standard and voice standard. Keep French and English substantive content aligned; do not publish.
+- [`editorial-verify`](.42p/.agents/skills/editorial-verify/SKILL.md): independently examine the article against its applicable Capture(s), both standards and its other language version. Record a version-bound, non-authoritative review at `.42p/editorial-reviews/<article-slug>.md`; a passing report is not human approval.
+- [`editorial-publish`](.42p/.agents/skills/editorial-publish/SKILL.md): apply the authorized `draft`, `unlisted`, or `public` visibility through native Docusaurus metadata and the real GitHub deployment workflow; do not rewrite editorial content.
+
+An article may draw from zero or more rationale units, and a unit may inform multiple articles. Where supported by the installed content plugin, link applicable `capture.md` files through a `rationale` frontmatter list of repository-relative paths. Do not create empty Captures or new infrastructure merely to satisfy a workflow.
+
+The author may authorize an `unlisted` preview before final public-publication approval; it is publicly accessible to anyone with the URL, not private. Moving content to `public` requires explicit approval of the verified French and English candidate versions. Substantive changes invalidate prior approvals and applicable reviews; changing visibility must never silently create editorial authority.
+
 ## Changes and publication
 
 Prefer changes through branches and pull requests.
 
-Agents may prepare content and technical changes autonomously, but must not publish new or substantively revised editorial content without explicit author approval.
+Agents may prepare content and technical changes autonomously. Public publication of new or substantively revised editorial content requires explicit author approval; unlisted preview exposure requires separate explicit authorization. Preparing drafts and verifying content do not grant either permission.
 
 Technical deployments may be automated according to the repository's configured workflows.
 
