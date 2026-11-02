@@ -1,21 +1,21 @@
 # jpbourgeon — Blog
 
-Ce dépôt rassemble les sources de mon blog personnel et technique. J'y publie en français et en anglais des articles sur les sujets que j'explore, les projets auxquels je contribue et les choix qui les accompagnent.
+This repository contains the source files for my personal and technical blog. I publish articles in French and English about topics I explore, projects I contribute to, and the decisions behind them.
 
-Le blog est la source de référence de mes publications. Les éventuelles reprises sur dev.to ou LinkedIn servent à les faire connaître.
+The blog is the canonical source of my publications. Any republication on dev.to or LinkedIn serves to help readers discover them.
 
-## Publication
+## Publishing
 
-Le site est destiné à être construit avec [Docusaurus](https://docusaurus.io/) et hébergé sur [GitHub Pages](https://pages.github.com/), à l'adresse prévue : https://jpbourgeon.github.io/blog/.
+The site is intended to be built with [Docusaurus](https://docusaurus.io/) and hosted on [GitHub Pages](https://pages.github.com/) at the planned address: https://jpbourgeon.github.io/blog/.
 
-Les articles sont conservés en Markdown/MDX et les évolutions sont versionnées dans Git.
+Articles are maintained in Markdown/MDX, and changes are version-controlled with Git.
 
-## Contribution éditoriale
+## Editorial contributions
 
-Les textes peuvent être préparés et vérifiés avec une assistance agentique. Les décisions éditoriales et la publication restent sous mon autorité.
+Articles may be prepared and verified with agent assistance. Editorial decisions and publication remain under my authority.
 
-Les conventions du dépôt sont décrites dans [AGENTS.md](AGENTS.md), le [standard éditorial](standards/editorial.md) et le [standard de voix](standards/voice.md).
+Repository conventions are documented in [AGENTS.md](AGENTS.md), the [editorial standard](standards/editorial.md), and the [authorial voice standard](standards/voice.md).
 
-## Licences
+## Licenses
 
-Les contenus éditoriaux originaux sont diffusés sous [CC BY-NC-ND 4.0](LICENSE-CONTENT.md). Le code propre au site, ses automatisations et ses skills sont placés sous [licence MIT](LICENSE), sauf mention contraire. Les composants tiers, notamment Docusaurus, conservent leurs propres licences.
+Original editorial content is licensed under [CC BY-NC-ND 4.0](LICENSE-CONTENT.md). Original site code, automation, and skills are licensed under the [MIT License](LICENSE), unless otherwise stated. Third-party components, including Docusaurus, retain their own licenses.
