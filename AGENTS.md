@@ -21,10 +21,10 @@ The standards apply to all relevant content, including drafts, translations and 
 
 ## Licensing
 
-- Original editorial prose, articles, pages and original editorial illustrations: [CC BY-NC-ND 4.0](LICENSE-CONTENT.md), except where an individual asset explicitly declares other terms.
-- Original site software, configuration, workflows and repository-owned skills: [MIT](LICENSE), unless individually licensed otherwise. Only code snippets explicitly marked MIT gain that grant; do not silently relicense prose or unmarked snippets.
+- Original editorial prose, articles, pages and original editorial illustrations: [CC BY-NC-ND 4.0](LICENSE), except where an individual asset explicitly declares other terms.
+- Original site software, configuration, workflows and repository-owned skills: [MIT](LICENSE-ADDITIONAL.md), unless individually licensed otherwise. Only code snippets explicitly marked MIT gain that grant; do not silently relicense prose or unmarked snippets.
 - Dependencies and third-party materials retain their respective licenses and notices. **Docusaurus itself is MIT-licensed**, independently of the blog's original content and software.
-- When Docusaurus is installed, expose the editorial content license and the repository licensing explanation in the site footer (using native `themeConfig.footer` links/copyright). Do not invent a built-in `license` Docusaurus config field. Keep site license notices consistent in French and English.
+- When Docusaurus is installed, expose the editorial content license and the additional licensing terms in the site footer (using native `themeConfig.footer` links/copyright). Do not invent a built-in `license` Docusaurus config field. Keep site license notices consistent in French and English.
 
 ## Engineering
 
