@@ -8,7 +8,7 @@ Le blog est la source de référence de mes publications. Les éventuelles repri
 
 Le site est destiné à être construit avec [Docusaurus](https://docusaurus.io/) et hébergé sur [GitHub Pages](https://pages.github.com/), à l'adresse prévue : https://jpbourgeon.github.io/blog/.
 
-L'installation du site et de son déploiement reste à réaliser. Les articles sont conservés en Markdown/MDX et les évolutions sont versionnées dans Git.
+Les articles sont conservés en Markdown/MDX et les évolutions sont versionnées dans Git.
 
 ## Contribution éditoriale
 
