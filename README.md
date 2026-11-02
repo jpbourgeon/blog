@@ -18,4 +18,4 @@ Repository conventions are documented in [AGENTS.md](AGENTS.md), the [editorial 
 
 ## Licenses
 
-Original editorial content is licensed under [CC BY-NC-ND 4.0](LICENSE-CONTENT.md). Original site code, automation, and skills are licensed under the [MIT License](LICENSE), unless otherwise stated. Third-party components, including Docusaurus, retain their own licenses.
+Original editorial content is licensed under [CC BY-NC-ND 4.0](LICENSE). Additional licensing terms for site code, automation, skills, and third-party materials are documented in [LICENSE-ADDITIONAL.md](LICENSE-ADDITIONAL.md).
