@@ -54,7 +54,7 @@ Store 42P artifacts under `.42p/` using these repository conventions:
 
 - Captures: `.42p/rationale-units/<unit-slug>/capture.md`
 - Allocations: `.42p/allocations/<scope-slug>/allocation.md`
-- Derivation verifications: `.42p/verifications/<scope-slug>/verification.md`
+- Derivation verifications: `.42p/derivation-verifications/<scope-slug>/verification.md`
 
 Use stable slugs reflecting each artifact's identity. Captures, Allocations and Verifications do not necessarily share the same scope or identity. The repository conventions define artifact locations; the applicable skill defines its operation and artifact content.
 
