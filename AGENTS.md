@@ -50,15 +50,14 @@ Keep canonical content in this repository. Adaptations for external platforms mu
 
 ## 42P artifact locations
 
-Store 42P artifacts under `.42p/` using these repository conventions:
+Store rationale artifacts under `.42p/rationale-units/<unit-slug>/`:
 
-- Captures: `.42p/rationale-units/<unit-slug>/capture.md`
-- Allocations: `.42p/allocations/<scope-slug>/allocation.md`
-- Derivation verifications: `.42p/derivation-verifications/<scope-slug>/verification.md`
+- `capture.md`: the rationale unit's Capture.
+- `allocation.md` (optional): responsibilities allocated from that unit's Capture, when allocation is useful.
 
-Use stable slugs reflecting each artifact's identity. Captures, Allocations and Verifications do not necessarily share the same scope or identity. The repository conventions define artifact locations; the applicable skill defines its operation and artifact content.
+An Allocation spanning several Captures lives alongside its primary rationale unit and may reference the others. Preserve stable unit identities; do not duplicate an Allocation across units or invent a primary unit where none is established. Use `42p-allocate` only when responsibility decomposition is needed, not as a mandatory editorial step. The applicable skill defines the operation and artifact content.
 
-Editorial verification reports remain under `.42p/editorial-reviews/`. Post-Apply verifications associated with OpenSpec Changes follow their own lifecycle and storage conventions. Do not create empty artifacts or directories merely to establish this structure.
+Editorial verification reports remain under `.42p/editorial-reviews/`. Editorial articles link directly to applicable Captures without an intervening Allocation. Post-Apply verifications associated with OpenSpec Changes follow their own lifecycle and storage conventions. Do not create empty artifacts or directories merely to establish this structure.
 
 ## Editorial skills and rationale units
 
