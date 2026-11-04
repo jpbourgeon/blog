@@ -48,11 +48,24 @@ Unlisted content is **publicly accessible**, not confidential; the public Git re
 
 Keep canonical content in this repository. Adaptations for external platforms must preserve its meaning and identify the original publication when appropriate.
 
+## 42P artifact locations
+
+Store 42P artifacts under `.42p/` using these repository conventions:
+
+- Captures: `.42p/rationale-units/<unit-slug>/capture.md`
+- Allocations: `.42p/allocations/<scope-slug>/allocation.md`
+- Derivation verifications: `.42p/verifications/<scope-slug>/verification.md`
+
+Use stable slugs reflecting each artifact's identity. Captures, Allocations and Verifications do not necessarily share the same scope or identity. The repository conventions define artifact locations; the applicable skill defines its operation and artifact content.
+
+Editorial verification reports remain under `.42p/editorial-reviews/`. Post-Apply verifications associated with OpenSpec Changes follow their own lifecycle and storage conventions. Do not create empty artifacts or directories merely to establish this structure.
+
 ## Editorial skills and rationale units
 
 Repository-owned skills live under `.42p/.agents/skills/`. Read the relevant `SKILL.md` before performing its operation; a skill does not override the standards or grant editorial authority.
 
-- [`42p-capture`](.42p/.agents/skills/42p-capture/SKILL.md): create or reconcile a compact, non-authoritative Capture of one coherent editorial exploration. Store it in `.42p/rationale/<unit-slug>/capture.md`; retain the unit slug as a stable identity, independent of article titles. Captures are not decisions, archives, or automatic publication approval.
+- [`42p-capture`](.42p/.agents/skills/42p-capture/SKILL.md): create or reconcile a compact, non-authoritative Capture of one coherent editorial exploration. Store it in `.42p/rationale-units/<unit-slug>/capture.md`; retain the unit slug as a stable identity, independent of article titles. Captures are not decisions, archives, or automatic publication approval.
+- [`42p-allocate`](.42p/.agents/skills/42p-allocate/SKILL.md): reconcile Capture-derived responsibility allocations without adding design authority or verifying implementation.
 - [`editorial-write`](.42p/.agents/skills/editorial-write/SKILL.md): draft and translate new articles, or prepare paired temporary revision candidates while leaving an exposed canonical article untouched. Preserve FR/EN alignment; do not publish.
 - [`editorial-verify`](.42p/.agents/skills/editorial-verify/SKILL.md): independently assess Capture coverage, fidelity, both standards and bilingual parity; record evidence, categorical verdicts and reproducible candidate/target identities at `.42p/editorial-reviews/<canonical-article-slug>.md`. A passing report is not human approval.
 - [`editorial-publish`](.42p/.agents/skills/editorial-publish/SKILL.md): manage authorized `draft`/`unlisted`/`public` visibility and atomically promote an approved temporary revision over the canonical FR/EN pair. Never compose new editorial prose during promotion. Public deployment requires both explicit author approval and an independent deterministic gate.
