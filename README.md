@@ -6,7 +6,18 @@ The blog is the canonical source of my publications. Any republication on dev.to
 
 ## Publishing
 
-The site is intended to be built with [Docusaurus](https://docusaurus.io/) and hosted on [GitHub Pages](https://pages.github.com/) at the planned address: https://jpbourgeon.github.io/blog/.
+The site is built with [Docusaurus](https://docusaurus.io/) and configured for [GitHub Pages](https://pages.github.com/) at https://jpbourgeon.github.io/blog/. French is the default language, with English under `/en/` within the site.
+
+Use Node.js 22 or later to install and check the site locally.
+
+```sh
+npm ci
+npm run typecheck
+npm run build
+npm run serve
+```
+
+The production build covers both locales. Docusaurus generates RSS and Atom for each locale once it has a listed article. The GitHub Pages workflow and editorial deployment controls are pending.
 
 Articles are maintained in Markdown/MDX, and changes are version-controlled with Git.
 
