@@ -86,7 +86,6 @@ Agents may prepare content and technical changes autonomously. Public publicatio
 Technical deployments may be automated according to the repository's configured workflows. Before exposing new or substantively changed canonical content, a **separately executed, fail-closed CI gate** must validate the exact commit/artifact to deploy against a previously committed, unchanged `PASS` review. Check both locales, expected canonical digests, applicable reference versions, revision baselines, permitted transitions and absence of unexpected public changes. The deploy job must depend on the gate, and **every** path capable of exposing canonical changes must be protected. Agent-side checks or a successful build do not substitute for the gate. Do not claim this protection is active until implemented and exercised in the real deployment workflow.
 
 Public deployment of new or substantively revised canonical content must be initiated by an explicit `workflow_dispatch` after author approval (the agent may trigger it); automatic push workflows may verify and build but must never expose such canonical changes, and the dispatched deployment must still pass the independent gate on the exact approved commit/artifact.
-
 Keep normative changes to the editorial/voice standards separate from article changes assessed against those standards; do not let a candidate silently change its own criteria.
 
 ## Minimal deterministic publication contract
