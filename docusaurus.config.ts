@@ -8,6 +8,7 @@ export default {
   url: 'https://jpbourgeon.github.io',
   baseUrl: '/blog/',
   trailingSlash: true,
+  clientModules: ['./src/client/goatcounter.ts'],
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {
