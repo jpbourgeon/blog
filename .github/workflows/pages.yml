@@ -1,0 +1,103 @@
+name: Validate and prepare GitHub Pages
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full SHA of the selected main commit
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.event_name == 'workflow_dispatch' && 'github-pages' || format('validation-{0}', github.run_id) }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate and build FR/EN
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Validate the manual target
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TARGET_COMMIT: ${{ inputs.commit }}
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REPOSITORY" != jpbourgeon/blog || "$GITHUB_REF" != refs/heads/main || "$TARGET_COMMIT" != "$GITHUB_SHA" ]]; then
+            echo "::error::Select main in jpbourgeon/blog and provide the exact commit SHA selected for this run."
+            exit 1
+          fi
+
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Verify the checkout
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          package-manager-cache: false
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+
+      - name: Verify the Pages output
+        shell: bash
+        run: |
+          for prefix in build build/en; do
+            for file in index.html about/index.html projects/index.html 404.html sitemap.xml; do
+              if [[ ! -s "$prefix/$file" ]]; then
+                echo "::error file=$prefix/$file::Missing or empty build output"
+                exit 1
+              fi
+            done
+          done
+          grep -q '<html lang="fr"' build/index.html
+          grep -q '<html lang="en"' build/en/index.html
+          links=$(find build \( -type l -o -type f -links +1 \) -print -quit)
+          test -z "$links"
+
+      # Workflow artifacts are downloadable by readers of this public repository.
+      - name: Refuse deployment without a verified publication baseline
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "::error::Pages deployment is locked before PR3. This workflow cannot verify the last deployed state or authorize a first publication."
+          exit 1
+
+      - name: Package the verified output
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          name: github-pages-${{ github.sha }}-${{ github.run_attempt }}
+          path: build/
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the verified Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        with:
+          artifact_name: github-pages-${{ github.sha }}-${{ github.run_attempt }}
