@@ -1,4 +1,17 @@
 {
   "extends": "@docusaurus/tsconfig",
-  "include": ["docusaurus.config.ts", "src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "docusaurus.config.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "scripts/publication/**/*.mts"
+  ],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "lib": [
+      "ES2024",
+      "DOM"
+    ]
+  }
 }

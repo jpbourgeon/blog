@@ -5,7 +5,9 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "publication": "node --disable-warning=ExperimentalWarning scripts/publication/cli.mts",
+    "test:publication": "node --disable-warning=ExperimentalWarning --test scripts/publication/*.test.mts"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
@@ -17,10 +19,13 @@
   "devDependencies": {
     "@docusaurus/tsconfig": "3.10.2",
     "@docusaurus/types": "3.10.2",
+    "@docusaurus/utils": "3.10.2",
+    "@mdx-js/mdx": "3.1.1",
     "@types/react": "19.2.17",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "yaml": "2.8.3"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.18.0"
   }
 }
