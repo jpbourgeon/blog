@@ -1,15 +1,16 @@
 import {isDeepStrictEqual} from 'node:util';
 import {
-  type Article, type Fields, type Locale, type Pair, articlePair, articlePath, capturePattern,
-  locales, normalize, project, readArticle, readMarkdown, record, requireThat, sameProvenance,
-  sha256, standards,
+  type Document, type Fields, type Kind, type Locale, type Pair,
+  articlePair, documentPath, locales, normalize, pageDraftPair, pagePair,
+  project, readDocument, readMarkdown, record, requireThat, sameProvenance,
+  sha256, capturePattern, standards,
 } from './content.mts';
 import {type Snapshot, gitSha} from './git.mts';
 
 type ContentRef = {path: string; content_sha256: string};
 type BlobRef = {path: string; git_blob_sha: string};
 export type Identities = {
-  article: string;
+  content: string;
   mode: 'new' | 'revision';
   candidates: Pair<ContentRef>;
   targets: Pair<ContentRef>;
@@ -18,186 +19,189 @@ export type Identities = {
 };
 export type Review = Identities & {result: 'PASS' | 'FAIL' | 'INCONCLUSIVE'};
 export const reviewsDir = '.42p/editorial-reviews/';
-export const reviewPath = (article: string) => `${reviewsDir}${article}.md`;
+export const reviewPath = (content: string) => reviewsDir + content + '.md';
+const authorityNotice = 'Human editorial approval: not granted by this report';
 
-export async function mapPair<A, B>(pair: Pair<A>, fn: (item: A, locale: Locale) => Promise<B>): Promise<Pair<B>> {
-  const [fr, en] = await Promise.all([fn(pair.fr, 'fr'), fn(pair.en, 'en')]);
-  return {fr, en};
+export function pairKey(pair: Pair<string>) {
+  const fr = documentPath(pair.fr);
+  const en = documentPath(pair.en);
+  requireThat(fr?.locale === 'fr' && en?.locale === 'en' && fr.key === en.key &&
+    fr.kind === en.kind && fr.source === en.source,
+    'Expected paired FR/EN documents: ' + pair.fr + ', ' + pair.en);
+  return fr.kind + '/' + fr.source + '/' + fr.key;
 }
 
-export function pairKey(pair: Pair<string>): string {
-  const fr = articlePath(pair.fr);
-  const en = articlePath(pair.en);
-  requireThat(fr?.locale === 'fr' && en?.locale === 'en' && fr.key === en.key,
-    `Expected one native FR/EN source pair: ${pair.fr}, ${pair.en}`);
-  return fr.key;
-}
-
-export async function readPair(tree: Snapshot, paths: Pair<string>): Promise<Pair<Article>> {
+export async function readPair(tree: Snapshot, paths: Pair<string>): Promise<Pair<Document>> {
   pairKey(paths);
-  const pair = await mapPair(paths, async path => readArticle(tree.read(path), path));
-  requireThat(pair.fr.visibility === pair.en.visibility, `FR/EN visibility differs for ${pair.fr.path}`);
-  return pair;
+  const [fr, en] = await Promise.all([
+    readDocument(tree.read(paths.fr), paths.fr), readDocument(tree.read(paths.en), paths.en),
+  ]);
+  requireThat(fr.visibility === en.visibility, 'FR/EN visibility differs: ' + fr.path);
+  return {fr, en};
 }
 
 function exactKeys(value: unknown, keys: string[]): value is Fields {
   return record(value) && isDeepStrictEqual(Object.keys(value).sort(), keys.sort());
 }
-
-function checkRefs<K extends 'content_sha256' | 'git_blob_sha'>(value: unknown, key: K):
+function checkRef<K extends 'content_sha256' | 'git_blob_sha'>(value: unknown, key: K):
   value is {path: string} & Record<K, string> {
   return exactKeys(value, ['path', key]) && typeof value.path === 'string' && typeof value[key] === 'string' &&
     (key === 'git_blob_sha' ? gitSha : /^[0-9a-f]{64}$/).test(value[key]);
 }
-
 function checkPair<K extends 'content_sha256' | 'git_blob_sha'>(value: unknown, key: K):
   value is Pair<{path: string} & Record<K, string>> {
-  if (!exactKeys(value, [...locales]) || !checkRefs(value.fr, key) || !checkRefs(value.en, key)) return false;
+  if (!exactKeys(value, [...locales]) || !checkRef(value.fr, key) || !checkRef(value.en, key)) return false;
   pairKey({fr: value.fr.path, en: value.en.path});
   return true;
 }
 
-export function validateReviewPath(path: string): void {
-  requireThat(/^\.42p\/editorial-reviews\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.md$/.test(path),
-    `Invalid report path: ${path}`);
-}
-
 export async function readReview(tree: Snapshot, path: string): Promise<Review> {
-  validateReviewPath(path);
+  requireThat(/^\.42p\/editorial-reviews\/(article|page)\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.md$/.test(path),
+    'Invalid review location: ' + path);
   const {fields, body} = await readMarkdown(tree.read(path), path);
   const revision = fields.mode === 'revision';
-  requireThat(exactKeys(fields, ['article', 'mode', 'candidates', 'targets', 'references', 'result',
-    ...(revision ? ['baseline'] : [])]) && (revision || fields.mode === 'new') &&
-    typeof fields.article === 'string' && reviewPath(fields.article) === path &&
-    typeof fields.result === 'string' && ['PASS', 'FAIL', 'INCONCLUSIVE'].includes(fields.result) &&
-    checkPair(fields.candidates, 'content_sha256') && checkPair(fields.targets, 'content_sha256') &&
+  requireThat(exactKeys(fields, ['content', 'mode', 'candidates', 'targets', 'references', 'result',
+    ...(revision ? ['baseline'] : [])]) &&
+    (revision || fields.mode === 'new') && typeof fields.content === 'string' &&
+    reviewPath(fields.content) === path &&
+    ['PASS', 'FAIL', 'INCONCLUSIVE'].includes(fields.result as string) &&
+    checkPair(fields.candidates, 'content_sha256') &&
+    checkPair(fields.targets, 'content_sha256') &&
     (!revision || checkPair(fields.baseline, 'git_blob_sha')) &&
-    Array.isArray(fields.references) && fields.references.every(item => checkRefs(item, 'git_blob_sha')) &&
-    body.includes('Human editorial approval: not granted by this report'),
-    `Invalid editorial report: ${path}`);
-  const review = fields as Review;
-  const referencePaths = review.references.map(ref => ref.path);
-  requireThat(standards.every(path => referencePaths.includes(path)) &&
-    (referencePaths.length === 2 || referencePaths.length === 3) &&
-    new Set(referencePaths).size === referencePaths.length &&
-    referencePaths.every(path => standards.includes(path) || capturePattern.test(path)),
-    `Invalid reference cardinality in ${path}`);
+    Array.isArray(fields.references) &&
+    fields.references.every(ref => checkRef(ref, 'git_blob_sha')) &&
+    body.includes(authorityNotice), 'Invalid editorial report: ' + path);
+  const report = fields as Review;
+  const refPaths = report.references.map(ref => ref.path);
+  requireThat(standards.every(path => refPaths.includes(path)) &&
+    refPaths.length <= 3 && new Set(refPaths).size === refPaths.length &&
+    refPaths.every(path => standards.includes(path) || capturePattern.test(path)),
+    'Invalid normative references: ' + path);
+  const targetKind = documentPath(report.targets.fr.path)?.kind;
+  requireThat(targetKind && report.content.startsWith(targetKind + '/'),
+    'Report kind differs from target: ' + path);
   for (const locale of locales) {
-    const candidate = review.candidates[locale].path;
-    const target = review.targets[locale].path;
-    requireThat(revision ? candidate !== target && review.baseline?.[locale].path === target : candidate === target,
-      `Invalid ${locale} projection paths in ${path}`);
+    if (revision) {
+      requireThat(report.candidates[locale].path !== report.targets[locale].path &&
+        report.baseline?.[locale].path === report.targets[locale].path,
+        'Invalid revision projection: ' + path);
+    }
   }
-  return review;
+  return report;
+}
+export function refPaths(pair: Pair<{path: string}>): Pair<string> {
+  return {fr: pair.fr.path, en: pair.en.path};
+}
+export function canonicalSlug(doc: Document) {
+  return doc.route.slice(doc.locale === 'en' ? '/blog/en/'.length : '/blog/'.length, -1);
 }
 
-export async function checkProvenance(tree: Snapshot, pair: Pair<Article>) {
+export async function checkProvenance(tree: Snapshot, pair: Pair<Document>) {
   const provenance = sameProvenance(pair);
-  for (const path of [provenance.main, ...provenance.context ?? []]) {
+  for (const path of [provenance.main, ...(provenance.context ?? [])]) {
     if (path) tree.requireBlob(path);
   }
   return provenance;
 }
 
-export const canonicalSlug = (french: Article) => french.route.slice('/blog/'.length, -1);
-export const refPaths = (pair: Pair<{path: string}>): Pair<string> => ({fr: pair.fr.path, en: pair.en.path});
-
 export async function identities(tree: Snapshot, candidatePaths: Pair<string>, baselinePaths?: Pair<string>) {
   const candidates = await readPair(tree, candidatePaths);
-  requireThat(candidates.fr.visibility !== 'public', `Candidate is already public: ${candidates.fr.path}`);
+  requireThat(candidates.fr.visibility !== 'public', 'Candidate is already public');
   const {main} = await checkProvenance(tree, candidates);
   const baseline = baselinePaths && await readPair(tree, baselinePaths);
   if (baseline) {
-    requireThat(baseline.fr.visibility === 'public', 'A revision baseline must be a canonical public pair');
+    requireThat(baseline.fr.visibility === 'public' && baseline.fr.kind === candidates.fr.kind,
+      'Revision requires a published baseline of the same kind');
     await checkProvenance(tree, baseline);
   }
-  const projected = await mapPair(candidates, async (candidate, locale) => {
-    const output = project(candidate, baseline?.[locale]);
-    const article = await readArticle(output.bytes, output.path);
-    const expectedRoute = (baseline?.[locale] ?? candidate).route;
-    requireThat(article.route === expectedRoute && article.visibility === 'public',
-      `Projection changes the canonical route: ${output.path}`);
-    const expectedFields = {...candidate.fields};
-    delete expectedFields.draft;
-    delete expectedFields.unlisted;
-    if (baseline) {
-      if (Object.hasOwn(baseline[locale].fields, 'slug')) expectedFields.slug = baseline[locale].fields.slug;
-      else delete expectedFields.slug;
+  const projected = {} as Pair<{path: string; bytes: Buffer; document: Document}>;
+  for (const locale of locales) {
+    const candidate = candidates[locale];
+    const target = project(candidate, baseline?.[locale]);
+    const document = await readDocument(target.bytes, target.path);
+    requireThat(document.visibility === 'public' && document.kind === candidate.kind &&
+      document.route === (baseline?.[locale] ?? candidate).route,
+      'Projection changes the canonical route: ' + target.path);
+    const expected = {...candidate.fields};
+    delete expected.draft;
+    delete expected.unlisted;
+    if (baseline && candidate.kind === 'article') {
+      if (Object.hasOwn(baseline[locale].fields, 'slug')) expected.slug = baseline[locale].fields.slug;
+      else delete expected.slug;
     }
-    requireThat(isDeepStrictEqual(article.fields, expectedFields) && article.body === candidate.body,
-      `Projection does not round-trip through Docusaurus: ${output.path}`);
-    return {...output, article};
-  });
-  const norm = (article: Article) => ({path: article.path, content_sha256: sha256(normalize(article))});
-  const blob = (path: string): BlobRef => ({path, git_blob_sha: tree.requireBlob(path)});
+    requireThat(isDeepStrictEqual(document.fields, expected) && document.body === candidate.body,
+      'Projection is not lossless: ' + target.path);
+    projected[locale] = {...target, document};
+  }
+  const ref = (path: string): BlobRef => ({path, git_blob_sha: tree.requireBlob(path)});
+  const norm = (doc: Document): ContentRef => ({path: doc.path, content_sha256: sha256(normalize(doc))});
   const data: Identities = {
-    article: canonicalSlug(projected.fr.article),
+    content: projected.fr.document.kind + '/' + canonicalSlug(projected.fr.document),
     mode: baseline ? 'revision' : 'new',
     candidates: {fr: norm(candidates.fr), en: norm(candidates.en)},
-    targets: {fr: norm(projected.fr.article), en: norm(projected.en.article)},
-    references: [...standards, ...(main ? [main] : [])].map(blob),
-    ...(baselinePaths && {baseline: {fr: blob(baselinePaths.fr), en: blob(baselinePaths.en)}}),
+    targets: {fr: norm(projected.fr.document), en: norm(projected.en.document)},
+    references: [...standards, ...(main ? [main] : [])].map(ref),
+    ...(baselinePaths && {baseline: {fr: ref(baselinePaths.fr), en: ref(baselinePaths.en)}}),
   };
   return {data, projected};
 }
 
 export function matchReview(review: Review, data: Identities): void {
   const {result, ...recorded} = review;
-  const byPath = (a: BlobRef, b: BlobRef) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0;
-  requireThat(isDeepStrictEqual({...recorded, references: [...recorded.references].sort(byPath)},
-    {...data, references: [...data.references].sort(byPath)}),
-    `Stale or inapplicable editorial report for ${data.article}`);
+  const sortRefs = (refs: BlobRef[]) => [...refs].sort((a, b) => a.path.localeCompare(b.path));
+  requireThat(isDeepStrictEqual({...recorded, references: sortRefs(recorded.references)},
+    {...data, references: sortRefs(data.references)}),
+    'Stale or inapplicable editorial report: ' + data.content);
 }
 
-export async function inventory(tree: Snapshot, pending?: Identities) {
-  const pairs = new Map<string, Pair<Article>>();
+export async function inventory(tree: Snapshot) {
+  const pairs = new Map<string, Pair<Document>>();
+  const roots = ['blog', 'i18n/en/docusaurus-plugin-content-blog', 'src/pages',
+    'i18n/en/docusaurus-plugin-content-pages', '.42p/editorial-drafts/pages'];
+  for (const path of tree.paths(...roots)) {
+    const id = documentPath(path);
+    if (!id || id.locale !== 'fr') continue;
+    const paths = id.kind === 'article' ? articlePair(id.key) :
+      id.source === 'candidate' ? pageDraftPair(id.key) : pagePair(id.key);
+    const key = pairKey(paths);
+    requireThat(!pairs.has(key), 'Duplicate content pair: ' + key);
+    const pair = await readPair(tree, paths);
+    await checkProvenance(tree, pair);
+    pairs.set(key, pair);
+  }
+  // Also reject orphan English translations.
+  for (const path of tree.paths(...roots)) {
+    const id = documentPath(path);
+    if (id?.locale === 'en') {
+      const paths = id.kind === 'article' ? articlePair(id.key) :
+        id.source === 'candidate' ? pageDraftPair(id.key) : pagePair(id.key);
+      requireThat(pairs.has(pairKey(paths)), 'Orphan English document: ' + path);
+    }
+  }
   const routes = new Set<string>();
-  for (const path of tree.paths('blog', 'i18n/en/docusaurus-plugin-content-blog')) {
-    const id = articlePath(path);
-    if (!id || pairs.has(id.key)) continue;
-    const pair = await readPair(tree, articlePair(id.key));
-    for (const locale of locales) {
-      const route = pair[locale].route.toLowerCase();
-      requireThat(!routes.has(route), `Duplicate route: ${pair[locale].route}`);
-      routes.add(route);
+  for (const pair of pairs.values()) {
+    if (pair.fr.visibility === 'draft') continue;
+    for (const doc of [pair.fr, pair.en]) {
+      requireThat(!routes.has(doc.route.toLowerCase()), 'Duplicate published route: ' + doc.route);
+      routes.add(doc.route.toLowerCase());
     }
-    pairs.set(id.key, pair);
   }
-
-  // A report binds temporary paths to actual canonical blobs. Its verdict is
-  // irrelevant to identity, and it need not be current enough to authorize promotion.
   const revisions = new Map<string, string>();
-  const reports: Identities[] = [];
   for (const path of tree.paths(reviewsDir.slice(0, -1))) {
-    const report = await readReview(tree, path);
-    if (report.article !== pending?.article) reports.push(report);
+    const review = await readReview(tree, path);
+    if (!review.baseline) continue;
+    const candidate = pairKey(refPaths(review.candidates));
+    const target = pairKey(refPaths(review.baseline));
+    if (pairs.has(candidate) && pairs.has(target)) revisions.set(candidate, target);
   }
-  if (pending) reports.push(pending);
-  for (const report of reports) {
-    if (!report.baseline) continue;
-    const candidate = pairKey(refPaths(report.candidates));
-    const canonical = pairKey(refPaths(report.baseline));
-    const preview = pairs.get(candidate);
-    const target = pairs.get(canonical);
-    if (preview?.fr.visibility === 'public') {
-      throw new Error(`Revision candidate is independently public: ${preview.fr.path}`);
-    }
-    if (!preview || !target || target.fr.visibility !== 'public' || canonicalSlug(target.fr) !== report.article ||
-      !locales.every(locale => tree.blob(target[locale].path) === report.baseline?.[locale].git_blob_sha)) continue;
-    for (const locale of locales) project(preview[locale], target[locale]);
-    requireThat(!revisions.has(candidate), `Ambiguous revision identity: ${preview.fr.path}`);
-    requireThat(![...revisions.values()].includes(canonical), `Multiple temporary pairs for ${target.fr.path}`);
-    revisions.set(candidate, canonical);
-  }
-
   const owners = new Map<string, string>();
   for (const [key, pair] of pairs) {
     const {main} = await checkProvenance(tree, pair);
     if (!main) continue;
     const owner = revisions.get(key) ?? key;
     requireThat(!owners.has(main) || owners.get(main) === owner,
-      `Main Capture belongs to more than one logical article, or revision identity is unbound: ${main}`);
+      'Main Capture belongs to multiple contents or an unbound revision: ' + main);
     owners.set(main, owner);
   }
-  return {pairs, revisions};
+  return pairs;
 }
