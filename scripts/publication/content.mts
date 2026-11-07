@@ -96,11 +96,19 @@ export function normalize(markdown: Markdown): Buffer {
   return Buffer.from(serialize({fields: editorialFields(markdown.fields), body: markdown.body}));
 }
 
-export function project(candidate: Article, baseline?: Article): {path: string; bytes: Buffer} {
+export function project(candidate: Article | Document, baseline?: Article | Document): {path: string; bytes: Buffer} {
   const fields = editorialFields(candidate.fields);
+  const document = candidate as Document;
+  if (document.kind === 'page') {
+    requireThat(document.source === 'candidate' && (!baseline || (baseline as Document).kind === 'page'),
+      'Pages must be prepared outside the published site');
+    requireThat(!Object.hasOwn(fields, 'slug'), 'Native pages use their path as identity');
+    const target = baseline?.path ?? pagePair(document.key)[document.locale];
+    return {path: target, bytes: Buffer.from(serialize({fields, body: candidate.body}))};
+  }
   if (baseline) {
     requireThat(candidate.path !== baseline.path && candidate.route !== baseline.route &&
-      typeof candidate.fields.slug === 'string', `Revision needs a separate path and preview slug: ${candidate.path}`);
+      typeof candidate.fields.slug === 'string', 'Article revision needs a distinct preview slug');
     if (Object.hasOwn(baseline.fields, 'slug')) fields.slug = baseline.fields.slug;
     else delete fields.slug;
   }
@@ -108,11 +116,6 @@ export function project(candidate: Article, baseline?: Article): {path: string; 
 }
 
 const blogRoots: Pair<string> = {fr: 'blog/', en: 'i18n/en/docusaurus-plugin-content-blog/'};
-export const pagePaths = [
-  'src/pages/about.md', 'src/pages/projects.md',
-  'i18n/en/docusaurus-plugin-content-pages/about.md',
-  'i18n/en/docusaurus-plugin-content-pages/projects.md',
-];
 export const capturePattern = /^\.42p\/rationale-units\/[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
 export const standards = ['standards/editorial.md', 'standards/voice.md'];
 
@@ -130,6 +133,33 @@ export function articlePath(path: string): {locale: Locale; key: string} | undef
 
 export function articlePair(key: string): Pair<string> {
   return {fr: blogRoots.fr + key, en: blogRoots.en + key};
+}
+
+export type Kind = 'article' | 'page';
+export type Document = Article & {kind: Kind; key: string; locale: Locale; source: 'canonical' | 'candidate'};
+const pageRoots: Pair<string> = {fr: 'src/pages/', en: 'i18n/en/docusaurus-plugin-content-pages/'};
+const pageDraftRoots: Pair<string> = {fr: '.42p/editorial-drafts/pages/fr/', en: '.42p/editorial-drafts/pages/en/'};
+
+export function pagePair(key: string): Pair<string> {
+  return {fr: pageRoots.fr + key, en: pageRoots.en + key};
+}
+export function pageDraftPair(key: string): Pair<string> {
+  return {fr: pageDraftRoots.fr + key, en: pageDraftRoots.en + key};
+}
+export function documentPath(path: string):
+  {kind: Kind; locale: Locale; key: string; source: 'canonical' | 'candidate'} | undefined {
+  const article = articlePath(path);
+  if (article) return {kind: 'article', ...article, source: 'canonical'};
+  for (const locale of locales) {
+    for (const [root, source] of [[pageRoots[locale], 'canonical'], [pageDraftRoots[locale], 'candidate']] as const) {
+      if (!path.startsWith(root)) continue;
+      const key = path.slice(root.length);
+      if (/^(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.mdx?$/.test(key) &&
+          !key.split('/').some(part => part.startsWith('_'))) {
+        return {kind: 'page', locale, key, source};
+      }
+    }
+  }
 }
 
 export async function readArticle(bytes: Buffer, path: string): Promise<Article> {
@@ -155,6 +185,32 @@ export async function readArticle(bytes: Buffer, path: string): Promise<Article>
     ...markdown, path,
     route: `/blog/${identity.locale === 'en' ? 'en/' : ''}${routeSlug.replace(/\/$/, '')}/`,
     visibility: draft ? 'draft' : unlisted ? 'unlisted' : 'public',
+  };
+}
+
+export async function readDocument(bytes: Buffer, path: string): Promise<Document> {
+  const id = documentPath(path);
+  requireThat(id, 'Unsupported editorial content: ' + path);
+  if (id.kind === 'article') {
+    return {...await readArticle(bytes, path), ...id};
+  }
+  const markdown = await readMarkdown(bytes, path);
+  requireThat(!Object.hasOwn(markdown.fields, 'slug') &&
+    markdown.fields.unlisted === undefined, 'Native pages do not use slug/unlisted: ' + path);
+  if (id.source === 'candidate') {
+    requireThat(markdown.fields.draft === true, 'Page candidates must be drafts: ' + path);
+  } else {
+    requireThat(markdown.fields.draft === undefined, 'Published pages cannot have draft: ' + path);
+  }
+  const pathSlug = id.key.replace(/(?:\/index)?\.mdx?$/, '');
+  requireThat(pathSlug !== '' && !/^(?:en|tags|authors|page|search|404)(\/|$)/.test(pathSlug),
+    'Reserved page route: ' + path);
+  return {
+    ...markdown,
+    ...id,
+    path,
+    route: '/blog/' + (id.locale === 'en' ? 'en/' : '') + pathSlug + '/',
+    visibility: id.source === 'candidate' ? 'draft' : 'public',
   };
 }
 
