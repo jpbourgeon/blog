@@ -1,19 +1,33 @@
----
-name: editorial-write
-description: Draft, revise, or translate canonical FR/EN blog articles from author-established positions, the main Capture when applicable, and the editorial and voice standards. Use when preparing or substantially editing an article; do not publish it.
----
-
 # editorial-write
 
-Produce a reader-facing article. Work within the repository's actual content and localization structure. Follow the editorial cycle from exploration through the main Capture when applicable, FR/EN drafting, verification, the author's decision and authorized publication.
+Read `AGENTS.md`, `standards/editorial.md`, `standards/voice.md`, and the
+existing content/versions. Read the main Capture when one applies; context
+Captures are references, not extensions of its scope. Preserve the author's
+intent, evidence, uncertainty, temporal context and distinctive voice.
+Never invent experiences or decide publication merit.
 
-1. Read repository-root `AGENTS.md`, `standards/editorial.md`, and `standards/voice.md`. Inspect the article files, relevant Git history, the user's current request, and the main Capture when applicable. Read contextual Captures as useful to understand related explorations and locate sources. The main Capture sets the substantive scope, the standards govern expression, and independent sources verify and support facts. A contextual Capture does not extend the scope. An article without a relevant Capture may proceed without one. Use the same process for revisions.
-2. Establish the author's purpose, intended audience, angle, and material adopted positions; the author alone decides editorial value and publication merit. A Capture is a compact non-authoritative working projection, not approval or independent evidence. Preserve the distinction between established author decisions, evidence, hypotheses, open questions, alternatives, and model proposals. Do not turn a plausible suggestion or silence into an authorial position or impose a novelty, usefulness or impact test.
-3. Draft or revise for the reader using the two standards. Preserve material conditions, limits, trade-offs, chronology and source attribution. Distinguish verified facts from opinions or deductions. Reformulate, structure, explain and illustrate freely within the established substantive scope. Any new substantive argument, concept, choice, position, conclusion or example, including one drawn from context or introduced during translation, requires prior reconciliation of the main Capture through `42p-capture` when the article uses a Capture. If the main Capture is too broad, too narrow, inconsistent or insufficiently stable for the intended article, obtain the necessary editorial decision and reconcile it through `42p-capture` before proceeding. Do not silently expand the article or rewrite the Capture as part of drafting. Do not invent personal experiences, convictions, claims, quotations, metrics, tests or sources. Research or verify time-sensitive and technical assertions when possible and mark material uncertainties when evidence is insufficient.
-4. Prepare corresponding French and English Markdown/MDX versions together, unless the user explicitly scopes a preparatory edit otherwise. Preserve the same substantive claims, degree of certainty, exclusions, links and code semantics across languages; do not assume literal sentence-for-sentence translation. Locate files and locales from the actual Docusaurus configuration, if installed. Do not guess locale directories or URLs.
-5. Follow the provenance contract in `AGENTS.md`. Use a scalar `rationale` path for the sole main Capture and an optional `rationaleContext` list for context, with the same provenance in FR/EN. Check that the main Capture is not primary for another logical article, counting translations and revisions as the same article. Preserve stable unit slugs, verify that all repository-relative Capture paths resolve, and reject duplicates and contextual self-references. Omit both fields when no Capture is applicable. If the current site rejects the metadata, report the incompatibility before proceeding.
-6. Use the site's native Markdown conventions and verified frontmatter fields. Do not add edition/version numbers, approval markers, or verification verdicts to article frontmatter: Git and the external review report cover identity and evidence. For a new article, keep `draft: true` in both locales as a safe initial state. For a revision of an exposed article, create a **separate temporary FR/EN pair** with distinct paths and explicit preview slugs, initially `draft: true`; never change the existing canonical files in this stage. Preserve the original public effective URLs and identity/date metadata in the intended final canonical result. Resolve paths and effective slugs from the actual site configuration, and inspect links/assets that could break when the revision is later promoted to its original file paths. Do not add a new publication workflow or custom revision frontmatter. If temporary paths cannot safely isolate a change, use a branch or otherwise prevent premature auto-deployment.
-7. Changing the candidate to `unlisted` is the responsibility of `editorial-publish` and requires explicit author permission to expose the preview; `editorial-write` must not increase visibility. An already authorized `unlisted` preview may be revised in place, but its edits are immediately exposed on an auto-deploying `main` and invalidate any prior verification. `unlisted` is not private and must later be excluded from Pagefind separately when installed.
-8. Recheck technical accuracy, semantic fidelity, FR/EN parity, and links within the available evidence, including how relative resources resolve from the eventual canonical paths. Preserve the historical context of published positions when updating them. Escalate only material editorial choices or contradictions requiring the author's authority; do not resolve them by stylistic preference. Report candidate paths, corresponding canonical target paths, changed files, material open issues, and the need for independent `editorial-verify`.
+Draft corresponding FR/EN Markdown or MDX. The same material assertions,
+sources, caveats and provenance must be present in both languages; natural
+translation is preferable to literal translation. Use a single optional
+`rationale` (main Capture) and optional `rationaleContext`, identically
+in both locales. A Capture is not mandatory.
 
-Writing never constitutes editorial approval, verification, or permission to publish.
+For **articles**, create paired `blog/` and `i18n/en/docusaurus-plugin-content-blog/`
+files with `draft: true`. For revisions, do not touch published originals:
+create a separate FR/EN temporary pair with distinct preview slugs.
+
+For **pages**, prepare paired Markdown candidates in
+`.42p/editorial-drafts/pages/fr/<path>.md` and
+`.42p/editorial-drafts/pages/en/<path>.md`, with `draft: true`.
+Do not place an unapproved page in `src/pages/`. Native pages have no
+`unlisted` preview; use a review branch/site for visual approval.
+Published pages live under `src/pages/` and
+`i18n/en/docusaurus-plugin-content-pages/` after promotion.
+
+Do not change visibility or public canonical files. Any new substantive
+argument arising during drafting must be validated by the author and, when a
+main Capture exists, reconciled in that Capture before verification.
+
+Check meaning, links, assets, FR/EN parity and route intent. Report the
+candidate paths, proposed public targets, unresolved points and readiness for
+independent `editorial-verify`. Writing grants no publication authority.
