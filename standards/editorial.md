@@ -1,23 +1,19 @@
-# Editorial standard
+# Standard éditorial
 
-Applies to all human-facing content in this repository, including blog posts, pages and documentation.
+S'applique aux articles, pages permanentes, futures pages de collection et
+ressources publiées. Le niveau de détail dépend du lecteur et du format.
 
-1. **Write for the reader.** Make the author's purpose and central idea clear. Adapt structure, vocabulary and depth to the intended audience.
+1. Clarifier l'intention, la thèse centrale et le public.
+2. Présenter directement les idées ; ne pas exposer la mécanique des agents sans raison éditoriale.
+3. Distinguer les faits sourcés, les hypothèses, les décisions et les interprétations.
+4. Préserver le sens, le raisonnement, les conditions, les incertitudes et les nuances de l'auteur.
+5. Respecter le temps : les pages pérennes décrivent l'état courant ; les articles datés restent situés dans leur contexte.
+6. Conserver terminologie, exemples, liens et cohérence FR/EN.
+7. Préférer la prose utile, les structures sobres et des références vérifiables.
+8. Une collection organise des contenus, sans imposer l'appartenance à chaque publication.
+9. Les pages suivent le même cycle de vérification et d'approbation que les articles.
 
-2. **State ideas directly.** Present arguments, findings and conclusions without unnecessary references to internal processes, specifications or agent instructions, unless these are the subject.
-
-3. **Distinguish evidence from interpretation.** Keep facts, hypotheses, deductions and personal positions identifiable. Do not present intentions, projections or assumptions as established results.
-
-4. **Preserve meaning and authorial intent.** Retain material nuances, conditions, uncertainty, reasoning and normative strength. Improve expression without silently changing the author's position or introducing unsupported claims.
-
-5. **Respect temporal context.** Keep permanent pages durable and factual. Allow dated articles to reflect the knowledge, perspective and circumstances of their publication. Do not silently rewrite historical positions as current ones.
-
-6. **Use precise and consistent language.** Preserve established terminology and proper names. Format commands, paths, identifiers and code examples appropriately. Avoid unnecessary jargon.
-
-7. **Keep content lean and connected.** Prefer coherent prose and meaningful structure over artificial sections, repetition or generic explanations. Reference existing sources where useful. Ensure links resolve.
-
-## Editorial authority
-
-Agents may research, draft, edit, translate and propose changes. They may verify evidence, fidelity and intelligibility but must not decide whether the article is worth writing or publishing, or impose criteria of novelty, impact or audience value. Editorial value, substantive editorial decisions and publication remain with the author.
-
-When the author's position or evidence evolves, reconcile any relevant rationale Capture and pass the revised article through the ordinary writing, verification and approval cycle. A dated publication must not be silently rewritten as if the author's earlier position had never existed.
+L'auteur seul décide de l'intérêt, de la position et de la publication.
+Les agents contrôlent fidélité et sources, jamais le mérite éditorial.
+Une évolution de position fait l'objet d'une publication ou d'une révision
+explicite ; elle ne réécrit pas silencieusement le passé.

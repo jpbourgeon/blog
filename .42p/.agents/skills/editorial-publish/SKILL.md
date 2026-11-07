@@ -1,20 +1,37 @@
----
-name: editorial-publish
-description: Apply the authorized draft, unlisted-preview, or public publication mode to paired FR/EN Docusaurus articles and perform the necessary Git/deployment operations. Use when asked to change article visibility, preview, publish, or withdraw; require appropriate author permission and verification.
----
-
 # editorial-publish
 
-Perform only mechanical publication operations for an identified article and target mode: `draft`, `unlisted`, `public`, or an approved `revision` promotion to `public`. No invocation implicitly grants editorial authority.
+Read `AGENTS.md`, the actual site and Git state, the exact FR/EN candidates,
+the matching editorial report and the author's **explicit** publication decision.
+The same procedure applies to pages and articles. Never equate PASS with consent.
 
-1. Read `AGENTS.md`, the actual Docusaurus configuration, deployment workflow, current article files and their French/English counterparts. Resolve the actual default locale and file layout; do not guess project setup, URLs, branch triggers, deployment behavior, or existing publication state. Stop any unsupported deployment operation rather than inventing infrastructure.
-2. Resolve the exact FR/EN candidates, canonical targets and public-exposure request. Require explicit author approval and a **previously committed, matching `PASS`** review for any public transition. Use the shared `N`/`P` implementation specified in `AGENTS.md` to check candidate and expected target digests. Check effective routes/assets and the Git blob IDs of the two standards, the main Capture when applicable, and revision baselines. The `rationaleContext` list remains part of the candidate and target digests. An edit to a contextual Capture's contents does not automatically make the review stale. Refuse missing, stale or unverifiable evidence. Verification is not authorization.
-3. Apply native Docusaurus frontmatter consistently to both locales, and require explicit author permission when withdrawing or exposing an existing public article:
-   - `draft`: set `draft: true` and remove `unlisted`; excluded from the production site (though source Markdown may remain public in a public Git repository). Author approval for public exposure is not needed.
-   - `unlisted`: remove `draft` (or set false) and set `unlisted: true`. This creates a publicly accessible, URL-discoverable preview, **not access control**. Require explicit authorization to expose this candidate for preview; it is not final public approval. For a revision, expose only the separate temporary article and leave canonical files unchanged. Report any review defects or limits, without claiming a final verification pass is required merely to preview.
-   - `public`: remove both `draft` and `unlisted` (or set false). Require the matching overall `PASS` editorial review and explicit human approval of those exact FR/EN candidates **and** their projected public exposure. For a revision, use the dedicated promotion operation rather than simply changing the temporary article's visibility. Neither silence, a previous article approval, nor an agent report supplies permission. Approval is an explicit author decision at publication time, not an extra frontmatter status or approval database.
-4. For a revision, apply **only** the minimal `P` transformation in `AGENTS.md`; atomically write the verified FR/EN outputs at the original canonical paths and delete both temporary candidates **in one Git commit**. Confirm exact target digests and unchanged canonical URLs. For initial publication, change only visibility fields in both languages. Any necessary edit to prose, dates, links, assets or other metadata goes back to writing and verification; never improvise a transformation or parser. In a clean checkout with the review already committed, run `npm run --silent publication -- check <report-path>`. After authorization, `npm run --silent publication -- project <report-path>` provides the exact UTF-8 contents to write and the temporary paths to remove in the promotion commit.
-5. Require the independent, fail-closed CI gate specified in `AGENTS.md` to validate the **actual artifact** before public deployment. It must find the unchanged earlier `PASS`, check final FR/EN digests and normative reference/baseline Git blobs, independently prove revision derivation using only the two preceding candidate blobs (or initial publication's visibility-only transition), reject incomplete promotions, direct unverified public edits and unexpected changed paths, and run build/route/search-index checks. **All** deployment paths must depend on it. See [the manual publication modes](../../../../README.md#manual-publication) for the dispatch and the separate bootstrap. For new or substantively revised canonical content, require explicit `workflow_dispatch` after author approval. The gate verifies artifact identity and integrity. Semantic assessment belongs to `editorial-verify`, and consent belongs to the author. If this control or the deployment workflow is absent, do not claim publication is protected or complete.
-6. Check resulting file paths, metadata, both localized routes, and absence of temporary articles after promotion. Verify the site build and search-index exclusions when the site is installed. Report separately: verified report identity, files committed, branch/PR status, CI status, deployed mode and accessible URLs **only if observed**. Human permission given in conversation is not independently proven by the content-integrity gate. Never claim a site is live merely because a commit or workflow succeeded.
+For a canonical publication or revision, require a previously committed,
+unchanged, matching PASS. From a clean commit:
 
-Use Git history for the audit trail. Do not introduce an editorial edition number, a new publication database, approval token, or custom preview system. Revising a published article follows the same Capture/reconciliation (when applicable) → write temporary pair → authorize unlisted preview (if wanted) → verify candidate and canonical projection → author decision → atomic promotion cycle.
+```sh
+npm run publication -- check <report>
+npm run publication -- project <report>
+```
+
+After authorization, write the projected FR/EN canonical bytes and remove
+temporary candidates **in one commit**. Never repair or compose editorial
+prose during promotion. Any necessary correction returns to writing and
+independent verification.
+
+For article previews, `draft` → `unlisted` requires separate explicit
+permission; unlisted is public by URL, not secret. Pages have no native
+unlisted state: review on an isolated branch without promoting to public routes.
+Do not change public page files just to preview them.
+
+Publication is a distinct manual `workflow_dispatch` on `main`, targeting
+the exact commit SHA. `inspect` validates without exposure, `publish`
+runs the independent gate, builds and deploys through GitHub Pages. No push
+or PR may publish. Confirm the CI and Pages outcome before reporting a live URL.
+
+A permanent-page withdrawal requires an explicit author decision and a
+versioned report at `.42p/editorial-reviews/page/<slug>.removal.md`:
+`action: remove`, `result: PASS`, `reason` (substantive explanation), and
+`baseline: {fr: <published Git blob SHA>, en: <published Git blob SHA>}`.
+The report body must include `Human editorial approval: not granted by this report`.
+The report must be committed **before** the commit removing the FR/EN pages and
+must remain unchanged in that commit. The gate matches both baseline blobs.
+A PASS remains distinct from the author's manual publication approval.
