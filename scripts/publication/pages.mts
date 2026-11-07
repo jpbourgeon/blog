@@ -4,6 +4,8 @@ import {pathToFileURL} from 'node:url';
 
 const repository = 'jpbourgeon/blog';
 const workflow = '.github/workflows/pages.yml';
+// GitHub-managed security workflows appear in the API without repository YAML.
+const managedWorkflows = new Set(['dynamic/dependabot/dependabot-updates', 'dynamic/github-code-scanning/codeql']);
 const environment = 'github-pages';
 const siteUrl = 'https://jpbourgeon.github.io/blog/';
 const shaPattern = /^[0-9a-f]{40}$/;
@@ -46,8 +48,10 @@ export async function assertSettings(read: Api): Promise<Pages> {
     policies.branch_policies[0].name === 'main' && policies.branch_policies[0].type === 'branch',
     'The github-pages environment must accept only the main branch');
   const workflows = await read<{total_count: number; workflows: {path: string; state: string}[]}>('actions/workflows');
-  assert(workflows.total_count === 1 && workflows.workflows.length === 1 &&
-    workflows.workflows[0].path === workflow && workflows.workflows[0].state === 'active',
+  const paths = workflows.workflows.map(entry => entry.path);
+  assert(workflows.total_count === paths.length && new Set(paths).size === paths.length &&
+    workflows.workflows.some(entry => entry.path === workflow && entry.state === 'active') &&
+    paths.every(path => path === workflow || managedWorkflows.has(path)),
     'An alternate or unknown Actions workflow can deploy');
   return pages;
 }
