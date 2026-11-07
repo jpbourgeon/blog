@@ -1,3 +1,5 @@
 {
-  "blog.empty": {"message": "No articles have been published yet."}
+  "blog.empty": {"message": "No articles have been published yet."},
+  "search.title": {"message": "Search"},
+  "search.description": {"message": "Search articles and pages"}
 }
