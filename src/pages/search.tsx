@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import React from 'react';
-import Translate from '@docusaurus/Translate';
+import Translate, {translate} from '@docusaurus/Translate';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 
@@ -19,7 +19,7 @@ export default function SearchPage() {
   }, [bundle]);
 
   return (
-    <Layout title="Recherche">
+    <Layout title={translate({id: 'search.title', message: 'Rechercher'})}>
       <main className="container margin-vert--lg">
         <h1><Translate id="search.title">Rechercher</Translate></h1>
         <p><Translate id="search.description">Rechercher dans les articles et les pages</Translate></p>
