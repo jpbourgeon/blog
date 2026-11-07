@@ -210,5 +210,5 @@ test('withdrawal approval must bind both exact published Git blobs', async t => 
   f.write('.42p/editorial-reviews/page/about.removal.md', approval);
   f.commit();
   for (const locale of locales) f.remove(paths[locale]);
-  await assert.rejects(plan(f.commit(), f.initial), /Removed page does not match approved/);
+  await assert.rejects(plan(f.commit(), f.initial), /Removed page does not match reviewed FR\/EN baseline/);
 });
