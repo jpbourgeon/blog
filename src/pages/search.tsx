@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 
 export default function SearchPage() {
   const bundle = useBaseUrl('/pagefind/');
+  const base = useBaseUrl('/');
   useEffect(() => {
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
@@ -22,7 +23,7 @@ export default function SearchPage() {
       <main className="container margin-vert--lg">
         <h1><Translate id="search.title">Rechercher</Translate></h1>
         <p><Translate id="search.description">Rechercher dans les articles et les pages</Translate></p>
-        {React.createElement('pagefind-config', {'base-url': useBaseUrl('/'), 'bundle-path': bundle})}
+        {React.createElement('pagefind-config', {'base-url': base, 'bundle-path': bundle})}
         {React.createElement('pagefind-input', {})}
         {React.createElement('pagefind-summary', {})}
         {React.createElement('pagefind-results', {})}

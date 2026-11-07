@@ -1,10 +1,11 @@
 import {execFileSync} from 'node:child_process';
-import {existsSync, readFileSync, writeFileSync} from 'node:fs';
+import {existsSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {resolve, join} from 'node:path';
 
 // Only sitemap-listed pages are indexable. Docusaurus excludes unlisted posts
 // from the sitemap; drafts do not generate routes. Pagefind sees no other body.
 const build = resolve('build');
+for (const path of ['__server', 'en/__server']) rmSync(join(build, path), {recursive: true, force: true});
 let marked = 0;
 for (const sitemap of ['sitemap.xml', 'en/sitemap.xml']) {
   const path = join(build, sitemap);

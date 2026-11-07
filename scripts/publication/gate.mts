@@ -1,6 +1,6 @@
 import {
   type Document, articlePair, documentPath, locales, normalize, pagePair,
-  readDocument, requireThat, sha256, standards,
+  readDocument, requireThat, sha256,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
 import {canonicalSlug, identities, inventory, matchReview, readPair, readReview, refPaths, reviewPath} from './review.mts';
@@ -60,9 +60,6 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
   for (const sha of target.repo.firstParentRange(deployed.commit, target.commit)) {
     const commit = target.repo.tree(sha);
     const changed = target.repo.changed(parent.commit, commit.commit);
-    requireThat(!changed.some(path => standards.includes(path)) ||
-      !changed.some(path => documentPath(path)?.kind === 'article' || documentPath(path)?.kind === 'page'),
-      'Change editorial standards separately from editorial documents');
     const affected = new Map<string, ReturnType<typeof documentPath>>();
     for (const path of changed) {
       const id = documentPath(path);

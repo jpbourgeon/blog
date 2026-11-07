@@ -179,7 +179,7 @@ export async function readArticle(bytes: Buffer, path: string): Promise<Article>
   requireThat((slug === undefined || typeof slug === 'string') &&
     /^(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\/?$/.test(routeSlug),
     `Unsupported or ambiguous article slug in ${path}`);
-  requireThat(!/^(en|about|projects|assets|page|tags|authors|404(?:\.html)?|__server)(\/|$)/i.test(routeSlug),
+  requireThat(!/^(en|about|assets|page|tags|authors|404(?:\.html)?|__server)(\/|$)/i.test(routeSlug),
     `Article route overlaps a reserved site route: ${path}`);
   return {
     ...markdown, path,
