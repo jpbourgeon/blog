@@ -8,7 +8,7 @@ The blog is the canonical source of my publications. Any republication on dev.to
 
 The site is built with [Docusaurus](https://docusaurus.io/) and configured for [GitHub Pages](https://pages.github.com/) at https://jpbourgeon.github.io/blog/. French is the default language, with English under `/en/` within the site.
 
-Use Node.js 22.18 or later to install and check the site locally.
+Use Node.js 26 or later to install and check the site locally.
 
 ```sh
 npm ci
