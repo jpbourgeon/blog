@@ -102,3 +102,49 @@ test('unlisted article previews stay out of canonical publication; paired page r
   const removed = f.commit();
   assert.match((await plan(removed, preview)).join('\n'), /Removed permanent page/);
 });
+
+test('a reviewed permanent-page revision preserves its public route', async t => {
+  const f = fixture(t);
+  const draftPaths = pageDraftPair('about.md');
+  const currentPaths = pagePair('about.md');
+  f.writePair(draftPaths, 'Revised page');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, draftPaths, currentPaths);
+  assert.equal(data.mode, 'revision');
+  f.report({...data, result: 'PASS'});
+  f.commit();
+  for (const locale of locales) {
+    f.write(currentPaths[locale], projected[locale].bytes);
+    f.remove(draftPaths[locale]);
+  }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/about/);
+});
+
+test('reviewed candidates changed after PASS cannot be promoted', async t => {
+  const f = fixture(t);
+  const draftPaths = pageDraftPair('new.md');
+  f.writePair(draftPaths, 'Original candidate');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, draftPaths);
+  f.report({...data, result: 'PASS'});
+  f.commit();
+  f.writePair(draftPaths, 'Changed after verification');
+  f.commit();
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(draftPaths[locale]);
+  }
+  await assert.rejects(plan(f.commit(), f.initial), /Stale or inapplicable editorial report/);
+});
+
+test('public promotion cannot publish only one language', async t => {
+  const f = fixture(t);
+  const paths = articlePair('partial.md');
+  f.writePair(paths, 'Candidate');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  f.commit();
+  f.write(paths.fr, projected.fr.bytes);
+  await assert.rejects(plan(f.commit(), f.initial), /FR\/EN visibility differs/);
+});
