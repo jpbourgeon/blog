@@ -90,3 +90,22 @@ test('provenance requires a valid sole main Capture and distinct context paths',
     assert.throws(() => provenance(markdown));
   }
 });
+
+test('page draft projects to the native FR/EN page routes without exposure', async () => {
+  const {readDocument, pageDraftPair, pagePair, documentPath} = await import('./content.mts');
+  const draftPaths = pageDraftPair('topics/intro.md');
+  const targetPaths = pagePair('topics/intro.md');
+  for (const locale of ['fr', 'en'] as const) {
+    const draft = await readDocument(Buffer.from('---\ntitle: Intro\ndraft: true\n---\n# Introduction\n'), draftPaths[locale]);
+    assert.equal(draft.visibility, 'draft');
+    assert.equal(draft.kind, 'page');
+    const target = project(draft);
+    assert.equal(target.path, targetPaths[locale]);
+    const published = await readDocument(target.bytes, target.path);
+    assert.equal(published.visibility, 'public');
+    assert.equal(published.route, '/blog/' + (locale === 'en' ? 'en/' : '') + 'topics/intro/');
+    assert.equal(published.body, draft.body);
+    assert.equal(documentPath(draft.path)?.source, 'candidate');
+  }
+  await assert.rejects(readDocument(Buffer.from('---\nunlisted: true\n---\n# Preview\n'), draftPaths.fr));
+});
