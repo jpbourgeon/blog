@@ -24,14 +24,19 @@ Do not change public page files just to preview them.
 
 Publication is a distinct manual `workflow_dispatch` on `main`, targeting
 the exact commit SHA. `inspect` validates without exposure, `publish`
-runs the independent gate, builds and deploys through GitHub Pages. No push
-or PR may publish. Confirm the CI and Pages outcome before reporting a live URL.
+runs the independent gate, builds and deploys through GitHub Pages. A PR
+may contain several contents, and one dispatch may deploy changes from
+several PRs. Each content keeps its own PASS; explicit human authorization
+must cover the exact set of public changes since the last deployment.
+Merging a PR does not itself grant editorial publication approval. No push
+or PR may deploy. Confirm the CI and Pages outcome before reporting a live URL.
 
 A permanent-page withdrawal requires an explicit author decision and a
 versioned report at `.42p/editorial-reviews/page/<slug>.removal.md`:
 `action: remove`, `result: PASS`, `reason` (substantive explanation), and
 `baseline: {fr: <published Git blob SHA>, en: <published Git blob SHA>}`.
 The report body must include `Human editorial approval: not granted by this report`.
-Review and approve the report **before merging the PR**. Squash & merge puts
+Verify the report and obtain explicit human authorization for the withdrawal,
+independently of how changes are grouped into PRs. Squash & merge may put
 report and withdrawal in one authoritative commit; the gate binds both
 removed FR/EN Git blobs to that report. PASS is not human publication consent.

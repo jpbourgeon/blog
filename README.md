@@ -15,6 +15,9 @@ Le dépôt est l'espace de rédaction. Les agents appliquent [AGENTS.md](AGENTS.
 
 Cycle identique pour articles et pages : exploration (Capture facultative),
 rédaction FR/EN, vérification indépendante, accord explicite, publication.
+Chaque contenu conserve son rapport PASS ; les PR peuvent regrouper plusieurs
+contenus et un déploiement peut regrouper plusieurs PR. La fusion d'une PR
+ne constitue pas, à elle seule, une approbation éditoriale.
 Les brouillons d'articles utilisent `draft: true` ; ceux des pages restent
 hors des routes publiques dans `.42p/editorial-drafts/pages/`. Les prévisualisations
 d'articles `unlisted` sont publiques par URL ; les pages sont prévisualisées
@@ -42,8 +45,9 @@ Sur PR et push, GitHub Actions vérifie seulement le code et le build.
 La publication reste **manuelle**, depuis **Actions → Pages → Run workflow**
 sur `main` avec son SHA complet. Le mode `inspect` vérifie le commit sans
 déployer ; `publish` applique le contrôle indépendant puis déploie exactement
-l'artefact construit. Ne déclenche `publish` qu'après approbation des contenus et
-changements publics du commit. Ni un PASS éditorial ni un build réussi n'accordent
+l'artefact construit. Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
+changements publics depuis le dernier déploiement**, qu'ils proviennent d'une
+ou de plusieurs PR. Ni un PASS éditorial ni un build réussi n'accordent
 cette approbation.
 
 `npm run publication -- prepare <fr> <en> [<baseline-fr> <baseline-en>]`
@@ -62,7 +66,8 @@ publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 
 Le retrait d'une page pérenne exige une justification versionnée dans
 `.42p/editorial-reviews/page/<slug>.removal.md` (décision de retrait,
-empreintes Git des deux pages d'origine, verdict PASS et motif). La
-rapport doit être vérifié avant l'approbation de la PR. Le squash & merge
-regroupe ensuite retrait et rapport dans un même commit : le gate contrôle
-les empreintes des deux pages supprimées et le verdict du rapport.
+empreintes Git des deux pages d'origine, verdict PASS et motif). Le
+rapport est vérifié indépendamment et le retrait reçoit une autorisation
+éditoriale explicite, sans dépendre de la granularité des PR. En cas de squash
+& merge, retrait et rapport peuvent figurer dans un même commit : le gate
+contrôle les empreintes des deux pages supprimées et le verdict du rapport.
