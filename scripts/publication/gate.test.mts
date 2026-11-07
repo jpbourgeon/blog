@@ -172,7 +172,7 @@ test('reviewed candidates changed after PASS cannot be promoted', async t => {
     f.write(projected[locale].path, projected[locale].bytes);
     f.remove(draftPaths[locale]);
   }
-  await assert.rejects(plan(f.commit(), f.initial), /Stale or inapplicable editorial report/);
+  await assert.rejects(plan(f.commit(), f.initial), /Candidate changed after independent verification/);
 });
 
 test('public promotion cannot publish only one language', async t => {

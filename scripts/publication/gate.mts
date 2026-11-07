@@ -33,6 +33,13 @@ async function verifyPromotion(commit: Snapshot, parent: Snapshot, published: Do
       requireThat(!report.baseline, 'Initial publication must not bind a published baseline');
     }
     const candidate = report.candidates[locale].path;
+    // Check the actual candidate whenever its pre-promotion Git state survives
+    // in the history. Squash commits legitimately omit this temporary file.
+    if (parent.blob(candidate)) {
+      const prepared = await readDocument(parent.read(candidate), candidate);
+      requireThat(sha256(normalize(prepared)) === report.candidates[locale].content_sha256,
+        'Candidate changed after independent verification: ' + candidate);
+    }
     if (candidate !== path) {
       requireThat(commit.blob(candidate) === undefined,
         'Temporary candidate left in publication: ' + candidate);
