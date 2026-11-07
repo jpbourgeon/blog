@@ -44,6 +44,24 @@ test('native Pages settings, environment rules and the exact current main are ma
   await assert.rejects(confirmMain(mock({'branches/main': {commit: {sha: 'b'.repeat(40)}}}), sha), /main advanced/);
 });
 
+test('the workflow inventory accepts only Pages and the exact GitHub-managed security paths', async () => {
+  const pages = settings['actions/workflows'].workflows[0];
+  const dependabot = {path: 'dynamic/dependabot/dependabot-updates', state: 'active'};
+  const codeql = {path: 'dynamic/github-code-scanning/codeql', state: 'active'};
+  const inventory = (...workflows: typeof pages[]) =>
+    mock({...settings, 'actions/workflows': {total_count: workflows.length, workflows}});
+  assert.deepEqual(await assertSettings(inventory(codeql, pages, dependabot)), site);
+  for (const workflows of [
+    [dependabot, codeql],
+    [{...pages, state: 'disabled_manually'}, codeql],
+    [pages, codeql, codeql],
+    [pages, {path: 'dynamic/github-code-scanning/other', state: 'active'}],
+    [pages, {path: '.github/workflows/codeql.yml', state: 'active'}],
+  ]) {
+    await assert.rejects(assertSettings(inventory(...workflows)), /alternate/);
+  }
+});
+
 test('bootstrap requires positive evidence of an empty native deployment history', async () => {
   const empty = {...site, status: null};
   assert.equal(await deployedCommit(mock({[deploymentQuery]: []}), empty, 'bootstrap'), undefined);
