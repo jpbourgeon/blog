@@ -43,7 +43,7 @@ jobs:
 
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '22'
+          node-version: '26'
           package-manager-cache: false
 
       - run: npm ci
@@ -102,7 +102,7 @@ jobs:
 
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '22'
+          node-version: '26'
           package-manager-cache: false
 
       - name: Establish the native Pages baseline
@@ -178,7 +178,7 @@ jobs:
 
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '22'
+          node-version: '26'
           package-manager-cache: false
 
       - name: Verify the immutable artifact and the selected main commit
