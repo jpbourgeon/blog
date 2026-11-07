@@ -77,7 +77,7 @@ test('a public page edit without a previously committed PASS is rejected', async
   await assert.rejects(plan(f.commit(), f.initial), /Missing .*editorial-reviews/);
 });
 
-test('a page review cannot be injected in the same promotion commit', async t => {
+test('a verified page may be promoted with its report in one squash commit', async t => {
   const f = fixture(t);
   const paths = pageDraftPair('new.md');
   f.writePair(paths, 'New');
@@ -88,7 +88,22 @@ test('a page review cannot be injected in the same promotion commit', async t =>
     f.write(projected[locale].path, projected[locale].bytes);
     f.remove(paths[locale]);
   }
-  await assert.rejects(plan(f.commit(), f.initial), /PASS must be committed before/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/new/);
+});
+
+test('squash merge retains a PASS and exact target without retaining the candidate', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('squash.md');
+  f.repo.text('checkout', '-qb', 'review');
+  f.writePair(paths, 'Prepared outside main');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.repo.text('checkout', 'main');
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+  }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/squash/);
 });
 
 test('unlisted previews are allowed; page removal requires prior immutable approval', async t => {
@@ -105,10 +120,10 @@ test('unlisted previews are allowed; page removal requires prior immutable appro
   f.commit();
   for (const locale of locales) f.remove(pages[locale]);
   const removed = f.commit();
-  assert.match((await plan(removed, preview)).join('\n'), /Approved page withdrawal/);
+  assert.match((await plan(removed, preview)).join('\n'), /Reviewed page withdrawal/);
 });
 
-test('same-commit withdrawal approval is rejected', async t => {
+test('same-commit withdrawal report is valid after squash merge', async t => {
   const f = fixture(t);
   const pages = pagePair('about.md');
   const baseline = {fr: f.initial.blob(pages.fr), en: f.initial.blob(pages.en)};
@@ -116,21 +131,14 @@ test('same-commit withdrawal approval is rejected', async t => {
     baseline.fr + '\n  en: ' + baseline.en + '\n---\n' + approvalNotice + '\n';
   for (const locale of locales) f.remove(pages[locale]);
   f.write('.42p/editorial-reviews/page/about.removal.md', approval);
-  await assert.rejects(plan(f.commit(), f.initial), /Removal PASS must be committed before deletion/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Reviewed page withdrawal/);
 });
 
-test('withdrawal report modified in removal commit is rejected', async t => {
+test('page removal without a report is rejected', async t => {
   const f = fixture(t);
   const pages = pagePair('about.md');
-  const baseline = {fr: f.initial.blob(pages.fr), en: f.initial.blob(pages.en)};
-  const approval = '---\naction: remove\nresult: PASS\nreason: Explicit editorial withdrawal of this obsolete page\nbaseline:\n  fr: ' +
-    baseline.fr + '\n  en: ' + baseline.en + '\n---\n' + approvalNotice + '\n';
-  const path = '.42p/editorial-reviews/page/about.removal.md';
-  f.write(path, approval);
-  f.commit();
-  f.write(path, approval.replace('obsolete page', 'old page'));
   for (const locale of locales) f.remove(pages[locale]);
-  await assert.rejects(plan(f.commit(), f.initial), /Removal PASS must be committed before deletion/);
+  await assert.rejects(plan(f.commit(), f.initial), /Missing/);
 });
 
 test('a reviewed permanent-page revision preserves its public route', async t => {

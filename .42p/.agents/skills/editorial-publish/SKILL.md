@@ -32,6 +32,6 @@ versioned report at `.42p/editorial-reviews/page/<slug>.removal.md`:
 `action: remove`, `result: PASS`, `reason` (substantive explanation), and
 `baseline: {fr: <published Git blob SHA>, en: <published Git blob SHA>}`.
 The report body must include `Human editorial approval: not granted by this report`.
-The report must be committed **before** the commit removing the FR/EN pages and
-must remain unchanged in that commit. The gate matches both baseline blobs.
-A PASS remains distinct from the author's manual publication approval.
+Review and approve the report **before merging the PR**. Squash & merge puts
+report and withdrawal in one authoritative commit; the gate binds both
+removed FR/EN Git blobs to that report. PASS is not human publication consent.

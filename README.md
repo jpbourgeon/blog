@@ -63,6 +63,6 @@ publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 Le retrait d'une page pérenne exige une justification versionnée dans
 `.42p/editorial-reviews/page/<slug>.removal.md` (décision de retrait,
 empreintes Git des deux pages d'origine, verdict PASS et motif). La
-rapport doit être commité avant la suppression, rester inchangé durant
-celle-ci et correspondre aux deux pages retirées. Le même gate manuel vérifie
-la transition.
+rapport doit être vérifié avant l'approbation de la PR. Le squash & merge
+regroupe ensuite retrait et rapport dans un même commit : le gate contrôle
+les empreintes des deux pages supprimées et le verdict du rapport.

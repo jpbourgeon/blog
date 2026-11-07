@@ -3,67 +3,68 @@ import {
   readDocument, readMarkdown, record, requireThat, sha256,
 } from './content.mts';
 import {type Snapshot, gitSha} from './git.mts';
-import {canonicalSlug, identities, inventory, matchReview, readPair, readReview, refPaths, reviewPath} from './review.mts';
+import {canonicalSlug, inventory, readPair, readReview, reviewPath} from './review.mts';
 
-async function at(tree: Snapshot, path: string) {
-  return tree.blob(path) ? readDocument(tree.read(path), path) : undefined;
-}
 function sourcePair(document: {kind: string; key: string}) {
   return document.kind === 'article' ? articlePair(document.key) : pagePair(document.key);
 }
-async function verifyPromotion(target: Snapshot, parent: Snapshot, published: Document) {
-  const location = reviewPath(published.kind + '/' + canonicalSlug(published));
-  const report = await readReview(target, location);
-  requireThat(report.result === 'PASS', 'No PASS for publication: ' + location);
-  requireThat(target.blob(location) === parent.blob(location),
-    'PASS must be committed before promotion: ' + location);
 
-  const {data, projected} = await identities(parent, refPaths(report.candidates),
-    report.baseline && refPaths(report.baseline));
-  matchReview(report, data);
-  requireThat(report.targets.fr.path === (published.locale === 'fr' ? published.path :
-    sourcePair(published).fr), 'Report belongs to another target');
-  for (const ref of report.references) {
-    requireThat(target.blob(ref.path) === ref.git_blob_sha,
-      'Normative reference changed during promotion: ' + ref.path);
-  }
+// Squash & merge deliberately collapses review and promotion into one main
+// commit. The gate binds that commit to the exact independently reviewed
+// published bytes; editorial approval occurs before merge, outside this gate.
+async function verifyPromotion(commit: Snapshot, parent: Snapshot, published: Document, previous?: Document) {
+  const location = reviewPath(published.kind + '/' + canonicalSlug(published));
+  const report = await readReview(commit, location);
+  requireThat(report.result === 'PASS', 'No PASS for publication: ' + location);
+  requireThat(report.mode === (previous?.visibility === 'public' ? 'revision' : 'new'),
+    'Editorial report mode differs from published transition: ' + location);
+
+  const paths = sourcePair(published);
   for (const locale of locales) {
-    const result = projected[locale];
-    const actual = await readDocument(target.read(result.path), result.path);
-    requireThat(actual.visibility === 'public' && actual.route === result.document.route &&
-      sha256(normalize(actual)) === report.targets[locale].content_sha256,
-      'Published contents differ from the verified projection: ' + result.path);
-    const candidate = report.candidates[locale].path;
-    if (candidate !== result.path) {
-      requireThat(target.blob(candidate) === undefined && target.read(result.path).equals(result.bytes),
-        'Promotion must remove temporary candidates and write exact approved bytes: ' + candidate);
+    const path = paths[locale];
+    requireThat(report.targets[locale].path === path &&
+      sha256(normalize(await readDocument(commit.read(path), path))) === report.targets[locale].content_sha256,
+      'Published content differs from verified target: ' + path);
+    if (report.mode === 'revision') {
+      requireThat(report.baseline?.[locale].path === path &&
+        parent.blob(path) === report.baseline[locale].git_blob_sha,
+        'Revision baseline differs from last published content: ' + path);
     } else {
-      const before = await at(parent, candidate);
-      requireThat(before?.visibility !== 'public', 'Initial publication must start from a draft or preview');
+      requireThat(!report.baseline, 'Initial publication must not bind a published baseline');
+    }
+    const candidate = report.candidates[locale].path;
+    if (candidate !== path) {
+      requireThat(commit.blob(candidate) === undefined,
+        'Temporary candidate left in publication: ' + candidate);
     }
   }
-  return {report, location};
+  if (previous?.visibility === 'public') {
+    requireThat(previous.route === published.route, 'Public revision changes its canonical route');
+  }
+  for (const ref of report.references) {
+    requireThat(commit.blob(ref.path) === ref.git_blob_sha,
+      'Editorial standard or main Capture differs from verified reference: ' + ref.path);
+  }
+  return {location, reportSha: commit.requireBlob(location), references: report.references};
 }
 
-async function verifyRemoval(target: Snapshot, parent: Snapshot, paths: {fr: string; en: string}, key: string) {
+async function verifyRemoval(commit: Snapshot, parent: Snapshot, paths: {fr: string; en: string}, key: string) {
   const path = reviewPath('page/' + key.replace(/\.mdx?$/, '') + '.removal');
-  requireThat(parent.blob(path) !== undefined && target.blob(path) === parent.blob(path),
-    'Removal PASS must be committed before deletion and remain unchanged: ' + path);
-  const {fields, body} = await readMarkdown(parent.read(path), path);
+  const {fields, body} = await readMarkdown(commit.read(path), path);
   requireThat(Object.keys(fields).sort().join(',') === 'action,baseline,reason,result' &&
     fields.action === 'remove' && fields.result === 'PASS' &&
     typeof fields.reason === 'string' && fields.reason.trim().length >= 10 &&
     body.includes('Human editorial approval: not granted by this report') &&
     record(fields.baseline) && Object.keys(fields.baseline).sort().join(',') === 'en,fr',
-    'Invalid page withdrawal approval: ' + path);
-  const proof = fields.baseline as {fr: string; en: string};
+    'Invalid page withdrawal report: ' + path);
+  const baseline = fields.baseline as {fr: string; en: string};
   for (const locale of locales) {
-    requireThat(gitSha.test(proof[locale]) &&
-      parent.blob(paths[locale]) === proof[locale] &&
-      target.blob(paths[locale]) === undefined,
-      'Removed page does not match approved FR/EN baseline: ' + paths[locale]);
+    requireThat(gitSha.test(baseline[locale]) &&
+      parent.blob(paths[locale]) === baseline[locale] &&
+      commit.blob(paths[locale]) === undefined,
+      'Removed page does not match reviewed FR/EN baseline: ' + paths[locale]);
   }
-  return 'Approved page withdrawal: ' + key;
+  return 'Reviewed page withdrawal: ' + key;
 }
 
 export async function plan(target: Snapshot, deployed?: Snapshot) {
@@ -75,9 +76,10 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     return ['Initial exposure: explicit human authorization required'];
   }
   await inventory(deployed);
-  const latest = new Map<string, {report: Awaited<ReturnType<typeof verifyPromotion>>; commit: Snapshot}>();
   let parent = deployed;
   const classification: string[] = [];
+  const promoted: {location: string; reportSha: string; references: {path: string; git_blob_sha: string}[]}[] = [];
+
   for (const sha of target.repo.firstParentRange(deployed.commit, target.commit)) {
     const commit = target.repo.tree(sha);
     const changed = target.repo.changed(parent.commit, commit.commit);
@@ -97,31 +99,26 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
         const changedPublic = !before || before.fr.visibility !== 'public' ||
           locales.some(locale => parent.blob(paths[locale]) !== commit.blob(paths[locale]));
         if (changedPublic) {
-          const verified = await verifyPromotion(commit, parent, after.fr);
-          latest.set(verified.report.content, {report: verified, commit});
-          classification.push('Verified ' + verified.report.content);
+          promoted.push(await verifyPromotion(commit, parent, after.fr, before?.fr));
+          classification.push('Verified ' + after.fr.kind + '/' + canonicalSlug(after.fr));
         }
       } else if (before?.fr.visibility === 'public') {
         requireThat(id.kind === 'page' && !after,
-          'Public article withdrawal or unpaired page removal requires a separate decision');
-        classification.push(await verifyRemoval(target, parent, paths, id.key));
+          'Public article withdrawal or partial page removal requires a separate decision');
+        classification.push(await verifyRemoval(commit, parent, paths, id.key));
       } else if (after?.fr.visibility === 'unlisted') {
         classification.push('Unlisted preview: ' + id.key);
       }
     }
     parent = commit;
   }
-  for (const {report: verification, commit} of latest.values()) {
-    const {report, location} = verification;
-    requireThat(target.blob(location) === commit.blob(location),
-      'Editorial PASS changed after promotion: ' + location);
-    for (const ref of report.references) {
+
+  for (const proof of promoted) {
+    requireThat(target.blob(proof.location) === proof.reportSha,
+      'Editorial PASS changed after publication: ' + proof.location);
+    for (const ref of proof.references) {
       requireThat(target.blob(ref.path) === ref.git_blob_sha,
-        'Normative reference changed after verification: ' + ref.path);
-    }
-    for (const locale of locales) {
-      requireThat(target.blob(report.targets[locale].path) === commit.blob(report.targets[locale].path),
-        'Canonical content changed after promotion: ' + report.targets[locale].path);
+        'Normative reference changed after publication: ' + ref.path);
     }
   }
   return classification.length ? classification : ['Technical or draft-only changes'];
