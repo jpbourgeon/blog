@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build": "docusaurus build && node scripts/pagefind.mts",
     "serve": "docusaurus serve",
     "typecheck": "tsc --noEmit",
     "publication": "node --disable-warning=ExperimentalWarning scripts/publication/cli.mts",
@@ -25,7 +25,5 @@
     "typescript": "5.9.3",
     "yaml": "2.8.3"
   },
-  "engines": {
-    "node": ">=26"
-  }
+  "engines": {"node": ">=26"}
 }

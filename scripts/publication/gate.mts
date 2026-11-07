@@ -1,206 +1,110 @@
-import {createProcessor} from '@mdx-js/mdx';
 import {
-  type Article, type Pair, articlePath, capturePattern, locales, normalize, pagePaths, readArticle,
-  readMarkdown, requireThat, sha256, standards,
+  type Document, articlePair, documentPath, locales, normalize, pagePair,
+  readDocument, requireThat, sha256, standards,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
-import {
-  canonicalSlug, identities, inventory, matchReview, pairKey, readReview, refPaths, reviewPath,
-  validateReviewPath, reviewsDir,
-} from './review.mts';
+import {canonicalSlug, identities, inventory, matchReview, readPair, readReview, refPaths, reviewPath} from './review.mts';
 
-export type Mode = 'inspect' | 'bootstrap' | 'publish' | 'pages';
-const isArticle = (path: string) => articlePath(path) !== undefined;
-
-function nonRendering(path: string) {
-  if (path.startsWith(reviewsDir)) {
-    validateReviewPath(path);
-    return true;
-  }
-  return ['AGENTS.md', 'README.md', 'LICENSE', 'LICENSE-ADDITIONAL.md', '.gitignore',
-    '.github/workflows/pages.yml', ...standards].includes(path) ||
-    /^\.42p\/\.agents\/skills\/(42p-capture|editorial-(verify|publish|write))\/SKILL\.md$/.test(path) ||
-    /^scripts\/publication\/[a-z-]+\.mts$/.test(path) || capturePattern.test(path);
+async function at(tree: Snapshot, path: string) {
+  return tree.blob(path) ? readDocument(tree.read(path), path) : undefined;
 }
+function sourcePair(document: {kind: string; key: string}) {
+  return document.kind === 'article' ? articlePair(document.key) : pagePair(document.key);
+}
+async function verifyPromotion(target: Snapshot, parent: Snapshot, published: Document) {
+  const location = reviewPath(published.kind + '/' + canonicalSlug(published));
+  const report = await readReview(target, location);
+  requireThat(report.result === 'PASS', 'No PASS for publication: ' + location);
+  requireThat(target.blob(location) === parent.blob(location),
+    'PASS must be committed before promotion: ' + location);
 
-async function verifyPromotion(commit: Snapshot, parent: Snapshot, published: Article) {
-  const path = reviewPath(canonicalSlug(published));
-  const review = await readReview(commit, path);
-  requireThat(review.result === 'PASS', `Editorial report is not PASS: ${path}`);
-  requireThat(parent.blob(path) === commit.blob(path), `Report must predate promotion and remain unchanged: ${path}`);
-  requireThat(review.targets.fr.path === published.path, `Report belongs to a different canonical pair: ${path}`);
-
-  const baseline = review.baseline && refPaths(review.baseline);
-  if (!baseline) {
-    for (const reportPath of parent.paths(reviewsDir.slice(0, -1))) {
-      const prior = await readReview(parent, reportPath);
-      requireThat(!prior.baseline || prior.candidates.fr.path !== review.candidates.fr.path,
-        `An established revision cannot become a new article: ${published.path}`);
-    }
-  }
-  const {data, projected} = await identities(parent, refPaths(review.candidates), baseline);
-  matchReview(review, data);
-  for (const ref of data.references) {
-    requireThat(commit.blob(ref.path) === ref.git_blob_sha, `Normative reference changed at promotion: ${ref.path}`);
+  const {data, projected} = await identities(parent, refPaths(report.candidates),
+    report.baseline && refPaths(report.baseline));
+  matchReview(report, data);
+  requireThat(report.targets.fr.path === (published.locale === 'fr' ? published.path :
+    sourcePair(published).fr), 'Report belongs to another target');
+  for (const ref of report.references) {
+    requireThat(target.blob(ref.path) === ref.git_blob_sha,
+      'Normative reference changed during promotion: ' + ref.path);
   }
   for (const locale of locales) {
-    const candidate = review.candidates[locale].path;
-    const target = projected[locale];
-    const bytes = commit.read(target.path);
-    const actual = await readArticle(bytes, target.path);
-    requireThat(actual.visibility === 'public' && actual.route === target.article.route,
-      `Unexpected public visibility or URL: ${target.path}`);
-    if (baseline) {
-      requireThat(!commit.blob(candidate) && target.bytes.equals(bytes),
-        `Revision must write the exact projection and delete its temporary candidate: ${candidate}`);
+    const result = projected[locale];
+    const actual = await readDocument(target.read(result.path), result.path);
+    requireThat(actual.visibility === 'public' && actual.route === result.document.route &&
+      sha256(normalize(actual)) === report.targets[locale].content_sha256,
+      'Published contents differ from the verified projection: ' + result.path);
+    const candidate = report.candidates[locale].path;
+    if (candidate !== result.path) {
+      requireThat(target.blob(candidate) === undefined && target.read(result.path).equals(result.bytes),
+        'Promotion must remove temporary candidates and write exact approved bytes: ' + candidate);
     } else {
-      requireThat(sha256(normalize(actual)) === data.targets[locale].content_sha256,
-        `Initial publication changed more than visibility: ${candidate}`);
+      const before = await at(parent, candidate);
+      requireThat(before?.visibility !== 'public', 'Initial publication must start from a draft or preview');
     }
   }
-  return review;
+  return {report, location};
 }
 
-async function articleAt(tree: Snapshot, path: string) {
-  if (tree.blob(path)) return readArticle(tree.read(path), path);
-}
-
-async function checkPromotions(deployed: Snapshot, target: Snapshot) {
-  const repo = target.repo;
-  const latest = new Map<string, {report: string; commit: Snapshot}>();
+export async function plan(target: Snapshot, deployed?: Snapshot) {
+  const pairs = await inventory(target);
+  if (!deployed) {
+    requireThat(![...pairs.values()].some(pair =>
+      pair.fr.kind === 'article' && pair.fr.visibility === 'public'),
+      'Initial deployment requires a baseline before publishing public articles');
+    return ['Initial exposure: explicit human authorization required'];
+  }
+  await inventory(deployed);
+  const latest = new Map<string, {report: Awaited<ReturnType<typeof verifyPromotion>>; commit: Snapshot}>();
   let parent = deployed;
-  for (const sha of repo.firstParentRange(deployed.commit, target.commit)) {
-    const commit = repo.tree(sha);
-    const changed = repo.changed(parent.commit, sha);
-    requireThat(!changed.some(isArticle) || !changed.some(path => standards.includes(path)),
-      `Keep changes to editorial standards separate from article changes: ${sha}`);
-    const covered = new Set<string>();
-    for (const file of changed.filter(isArticle)) {
-      if (covered.has(file)) continue;
-      const before = await articleAt(parent, file);
-      const after = await articleAt(commit, file);
-      if (before?.visibility !== 'public' && after?.visibility !== 'public') continue;
-      requireThat(after?.visibility === 'public', `Unsupported withdrawal of a canonical article: ${file}`);
-      const id = articlePath(file)!;
-      const french = id.locale === 'fr' ? after : await articleAt(commit, 'blog/' + id.key);
-      requireThat(french?.visibility === 'public', `Partial canonical publication: ${file}`);
-      const review = await verifyPromotion(commit, parent, french);
-      for (const locale of locales) {
-        covered.add(review.targets[locale].path);
-        covered.add(review.candidates[locale].path);
+  const classification: string[] = [];
+  for (const sha of target.repo.firstParentRange(deployed.commit, target.commit)) {
+    const commit = target.repo.tree(sha);
+    const changed = target.repo.changed(parent.commit, commit.commit);
+    requireThat(!changed.some(path => standards.includes(path)) ||
+      !changed.some(path => documentPath(path)?.kind === 'article' || documentPath(path)?.kind === 'page'),
+      'Change editorial standards separately from editorial documents');
+    const affected = new Map<string, ReturnType<typeof documentPath>>();
+    for (const path of changed) {
+      const id = documentPath(path);
+      if (id && (id.kind === 'article' || id.source === 'canonical')) {
+        affected.set(id.kind + ':' + id.key, id);
       }
-      latest.set(pairKey(refPaths(review.targets)), {report: reviewPath(review.article), commit});
     }
-    if (covered.size) {
-      requireThat(changed.length === covered.size && changed.every(file => covered.has(file)),
-        `Publication commit ${sha} must contain exactly the paired promotion changes`);
+    for (const id of affected.values()) {
+      if (!id) continue;
+      const paths = sourcePair(id);
+      const before = parent.blob(paths.fr) || parent.blob(paths.en) ? await readPair(parent, paths) : undefined;
+      const after = commit.blob(paths.fr) || commit.blob(paths.en) ? await readPair(commit, paths) : undefined;
+      if (after?.fr.visibility === 'public') {
+        const changedPublic = !before || before.fr.visibility !== 'public' ||
+          locales.some(locale => parent.blob(paths[locale]) !== commit.blob(paths[locale]));
+        if (changedPublic) {
+          const verified = await verifyPromotion(commit, parent, after.fr);
+          latest.set(verified.report.content, {report: verified, commit});
+          classification.push('Verified ' + verified.report.content);
+        }
+      } else if (before?.fr.visibility === 'public') {
+        requireThat(id.kind === 'page' && !after,
+          'Public article withdrawal or unpaired page removal requires a separate decision');
+        classification.push('Removed permanent page: ' + id.key);
+      } else if (after?.fr.visibility === 'unlisted') {
+        classification.push('Unlisted preview: ' + id.key);
+      }
     }
     parent = commit;
   }
-
-  for (const {report, commit} of latest.values()) {
-    requireThat(target.blob(report) === commit.blob(report), `Report changed after promotion: ${report}`);
-    const review = await readReview(commit, report);
-    for (const ref of review.references) {
-      requireThat(target.blob(ref.path) === ref.git_blob_sha, `Normative reference changed before deployment: ${ref.path}`);
+  for (const {report: verification, commit} of latest.values()) {
+    const {report, location} = verification;
+    requireThat(target.blob(location) === commit.blob(location),
+      'Editorial PASS changed after promotion: ' + location);
+    for (const ref of report.references) {
+      requireThat(target.blob(ref.path) === ref.git_blob_sha,
+        'Normative reference changed after verification: ' + ref.path);
     }
     for (const locale of locales) {
-      const path = review.targets[locale].path;
-      requireThat(target.blob(path) === commit.blob(path), `Canonical target changed after promotion: ${path}`);
+      requireThat(target.blob(report.targets[locale].path) === commit.blob(report.targets[locale].path),
+        'Canonical content changed after promotion: ' + report.targets[locale].path);
     }
   }
+  return classification.length ? classification : ['Technical or draft-only changes'];
 }
-
-type MarkdownNode = {
-  type: string;
-  value?: string;
-  url?: string;
-  identifier?: string;
-  children?: MarkdownNode[];
-};
-const processor = createProcessor();
-
-function checkStaticMarkdown(body: string, path: string): void {
-  // Docusaurus accepts the legacy HTML truncation marker as well as the MDX comment.
-  const tree = processor.parse(body.replace(/^<!-- truncate -->$/gm, '{/* truncate */}')) as MarkdownNode;
-  const localImages = new Set<string>();
-  function collectImages(node: MarkdownNode) {
-    if (node.type === 'imageReference' && node.identifier) localImages.add(node.identifier);
-    node.children?.forEach(collectImages);
-  }
-  collectImages(tree);
-  function inspect(node: MarkdownNode) {
-    if (node.type.startsWith('mdx') || node.type === 'html') {
-      requireThat(node.type === 'mdxFlowExpression' && /^\/\*\s*truncate\s*\*\/$/.test(node.value?.trim() ?? ''),
-        `Executable or unclassified Markdown in ${path}: ${node.type}`);
-    }
-    if (node.url) {
-      requireThat(!/^[a-z][a-z0-9+.-]*:/i.test(node.url) || /^(https?:|mailto:)/i.test(node.url),
-        `Unsupported Markdown URL in ${path}`);
-      const image = node.type === 'image' || (node.type === 'definition' && localImages.has(node.identifier ?? ''));
-      if (image && !/^https?:\/\//i.test(node.url)) {
-        requireThat(/\.(png|jpe?g|webp|gif|avif)(?:[?#].*)?$/i.test(node.url),
-          `Unclassified local image dependency in ${path}`);
-      }
-    }
-    node.children?.forEach(inspect);
-  }
-  inspect(tree);
-}
-
-export async function plan(target: Snapshot, mode: Mode, deployed?: Snapshot) {
-  const workflows = target.paths('.github/workflows');
-  requireThat(workflows.length === 1 && workflows[0] === '.github/workflows/pages.yml',
-    'Found an alternate workflow or missing the Pages workflow');
-  target.requireBlob(workflows[0]);
-
-  const {pairs} = await inventory(target);
-  const exposed = [...pairs.values()].filter(pair => pair.fr.visibility !== 'draft');
-  const classification: string[] = [];
-  if (mode === 'bootstrap') {
-    requireThat(!deployed && exposed.length === 0, 'Bootstrap requires no deployed baseline or exposed article');
-    classification.push('First exposure of the permanent bilingual site');
-  } else if (mode !== 'inspect') {
-    requireThat(deployed && deployed.commit !== target.commit,
-      'Normal publication needs a different, verified deployed commit');
-    await inventory(deployed);
-    const changed = target.repo.changed(deployed.commit, target.commit);
-    for (const path of changed) {
-      requireThat(nonRendering(path) || isArticle(path) || (mode === 'pages' && pagePaths.includes(path)),
-        `Public effect is unclassified, or requires the separate pages dispatch: ${path}`);
-    }
-    await checkPromotions(deployed, target);
-    for (const path of changed.filter(isArticle)) {
-      const before = await articleAt(deployed, path);
-      const after = await articleAt(target, path);
-      if (mode === 'pages') {
-        requireThat((!before || before.visibility === 'draft') && (!after || after.visibility === 'draft'),
-          `Permanent page dispatch cannot also change an exposed article: ${path}`);
-      }
-      const change = after?.visibility === 'unlisted' ?
-        (before?.visibility === 'unlisted' && before.route === after.route ? 'Updated preview' : 'First preview exposure') :
-        after?.visibility === 'public' ? (before?.visibility === 'public' ? 'Canonical revision' : 'Canonical publication') :
-        before?.visibility === 'unlisted' ? 'Preview removal' : 'Non-public source';
-      classification.push(`${change}: ${path}`);
-    }
-    classification.push(...changed.filter(path => pagePaths.includes(path)).map(path => `Permanent page: ${path}`));
-    if (!classification.length) classification.push('Only non-rendering files changed');
-  }
-
-  const articles: Article[] = [];
-  const drafts: Article[] = [];
-  for (const pair of pairs.values()) {
-    if (pair.fr.visibility === 'draft') drafts.push(pair.fr, pair.en);
-    else articles.push(pair.fr, pair.en);
-  }
-  // The independent build verifies routing and indexing. Static Markdown keeps
-  // an approved article from importing unrelated sources or running site code.
-  for (const article of articles) checkStaticMarkdown(article.body, article.path);
-  for (const path of pagePaths) {
-    const page = await readMarkdown(target.read(path), path);
-    checkStaticMarkdown(page.body, path);
-  }
-  return {articles, drafts, classification};
-}
-
-export type Plan = Awaited<ReturnType<typeof plan>>;
