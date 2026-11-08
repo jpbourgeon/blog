@@ -1,6 +1,6 @@
 import {
   type Document, articlePair, locales, normalize, pagePair,
-  readDocument, requireThat, sha256,
+  requireThat, sha256,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
 import {canonicalSlug, inventory, readReview, reviewPath} from './review.mts';
@@ -11,14 +11,14 @@ function sourcePair(document: {kind: string; key: string}) {
 
 // Publication validity belongs to the target commit, never to intermediate
 // editorial commits. A PASS is bound to the exact public FR/EN projection.
-async function verifyPublished(target: Snapshot, published: Document) {
+async function verifyPublished(target: Snapshot, published: Document, pair: {fr: Document; en: Document}) {
   const location = reviewPath(published.kind + '/' + canonicalSlug(published));
   const report = await readReview(target, location);
   requireThat(report.result === 'PASS', 'No PASS for publication: ' + location);
   const paths = sourcePair(published);
   for (const locale of locales) {
     const path = paths[locale];
-    const actual = await readDocument(target.read(path), path);
+    const actual = pair[locale];
     requireThat(actual.visibility === 'public' && report.targets[locale].path === path &&
       sha256(normalize(actual)) === report.targets[locale].content_sha256,
       'Published content differs from verified target: ' + path);
@@ -48,7 +48,7 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     const paths = sourcePair(document);
 
     if (document.visibility === 'public') {
-      await verifyPublished(target, document);
+      await verifyPublished(target, document, pair);
     }
 
     if (document.kind === 'article') {
