@@ -57,7 +57,7 @@ test('a page and an article each require a matching PASS for the published state
     f.remove(page[locale]);
   }
   const published = f.commit();
-  assert.match((await plan(published, f.initial)).join('\n'), /Verified page\/note/);
+  assert.match((await plan(published, f.initial)).join('\n'), /Public page\/note/);
   assert.match(location, /editorial-reviews\/page\/note.md/);
 
   const article = articlePair('example.md');
@@ -68,7 +68,7 @@ test('a page and an article each require a matching PASS for the published state
   f.commit();
   for (const locale of locales) f.write(article[locale], articleData.projected[locale].bytes);
   const result = f.commit();
-  assert.match((await plan(result, published)).join('\n'), /Verified article\/example/);
+  assert.match((await plan(result, published)).join('\n'), /Public article\/example/);
 });
 
 test('a public page edit without a previously committed PASS is rejected', async t => {
@@ -88,7 +88,7 @@ test('a verified page may be promoted with its report in one squash commit', asy
     f.write(projected[locale].path, projected[locale].bytes);
     f.remove(paths[locale]);
   }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/new/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/new/);
 });
 
 test('squash merge retains a PASS and exact target without retaining the candidate', async t => {
@@ -103,7 +103,7 @@ test('squash merge retains a PASS and exact target without retaining the candida
   for (const locale of locales) {
     f.write(projected[locale].path, projected[locale].bytes);
   }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/squash/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/squash/);
 });
 
 test('unlisted previews are allowed; page removal requires prior immutable approval', async t => {
@@ -155,7 +155,7 @@ test('a reviewed permanent-page revision preserves its public route', async t =>
     f.write(currentPaths[locale], projected[locale].bytes);
     f.remove(draftPaths[locale]);
   }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/about/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
 });
 
 test('intermediate candidate edits do not invalidate a final exact PASS', async t => {
