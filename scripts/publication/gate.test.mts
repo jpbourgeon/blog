@@ -399,7 +399,10 @@ test('unlisted is still public and cannot serve as withdrawal', async t => {
   const publicState = f.commit();
 
   f.writePair(paths, 'Published', 'unlisted: true\n');
-  await assert.rejects(plan(f.commit(), publicState), /Exposed content must be withdrawn before deletion/);
+  const stillExposed = f.commit();
+  assert.match((await plan(stillExposed, publicState)).join('\n'), /Unlisted preview/);
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), stillExposed), /Exposed content must be withdrawn before deletion/);
 });
 
 test('a never-deployed draft and its rationale may be deleted directly', async t => {
