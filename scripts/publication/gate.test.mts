@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import test, {type TestContext} from 'node:test';
 import {stringify} from 'yaml';
-import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards} from './content.mts';
+import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
 import {identities, reviewPath, type Review} from './review.mts';
 import {plan} from './gate.mts';
@@ -31,6 +31,25 @@ function fixture(t: TestContext) {
   for (const path of standards) write(path, '# Verified standard\n');
   const about = pagePair('about.md');
   for (const locale of locales) write(about[locale], '---\ntitle: About\n---\n# About\n');
+  const seed = commit();
+  const hash = sha256(normalize({fields: {title: 'About'}, body: '# About'}));
+  const candidate = pageDraftPair('about.md');
+  const signed: Review = {
+    content: 'page/about',
+    mode: 'new',
+    candidates: {
+      fr: {path: candidate.fr, content_sha256: hash},
+      en: {path: candidate.en, content_sha256: hash},
+    },
+    targets: {
+      fr: {path: about.fr, content_sha256: hash},
+      en: {path: about.en, content_sha256: hash},
+    },
+    references: standards.map(path => ({path, git_blob_sha: seed.requireBlob(path)})),
+    result: 'PASS',
+  };
+  write(reviewPath(signed.content), '---\n' + stringify(signed) +
+    '---\nVerified evidence\n\n' + approvalNotice + '\n');
   const initial = commit();
   function writePair(paths: Pair<string>, body: string, state = 'draft: true\n') {
     for (const locale of locales) write(paths[locale],
@@ -71,10 +90,10 @@ test('a page and an article each require a matching PASS for the published state
   assert.match((await plan(result, published)).join('\n'), /Public article\/example/);
 });
 
-test('a public page edit without a previously committed PASS is rejected', async t => {
+test('a public page edit without a matching PASS is rejected', async t => {
   const f = fixture(t);
   f.write('src/pages/about.md', '---\ntitle: About\n---\n# Changed without approval\n');
-  await assert.rejects(plan(f.commit(), f.initial), /Missing .*editorial-reviews\/page\/about\.md/);
+  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
 });
 
 
@@ -311,7 +330,8 @@ test('an article revision preserving its FR/EN route remains publishable', async
 
 test('first deployment refuses an unsealed public placeholder', async t => {
   const f = fixture(t);
-  await assert.rejects(plan(f.initial), /Missing .*editorial-reviews\/page\/about\.md/);
+  f.remove('.42p/editorial-reviews/page/about.md');
+  await assert.rejects(plan(f.commit()), /Missing .*editorial-reviews\/page\/about\.md/);
 });
 
 test('first deployment accepts a public page verified through the normal workflow', async t => {
@@ -436,5 +456,6 @@ test('a deployed unlisted article cannot silently change route', async t => {
 
 test('unchanged unsealed public pages are no longer exempt from PASS', async t => {
   const f = fixture(t);
-  await assert.rejects(plan(f.initial, f.initial), /Missing .*page\/about\.md/);
+  f.remove('.42p/editorial-reviews/page/about.md');
+  await assert.rejects(plan(f.commit(), f.initial), /Missing .*page\/about\.md/);
 });
