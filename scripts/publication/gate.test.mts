@@ -44,7 +44,7 @@ function fixture(t: TestContext) {
   return {repo, initial, write, remove, commit, writePair, report};
 }
 
-test('a page and an article share the same prior-PASS publication guarantee', async t => {
+test('a page and an article each require a matching PASS for the published state', async t => {
   const f = fixture(t);
   const page = pageDraftPair('note.md');
   f.writePair(page, 'New page');
@@ -74,7 +74,7 @@ test('a page and an article share the same prior-PASS publication guarantee', as
 test('a public page edit without a previously committed PASS is rejected', async t => {
   const f = fixture(t);
   f.write('src/pages/about.md', '---\ntitle: About\n---\n# Changed without approval\n');
-  await assert.rejects(plan(f.commit(), f.initial), /Missing .*editorial-reviews/);
+  await assert.rejects(plan(f.commit(), f.initial), /Unsealed published content/);
 });
 
 test('a verified page may be promoted with its report in one squash commit', async t => {
@@ -158,7 +158,7 @@ test('a reviewed permanent-page revision preserves its public route', async t =>
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Verified page\/about/);
 });
 
-test('reviewed candidates changed after PASS cannot be promoted', async t => {
+test('intermediate candidate edits do not invalidate a final exact PASS', async t => {
   const f = fixture(t);
   const draftPaths = pageDraftPair('new.md');
   f.writePair(draftPaths, 'Original candidate');
@@ -172,7 +172,7 @@ test('reviewed candidates changed after PASS cannot be promoted', async t => {
     f.write(projected[locale].path, projected[locale].bytes);
     f.remove(draftPaths[locale]);
   }
-  await assert.rejects(plan(f.commit(), f.initial), /Candidate changed after independent verification/);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/new/);
 });
 
 test('public promotion cannot publish only one language', async t => {
@@ -211,4 +211,61 @@ test('withdrawal approval must bind both exact published Git blobs', async t => 
   f.commit();
   for (const locale of locales) f.remove(paths[locale]);
   await assert.rejects(plan(f.commit(), f.initial), /Removed page does not match reviewed FR\/EN baseline/);
+});
+
+
+test('several revisions of the same page use only the final PASS even if V2 was never deployed', async t => {
+  const f = fixture(t);
+  const temporary = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  let previous = f.initial;
+  for (const revision of ['V2', 'V3']) {
+    f.writePair(temporary, revision);
+    const candidate = f.commit();
+    const {data, projected} = await identities(candidate, temporary, canonical);
+    f.report({...data, result: 'PASS'});
+    for (const locale of locales) {
+      f.write(canonical[locale], projected[locale].bytes);
+      f.remove(temporary[locale]);
+    }
+    previous = f.commit();
+  }
+  assert.match((await plan(previous, f.initial)).join('\n'), /Public page\/about/);
+});
+
+test('multiple public documents can share a single publication commit', async t => {
+  const f = fixture(t);
+  const pages = [pageDraftPair('one.md'), pageDraftPair('two.md')];
+  for (const paths of pages) f.writePair(paths, 'Independent');
+  const draft = f.commit();
+  for (const paths of pages) {
+    const {data, projected} = await identities(draft, paths);
+    f.report({...data, result: 'PASS'});
+    for (const locale of locales) {
+      f.write(projected[locale].path, projected[locale].bytes);
+      f.remove(paths[locale]);
+    }
+  }
+  const published = f.commit();
+  const messages = (await plan(published, f.initial)).join('\n');
+  assert.match(messages, /Public page\/one/);
+  assert.match(messages, /Public page\/two/);
+});
+
+test('invalid intermediate revision does not block a final valid seal', async t => {
+  const f = fixture(t);
+  const temporary = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  f.write('src/pages/about.md', '---\ntitle: About\n---\n# Unverified interim\n');
+  f.write('i18n/en/docusaurus-plugin-content-pages/about.md', '---\ntitle: About\n---\n# Unverified interim\n');
+  f.commit();
+  f.writePair(temporary, 'Final verified');
+  const candidate = f.commit();
+  const {data, projected} = await identities(candidate, temporary, canonical);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(canonical[locale], projected[locale].bytes);
+    f.remove(temporary[locale]);
+  }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
 });

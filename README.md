@@ -56,6 +56,12 @@ calcule les identités du contenu candidat et de sa cible. Le compte rendu
 promotion. `check <rapport>` revalide son identité ; `project <rapport>`
 produit les octets à promouvoir pour un rapport PASS autorisé.
 
+Le gate valide les contenus publics présents dans le commit cible à partir de
+leurs sceaux PASS exacts, sans imposer la validité des révisions intermédiaires.
+La comparaison avec le dernier déploiement sert au contrôle des retraits et au
+relevé des changements à autoriser. Les anciennes pages publiques sans sceau
+ne peuvent rester que si elles sont inchangées.
+
 L'historique Git fait foi pour les versions. Pagefind indexe les routes
 publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 
