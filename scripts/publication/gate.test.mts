@@ -77,19 +77,6 @@ test('a public page edit without a previously committed PASS is rejected', async
   await assert.rejects(plan(f.commit(), f.initial), /Unsealed published content/);
 });
 
-test('a verified page may be promoted with its report in one squash commit', async t => {
-  const f = fixture(t);
-  const paths = pageDraftPair('new.md');
-  f.writePair(paths, 'New');
-  const draft = f.commit();
-  const {data, projected} = await identities(draft, paths);
-  f.report({...data, result: 'PASS'});
-  for (const locale of locales) {
-    f.write(projected[locale].path, projected[locale].bytes);
-    f.remove(paths[locale]);
-  }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/new/);
-});
 
 test('squash merge retains a PASS and exact target without retaining the candidate', async t => {
   const f = fixture(t);
@@ -106,33 +93,26 @@ test('squash merge retains a PASS and exact target without retaining the candida
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/squash/);
 });
 
-test('unlisted previews are allowed; page removal requires prior immutable approval', async t => {
+test('unlisted article previews are reported without being published', async t => {
   const f = fixture(t);
   const article = articlePair('preview.md');
   f.writePair(article, 'Preview', 'unlisted: true\n');
   const preview = f.commit();
   assert.match((await plan(preview, f.initial)).join('\n'), /Unlisted preview/);
-  const pages = pagePair('about.md');
-  const baseline = {fr: preview.blob(pages.fr), en: preview.blob(pages.en)};
-  const approval = '---\naction: remove\nresult: PASS\nreason: Explicit editorial withdrawal of this obsolete page\nbaseline:\n  fr: ' +
-    baseline.fr + '\n  en: ' + baseline.en + '\n---\n' + approvalNotice + '\n';
-  f.write('.42p/editorial-reviews/page/about.removal.md', approval);
-  f.commit();
-  for (const locale of locales) f.remove(pages[locale]);
-  const removed = f.commit();
-  assert.match((await plan(removed, preview)).join('\n'), /Reviewed page withdrawal/);
 });
 
-test('same-commit withdrawal report is valid after squash merge', async t => {
+test('an approved page withdrawal matches the deployed FR/EN blobs', async t => {
   const f = fixture(t);
   const pages = pagePair('about.md');
   const baseline = {fr: f.initial.blob(pages.fr), en: f.initial.blob(pages.en)};
   const approval = '---\naction: remove\nresult: PASS\nreason: Explicit editorial withdrawal of this obsolete page\nbaseline:\n  fr: ' +
     baseline.fr + '\n  en: ' + baseline.en + '\n---\n' + approvalNotice + '\n';
-  for (const locale of locales) f.remove(pages[locale]);
   f.write('.42p/editorial-reviews/page/about.removal.md', approval);
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Reviewed page withdrawal/);
+  for (const locale of locales) f.remove(pages[locale]);
+  const removed = f.commit();
+  assert.match((await plan(removed, f.initial)).join('\n'), /Reviewed page withdrawal/);
 });
+
 
 test('page removal without a report is rejected', async t => {
   const f = fixture(t);
@@ -158,22 +138,6 @@ test('a reviewed permanent-page revision preserves its public route', async t =>
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
 });
 
-test('intermediate candidate edits do not invalidate a final exact PASS', async t => {
-  const f = fixture(t);
-  const draftPaths = pageDraftPair('new.md');
-  f.writePair(draftPaths, 'Original candidate');
-  const draft = f.commit();
-  const {data, projected} = await identities(draft, draftPaths);
-  f.report({...data, result: 'PASS'});
-  f.commit();
-  f.writePair(draftPaths, 'Changed after verification');
-  f.commit();
-  for (const locale of locales) {
-    f.write(projected[locale].path, projected[locale].bytes);
-    f.remove(draftPaths[locale]);
-  }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/new/);
-});
 
 test('public promotion cannot publish only one language', async t => {
   const f = fixture(t);
@@ -268,4 +232,67 @@ test('invalid intermediate revision does not block a final valid seal', async t 
     f.remove(temporary[locale]);
   }
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
+});
+
+
+test('final public FR/EN bytes must match the exact PASS fingerprint', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('sealed.md');
+  f.writePair(paths, 'Original');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(paths[locale]);
+  }
+  f.write(projected.fr.path, projected.fr.bytes.toString('utf8').replace('Original', 'Tampered'));
+  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
+});
+
+test('FAIL and INCONCLUSIVE seals never authorize public content', async t => {
+  for (const result of ['FAIL', 'INCONCLUSIVE'] as const) {
+    const f = fixture(t);
+    const paths = pageDraftPair('rejected.md');
+    f.writePair(paths, 'Not approved');
+    const draft = f.commit();
+    const {data, projected} = await identities(draft, paths);
+    f.report({...data, result});
+    for (const locale of locales) {
+      f.write(projected[locale].path, projected[locale].bytes);
+      f.remove(paths[locale]);
+    }
+    await assert.rejects(plan(f.commit(), f.initial), /No PASS for publication/, result);
+  }
+});
+
+test('normative references must remain identical to the verified blobs', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('reference.md');
+  f.writePair(paths, 'Verified with the original standard');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(paths[locale]);
+  }
+  f.write(standards[0], '# Changed after verification\n');
+  await assert.rejects(plan(f.commit(), f.initial), /Normative reference differs from verified evidence/);
+});
+
+test('a public page cannot change its canonical route by moving files without withdrawal approval', async t => {
+  const f = fixture(t);
+  const old = pagePair('about.md');
+  const newer = pageDraftPair('different.md');
+  f.writePair(newer, 'Different route');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, newer);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(old[locale]);
+    f.remove(newer[locale]);
+  }
+  await assert.rejects(plan(f.commit(), f.initial), /Missing .*removal\.md/);
 });
