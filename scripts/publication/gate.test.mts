@@ -32,7 +32,7 @@ function fixture(t: TestContext) {
   const about = pagePair('about.md');
   for (const locale of locales) write(about[locale], '---\ntitle: About\n---\n# About\n');
   const seed = commit();
-  const hash = sha256(normalize({fields: {title: 'About'}, body: '# About'}));
+  const hash = sha256(normalize({fields: {title: 'About'}, body: '# About\n'}));
   const candidate = pageDraftPair('about.md');
   const signed: Review = {
     content: 'page/about',
