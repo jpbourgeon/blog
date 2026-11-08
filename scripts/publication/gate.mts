@@ -77,6 +77,15 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     } else {
       await verifyPublished(target, published);
     }
+    if (deployed && published.kind === 'article' &&
+        locales.every(locale => deployed.blob(paths[locale]) !== undefined)) {
+      for (const locale of locales) {
+        const previous = await readDocument(deployed.read(paths[locale]), paths[locale]);
+        const currentArticle = pair[locale];
+        requireThat(previous.visibility !== 'public' || previous.route === currentArticle.route,
+          'Public article route changed: ' + paths[locale]);
+      }
+    }
     if (!deployed || locales.some(locale => deployed.blob(paths[locale]) !== target.blob(paths[locale]))) {
       classification.push('Public ' + published.kind + '/' + canonicalSlug(published));
     }
