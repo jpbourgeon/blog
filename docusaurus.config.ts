@@ -35,7 +35,6 @@ export default {
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
         {to: '/search/', label: 'Rechercher', position: 'left'},
-        {to: '/about/', label: 'À propos / Contact', position: 'left'},
         {type: 'localeDropdown', position: 'right'},
       ],
     },
