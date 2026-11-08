@@ -7,7 +7,7 @@ import test, {type TestContext} from 'node:test';
 import {stringify} from 'yaml';
 import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
-import {identities, reviewPath, type Review} from './review.mts';
+import {identities, matchReview, reviewPath, type Review} from './review.mts';
 import {plan} from './gate.mts';
 
 const approvalNotice = 'Human editorial approval: not granted by this report';
@@ -285,11 +285,13 @@ test('a new PASS binds the actual standards at the time of verification', async 
   const changed = f.commit();
   const after = await identities(changed, paths);
   assert.notDeepEqual(before.data.references, after.data.references);
-  f.report({...before.data, result: 'PASS'});
-  f.commit();
-  // Re-validating a candidate against the current tree must reject stale evidence.
-  const latest = await identities(f.commit(), paths);
-  assert.notDeepEqual(before.data.references, latest.data.references);
+  // A candidate sealed against previous references cannot be promoted
+  // without a new verification; this does not affect already published work.
+  assert.throws(
+    () => matchReview({...before.data, result: 'PASS'}, after.data),
+    /Stale or inapplicable editorial report/,
+  );
+  assert.doesNotThrow(() => matchReview({...after.data, result: 'PASS'}, after.data));
 });
 
 test('a public page cannot be replaced by a new route without withdrawal', async t => {
