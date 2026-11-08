@@ -93,11 +93,12 @@ test('squash merge retains a PASS and exact target without retaining the candida
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/squash/);
 });
 
-test('unlisted article previews are reported without being published', async t => {
+test('unlisted article previews are reported even on the first deployment', async t => {
   const f = fixture(t);
   const article = articlePair('preview.md');
   f.writePair(article, 'Preview', 'unlisted: true\n');
   const preview = f.commit();
+  assert.match((await plan(preview)).join('\n'), /Unlisted preview: preview.md/);
   assert.match((await plan(preview, f.initial)).join('\n'), /Unlisted preview/);
 });
 
@@ -266,7 +267,7 @@ test('a public page cannot be replaced by a new route without withdrawal', async
     f.remove(old[locale]);
     f.remove(newer[locale]);
   }
-  await assert.rejects(plan(f.commit(), f.initial), /Public content must be withdrawn before deletion/);
+  await assert.rejects(plan(f.commit(), f.initial), /Exposed content must be withdrawn before deletion/);
 });
 
 
@@ -328,10 +329,6 @@ test('first deployment accepts a public page verified through the normal workflo
   assert.match((await plan(f.commit())).join('\n'), /Public page\/about/);
 });
 
-test('an unchanged legacy page may remain unsealed after a deployment', async t => {
-  const f = fixture(t);
-  assert.deepEqual(await plan(f.initial, f.initial), ['No public content changes']);
-});
 
 
 test('a deployed article must be withdrawn as draft before deletion', async t => {
@@ -345,7 +342,7 @@ test('a deployed article must be withdrawn as draft before deletion', async t =>
   const publicState = f.commit();
 
   for (const locale of locales) f.remove(paths[locale]);
-  await assert.rejects(plan(f.commit(), publicState), /Public content must be withdrawn before deletion/);
+  await assert.rejects(plan(f.commit(), publicState), /Exposed content must be withdrawn before deletion/);
 
   f.writePair(paths, 'Published', 'draft: true\n');
   const withdrawn = f.commit();
@@ -382,7 +379,7 @@ test('unlisted is still public and cannot serve as withdrawal', async t => {
   const publicState = f.commit();
 
   f.writePair(paths, 'Published', 'unlisted: true\n');
-  await assert.rejects(plan(f.commit(), publicState), /Public content must be withdrawn before deletion/);
+  await assert.rejects(plan(f.commit(), publicState), /Exposed content must be withdrawn before deletion/);
 });
 
 test('a never-deployed draft and its rationale may be deleted directly', async t => {
@@ -410,4 +407,34 @@ test('a shared rationale cannot be deleted while another document still referenc
   f.commit();
   f.remove(capture);
   await assert.rejects(plan(f.commit(), f.initial), /Missing/);
+});
+
+
+test('a deployed unlisted article cannot be deleted without a deployed draft withdrawal', async t => {
+  const f = fixture(t);
+  const paths = articlePair('unlisted.md');
+  f.writePair(paths, 'Accessible by URL', 'unlisted: true\n');
+  const exposed = f.commit();
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), exposed), /Exposed content must be withdrawn before deletion/);
+
+  f.writePair(paths, 'Now private', 'draft: true\n');
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, exposed)).join('\n'), /Withdrawn article\/unlisted/);
+  for (const locale of locales) f.remove(paths[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('a deployed unlisted article cannot silently change route', async t => {
+  const f = fixture(t);
+  const paths = articlePair('preview-route.md');
+  f.writePair(paths, 'Accessible by URL', 'unlisted: true\nslug: original-route\n');
+  const exposed = f.commit();
+  f.writePair(paths, 'Same article', 'unlisted: true\nslug: changed-route\n');
+  await assert.rejects(plan(f.commit(), exposed), /Exposed article route changed/);
+});
+
+test('unchanged unsealed public pages are no longer exempt from PASS', async t => {
+  const f = fixture(t);
+  await assert.rejects(plan(f.initial, f.initial), /Missing .*page\/about\.md/);
 });

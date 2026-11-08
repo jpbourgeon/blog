@@ -60,9 +60,8 @@ Le gate valide les contenus publics présents dans le commit cible à partir de
 leurs sceaux PASS exacts, sans imposer la validité des révisions intermédiaires.
 La comparaison avec le dernier déploiement sert au contrôle des retraits et au
 relevé des changements à autoriser. **Dès le premier déploiement**, toute page
-ou tout article public doit disposer d'un sceau PASS ; aucune exception
-n'est accordée aux placeholders initiaux. Une page sans sceau déjà présente
-dans un déploiement antérieur reste tolérée uniquement si elle est inchangée.
+ou tout article public doit disposer d'un sceau PASS, y compris s'il est
+inchangé depuis un déploiement précédent. Aucune exception historique.
 
 L'historique Git fait foi pour les versions. Pagefind indexe les routes
 publiées du sitemap, et exclut les brouillons et les aperçus non listés.
@@ -74,7 +73,7 @@ publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 
 ## Retirer et supprimer
 
-Un contenu déployé publiquement ne peut pas être supprimé directement.
+Un contenu exposé par un déploiement (`public` ou `unlisted`) ne peut pas être supprimé directement.
 Après décision explicite de l'auteur, il est d'abord retiré de l'exposition :
 `draft: true` pour un article ; déplacement de la paire FR/EN d'une page
 vers `.42p/editorial-drafts/pages/`, hors des routes publiques.
@@ -83,6 +82,7 @@ L'état retiré doit être **déployé** avant de pouvoir supprimer les fichiers
 La suppression ultérieure retire les versions FR/EN et, si elle n'est pas
 partagée, la rationale-unit associée. Les contenus jamais déployés ou déjà
 retirés peuvent être effacés directement. Les références des objets conservés
-doivent rester valides. Aucun rapport de suppression ni sceau PASS supplémentaire
+doivent rester valides. Les aperçus `unlisted` restent accessibles par URL et
+sont signalés dans le relevé dès le premier déploiement. Aucun rapport de suppression ni sceau PASS supplémentaire
 n'est requis ; la décision de retrait figure dans le rapport de publication.
 Git conserve l'historique des fichiers supprimés.

@@ -188,7 +188,6 @@ export async function inventory(tree: Snapshot) {
   }
   const revisions = new Map<string, string>();
   for (const path of tree.paths(reviewsDir.slice(0, -1))) {
-    if (path.endsWith('.removal.md')) continue;
     const review = await readReview(tree, path);
     if (!review.baseline) continue;
     const candidate = pairKey(refPaths(review.candidates));

@@ -37,69 +37,53 @@ async function verifyPublished(target: Snapshot, published: Document) {
 
 export async function plan(target: Snapshot, deployed?: Snapshot) {
   const current = await inventory(target);
-  if (deployed) await inventory(deployed);
+  const baseline = deployed ? await inventory(deployed) : undefined;
 
   const classification: string[] = [];
-  const present = new Set<string>();
-  for (const pair of current.values()) {
-    const published = pair.fr;
-    if (published.source !== 'canonical' || published.visibility !== 'public') continue;
-    const paths = sourcePair(published);
-    present.add(published.kind + ':' + published.key);
-    const location = reviewPath(published.kind + '/' + canonicalSlug(published));
+  const exposed = new Set<string>();
+  for (const [identity, pair] of current) {
+    const document = pair.fr;
+    if (document.source !== 'canonical' || document.visibility === 'draft') continue;
+    exposed.add(identity);
+    const paths = sourcePair(document);
 
-    if (!target.blob(location)) {
-      // Only unchanged pages from an actual prior deployment may remain unsealed.
-      // First publication follows the ordinary PASS protocol for every public page.
-      requireThat(published.kind === 'page' && deployed &&
-        locales.every(locale => target.blob(paths[locale]) === deployed.blob(paths[locale])),
-        'Unsealed published content: ' + location);
-    } else {
-      await verifyPublished(target, published);
+    if (document.visibility === 'public') {
+      await verifyPublished(target, document);
     }
-    if (deployed && published.kind === 'article' &&
-        locales.every(locale => deployed.blob(paths[locale]) !== undefined)) {
-      for (const locale of locales) {
-        const previous = await readDocument(deployed.read(paths[locale]), paths[locale]);
-        const currentArticle = pair[locale];
-        requireThat(previous.visibility !== 'public' || previous.route === currentArticle.route,
-          'Public article route changed: ' + paths[locale]);
+
+    if (document.kind === 'article') {
+      const previous = baseline?.get(identity);
+      if (previous && previous.fr.visibility !== 'draft') {
+        for (const locale of locales) {
+          requireThat(previous[locale].route === pair[locale].route,
+            'Exposed article route changed: ' + paths[locale]);
+        }
       }
     }
+
     if (!deployed || locales.some(locale => deployed.blob(paths[locale]) !== target.blob(paths[locale]))) {
-      classification.push('Public ' + published.kind + '/' + canonicalSlug(published));
+      classification.push(document.visibility === 'unlisted'
+        ? 'Unlisted preview: ' + document.key
+        : 'Public ' + document.kind + '/' + canonicalSlug(document));
     }
   }
 
-  // The differential is informative except for withdrawals, where the
-  // identity of the last deployed bytes is required to prove authorization.
-  if (deployed) {
-    const baseline = await inventory(deployed);
-    for (const pair of baseline.values()) {
+  if (baseline) {
+    for (const [identity, pair] of baseline) {
       const previous = pair.fr;
-      if (previous.source !== 'canonical' || previous.visibility !== 'public') continue;
-      const key = previous.kind + ':' + previous.key;
-      if (present.has(key)) continue;
+      if (previous.source !== 'canonical' || previous.visibility === 'draft') continue;
+      if (exposed.has(identity)) continue;
       const paths = sourcePair(previous);
-      // Withdraw first, deploy the non-public state, then delete later.
-      // Pages use an off-site draft pair; articles use draft: true in place.
+      // Removal from a deployed site requires a non-exposed, still-present
+      // draft in the target. Only a subsequent deployment can delete it.
       const withdrawn = previous.kind === 'article'
-        ? current.get('article/canonical/' + previous.key)
+        ? current.get(identity)
         : current.get('page/candidate/' + previous.key);
       requireThat(withdrawn?.fr.visibility === 'draft' &&
         withdrawn.en.visibility === 'draft' &&
         (previous.kind !== 'page' || locales.every(locale => target.blob(paths[locale]) === undefined)),
-        'Public content must be withdrawn before deletion: ' + key);
+        'Exposed content must be withdrawn before deletion: ' + identity);
       classification.push('Withdrawn ' + previous.kind + '/' + canonicalSlug(previous));
-    }
-    // Preview entries are reported only; a preview is publicly reachable by
-    // its URL and must be separately authorized before deployment.
-    for (const pair of current.values()) {
-      if (pair.fr.kind !== 'article' || pair.fr.visibility !== 'unlisted') continue;
-      const paths = sourcePair(pair.fr);
-      if (locales.some(locale => target.blob(paths[locale]) !== deployed.blob(paths[locale]))) {
-        classification.push('Unlisted preview: ' + pair.fr.key);
-      }
     }
   }
   return classification.length ? classification : ['No public content changes'];

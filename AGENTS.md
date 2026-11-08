@@ -26,7 +26,7 @@ Articles et pages utilisent le même cycle. Ne jamais modifier directement
 une version publique avant son approbation : préparer une candidate distincte.
 Les drafts de pages vont dans `.42p/editorial-drafts/pages/{fr,en}/` ;
 les articles utilisent `draft: true` et, avec autorisation, `unlisted`.
-Un contenu déployé publiquement doit d'abord être retiré (article en `draft`,
+Un contenu déployé et exposé (`public` ou `unlisted`) doit d'abord être retiré (article en `draft`,
 page déplacée vers les drafts FR/EN), puis ce retrait doit être déployé
 avant toute suppression physique. Aucun rapport de suppression spécifique ;
 conserver les ressources et Captures encore référencées.
@@ -46,8 +46,7 @@ garantie éditoriale utile. Respecter les licences et les standards.
 Tester les changements pertinents. Les collections seront fondées sur les
 tags natifs ; ne pas créer de collection ou de composant prématurément.
 Le gate valide l'état public du commit cible ; le différentiel avec le dernier
-déploiement sert aux retraits et au relevé des changements. Le premier
-déploiement exige un PASS pour tout contenu public, sans exception d'amorçage. Le déploiement
+déploiement sert aux retraits et au relevé des changements. Tout déploiement exige un PASS pour les contenus publics, sans exception. Le déploiement
 public reste manuel, après gate indépendant sur le commit exact ;
 un push ou une PR ne déploie jamais. Préserver les URL canoniques, les
 traductions et l'exclusion des brouillons/aperçus de Pagefind.
