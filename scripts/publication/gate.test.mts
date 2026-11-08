@@ -74,7 +74,7 @@ test('a page and an article each require a matching PASS for the published state
 test('a public page edit without a previously committed PASS is rejected', async t => {
   const f = fixture(t);
   f.write('src/pages/about.md', '---\ntitle: About\n---\n# Changed without approval\n');
-  await assert.rejects(plan(f.commit(), f.initial), /Unsealed published content/);
+  await assert.rejects(plan(f.commit(), f.initial), /Missing .*editorial-reviews\/page\/about\.md/);
 });
 
 
@@ -287,7 +287,7 @@ test('a published article keeps its FR/EN route across revisions', async t => {
   const replacement = await identities(revised, paths);
   f.report({...replacement.data, result: 'PASS'});
   for (const locale of locales) f.write(paths[locale], replacement.projected[locale].bytes);
-  await assert.rejects(plan(f.commit(), deployed), /Public article route changed/);
+  await assert.rejects(plan(f.commit(), deployed), /Exposed article route changed/);
 });
 
 test('an article revision preserving its FR/EN route remains publishable', async t => {
@@ -311,7 +311,7 @@ test('an article revision preserving its FR/EN route remains publishable', async
 
 test('first deployment refuses an unsealed public placeholder', async t => {
   const f = fixture(t);
-  await assert.rejects(plan(f.initial), /Unsealed published content: .*page\/about\.md/);
+  await assert.rejects(plan(f.initial), /Missing .*editorial-reviews\/page\/about\.md/);
 });
 
 test('first deployment accepts a public page verified through the normal workflow', async t => {
