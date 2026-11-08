@@ -309,7 +309,7 @@ test('a published article keeps its FR/EN route across revisions', async t => {
   const deployed = f.commit();
 
   // A valid final seal alone must not authorize a change to an existing URL.
-  f.writePair(paths, 'Revised version', 'slug: changed-route\n');
+  f.writePair(paths, 'Revised version', 'draft: true\nslug: changed-route\n');
   const revised = f.commit();
   const replacement = await identities(revised, paths);
   f.report({...replacement.data, result: 'PASS'});
@@ -320,14 +320,14 @@ test('a published article keeps its FR/EN route across revisions', async t => {
 test('an article revision preserving its FR/EN route remains publishable', async t => {
   const f = fixture(t);
   const paths = articlePair('stable.md');
-  f.writePair(paths, 'First version', 'slug: permanent-route\n');
+  f.writePair(paths, 'First version', 'draft: true\nslug: permanent-route\n');
   const draft = f.commit();
   const first = await identities(draft, paths);
   f.report({...first.data, result: 'PASS'});
   for (const locale of locales) f.write(paths[locale], first.projected[locale].bytes);
   const deployed = f.commit();
 
-  f.writePair(paths, 'Updated version', 'slug: permanent-route\n');
+  f.writePair(paths, 'Updated version', 'draft: true\nslug: permanent-route\n');
   const revised = f.commit();
   const replacement = await identities(revised, paths);
   f.report({...replacement.data, result: 'PASS'});
