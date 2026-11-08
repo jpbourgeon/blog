@@ -59,8 +59,10 @@ produit les octets à promouvoir pour un rapport PASS autorisé.
 Le gate valide les contenus publics présents dans le commit cible à partir de
 leurs sceaux PASS exacts, sans imposer la validité des révisions intermédiaires.
 La comparaison avec le dernier déploiement sert au contrôle des retraits et au
-relevé des changements à autoriser. Les anciennes pages publiques sans sceau
-ne peuvent rester que si elles sont inchangées.
+relevé des changements à autoriser. **Dès le premier déploiement**, toute page
+ou tout article public doit disposer d'un sceau PASS ; aucune exception
+n'est accordée aux placeholders initiaux. Une page sans sceau déjà présente
+dans un déploiement antérieur reste tolérée uniquement si elle est inchangée.
 
 L'historique Git fait foi pour les versions. Pagefind indexe les routes
 publiées du sitemap, et exclut les brouillons et les aperçus non listés.

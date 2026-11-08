@@ -69,10 +69,10 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     const location = reviewPath(published.kind + '/' + canonicalSlug(published));
 
     if (!target.blob(location)) {
-      // Pre-protocol permanent pages have no editorial seal. They remain valid
-      // only unchanged; all new and modified public content needs a PASS.
-      requireThat(published.kind === 'page' &&
-        (!deployed || locales.every(locale => target.blob(paths[locale]) === deployed.blob(paths[locale]))),
+      // Only unchanged pages from an actual prior deployment may remain unsealed.
+      // First publication follows the ordinary PASS protocol for every public page.
+      requireThat(published.kind === 'page' && deployed &&
+        locales.every(locale => target.blob(paths[locale]) === deployed.blob(paths[locale])),
         'Unsealed published content: ' + location);
     } else {
       await verifyPublished(target, published);

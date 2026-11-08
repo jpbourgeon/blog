@@ -334,3 +334,29 @@ test('an article revision preserving its FR/EN route remains publishable', async
   for (const locale of locales) f.write(paths[locale], replacement.projected[locale].bytes);
   assert.match((await plan(f.commit(), deployed)).join('\n'), /Public article\/permanent-route/);
 });
+
+
+test('first deployment refuses an unsealed public placeholder', async t => {
+  const f = fixture(t);
+  await assert.rejects(plan(f.initial), /Unsealed published content: .*page\/about\.md/);
+});
+
+test('first deployment accepts a public page verified through the normal workflow', async t => {
+  const f = fixture(t);
+  const candidate = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  f.writePair(candidate, 'Reviewed introduction');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, candidate, canonical);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(canonical[locale], projected[locale].bytes);
+    f.remove(candidate[locale]);
+  }
+  assert.match((await plan(f.commit())).join('\n'), /Public page\/about/);
+});
+
+test('an unchanged legacy page may remain unsealed after a deployment', async t => {
+  const f = fixture(t);
+  assert.deepEqual(await plan(f.initial, f.initial), ['No public content changes']);
+});

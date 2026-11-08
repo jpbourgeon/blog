@@ -42,7 +42,8 @@ garantie éditoriale utile. Respecter les licences et les standards.
 Tester les changements pertinents. Les collections seront fondées sur les
 tags natifs ; ne pas créer de collection ou de composant prématurément.
 Le gate valide l'état public du commit cible ; le différentiel avec le dernier
-déploiement sert aux retraits et au relevé des changements. Le déploiement
+déploiement sert aux retraits et au relevé des changements. Le premier
+déploiement exige un PASS pour tout contenu public, sans exception d'amorçage. Le déploiement
 public reste manuel, après gate indépendant sur le commit exact ;
 un push ou une PR ne déploie jamais. Préserver les URL canoniques, les
 traductions et l'exclusion des brouillons/aperçus de Pagefind.
