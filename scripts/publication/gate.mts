@@ -1,8 +1,8 @@
 import {
   type Document, articlePair, locales, normalize, pagePair,
-  readDocument, readMarkdown, record, requireThat, sha256,
+  readDocument, requireThat, sha256,
 } from './content.mts';
-import {type Snapshot, gitSha} from './git.mts';
+import {type Snapshot} from './git.mts';
 import {canonicalSlug, inventory, readReview, reviewPath} from './review.mts';
 
 function sourcePair(document: {kind: string; key: string}) {
@@ -33,26 +33,6 @@ async function verifyPublished(target: Snapshot, published: Document) {
       'Normative reference differs from verified evidence: ' + ref.path);
   }
   return location;
-}
-
-// The only normative use of the deployed state: prevent silent withdrawals.
-async function verifyRemoval(target: Snapshot, deployed: Snapshot, paths: {fr: string; en: string}, key: string) {
-  const path = reviewPath('page/' + key.replace(/\.mdx?$/, '') + '.removal');
-  const {fields, body} = await readMarkdown(target.read(path), path);
-  requireThat(Object.keys(fields).sort().join(',') === 'action,baseline,reason,result' &&
-    fields.action === 'remove' && fields.result === 'PASS' &&
-    typeof fields.reason === 'string' && fields.reason.trim().length >= 10 &&
-    body.includes('Human editorial approval: not granted by this report') &&
-    record(fields.baseline) && Object.keys(fields.baseline).sort().join(',') === 'en,fr',
-    'Invalid page withdrawal report: ' + path);
-  const baseline = fields.baseline as {fr: string; en: string};
-  for (const locale of locales) {
-    requireThat(gitSha.test(baseline[locale]) &&
-      deployed.blob(paths[locale]) === baseline[locale] &&
-      target.blob(paths[locale]) === undefined,
-      'Removed page does not match reviewed FR/EN baseline: ' + paths[locale]);
-  }
-  return 'Reviewed page withdrawal: ' + key;
 }
 
 export async function plan(target: Snapshot, deployed?: Snapshot) {
@@ -101,11 +81,16 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
       const key = previous.kind + ':' + previous.key;
       if (present.has(key)) continue;
       const paths = sourcePair(previous);
-      if (previous.kind === 'page' && locales.every(locale => target.blob(paths[locale]) === undefined)) {
-        classification.push(await verifyRemoval(target, deployed, paths, previous.key));
-      } else {
-        throw new Error('Public article withdrawal or unpublished canonical content requires a separate decision: ' + key);
-      }
+      // Withdraw first, deploy the non-public state, then delete later.
+      // Pages use an off-site draft pair; articles use draft: true in place.
+      const withdrawn = previous.kind === 'article'
+        ? current.get('article/canonical/' + previous.key)
+        : current.get('page/candidate/' + previous.key);
+      requireThat(withdrawn?.fr.visibility === 'draft' &&
+        withdrawn.en.visibility === 'draft' &&
+        (previous.kind !== 'page' || locales.every(locale => target.blob(paths[locale]) === undefined)),
+        'Public content must be withdrawn before deletion: ' + key);
+      classification.push('Withdrawn ' + previous.kind + '/' + canonicalSlug(previous));
     }
     // Preview entries are reported only; a preview is publicly reachable by
     // its URL and must be separately authorized before deployment.

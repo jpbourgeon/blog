@@ -72,10 +72,17 @@ publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 [Contenus : CC BY-NC-ND 4.0](LICENSE).
 [Code et composants du site : modalités complémentaires](LICENSE-ADDITIONAL.md).
 
-Le retrait d'une page pérenne exige une justification versionnée dans
-`.42p/editorial-reviews/page/<slug>.removal.md` (décision de retrait,
-empreintes Git des deux pages d'origine, verdict PASS et motif). Le
-rapport est vérifié indépendamment et le retrait reçoit une autorisation
-éditoriale explicite, sans dépendre de la granularité des PR. En cas de squash
-& merge, retrait et rapport peuvent figurer dans un même commit : le gate
-contrôle les empreintes des deux pages supprimées et le verdict du rapport.
+## Retirer et supprimer
+
+Un contenu déployé publiquement ne peut pas être supprimé directement.
+Après décision explicite de l'auteur, il est d'abord retiré de l'exposition :
+`draft: true` pour un article ; déplacement de la paire FR/EN d'une page
+vers `.42p/editorial-drafts/pages/`, hors des routes publiques.
+L'état retiré doit être **déployé** avant de pouvoir supprimer les fichiers.
+
+La suppression ultérieure retire les versions FR/EN et, si elle n'est pas
+partagée, la rationale-unit associée. Les contenus jamais déployés ou déjà
+retirés peuvent être effacés directement. Les références des objets conservés
+doivent rester valides. Aucun rapport de suppression ni sceau PASS supplémentaire
+n'est requis ; la décision de retrait figure dans le rapport de publication.
+Git conserve l'historique des fichiers supprimés.

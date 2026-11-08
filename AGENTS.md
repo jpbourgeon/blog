@@ -26,6 +26,10 @@ Articles et pages utilisent le même cycle. Ne jamais modifier directement
 une version publique avant son approbation : préparer une candidate distincte.
 Les drafts de pages vont dans `.42p/editorial-drafts/pages/{fr,en}/` ;
 les articles utilisent `draft: true` et, avec autorisation, `unlisted`.
+Un contenu déployé publiquement doit d'abord être retiré (article en `draft`,
+page déplacée vers les drafts FR/EN), puis ce retrait doit être déployé
+avant toute suppression physique. Aucun rapport de suppression spécifique ;
+conserver les ressources et Captures encore référencées.
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
 

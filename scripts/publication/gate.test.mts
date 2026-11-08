@@ -101,25 +101,8 @@ test('unlisted article previews are reported without being published', async t =
   assert.match((await plan(preview, f.initial)).join('\n'), /Unlisted preview/);
 });
 
-test('an approved page withdrawal matches the deployed FR/EN blobs', async t => {
-  const f = fixture(t);
-  const pages = pagePair('about.md');
-  const baseline = {fr: f.initial.blob(pages.fr), en: f.initial.blob(pages.en)};
-  const approval = '---\naction: remove\nresult: PASS\nreason: Explicit editorial withdrawal of this obsolete page\nbaseline:\n  fr: ' +
-    baseline.fr + '\n  en: ' + baseline.en + '\n---\n' + approvalNotice + '\n';
-  f.write('.42p/editorial-reviews/page/about.removal.md', approval);
-  for (const locale of locales) f.remove(pages[locale]);
-  const removed = f.commit();
-  assert.match((await plan(removed, f.initial)).join('\n'), /Reviewed page withdrawal/);
-});
 
 
-test('page removal without a report is rejected', async t => {
-  const f = fixture(t);
-  const pages = pagePair('about.md');
-  for (const locale of locales) f.remove(pages[locale]);
-  await assert.rejects(plan(f.commit(), f.initial), /Missing/);
-});
 
 test('a reviewed permanent-page revision preserves its public route', async t => {
   const f = fixture(t);
@@ -165,17 +148,6 @@ test('executable MDX is rejected even when the FR/EN drafts agree', async t => {
   }
 });
 
-test('withdrawal approval must bind both exact published Git blobs', async t => {
-  const f = fixture(t);
-  const paths = pagePair('about.md');
-  const approval = '---\naction: remove\nresult: PASS\nreason: Explicit editorial withdrawal of the current page\nbaseline:\n  fr: ' +
-    'a'.repeat(40) + '\n  en: ' + 'b'.repeat(40) +
-    '\n---\n' + approvalNotice + '\n';
-  f.write('.42p/editorial-reviews/page/about.removal.md', approval);
-  f.commit();
-  for (const locale of locales) f.remove(paths[locale]);
-  await assert.rejects(plan(f.commit(), f.initial), /Removed page does not match reviewed FR\/EN baseline/);
-});
 
 
 test('several revisions of the same page use only the final PASS even if V2 was never deployed', async t => {
@@ -281,7 +253,7 @@ test('normative references must remain identical to the verified blobs', async t
   await assert.rejects(plan(f.commit(), f.initial), /Normative reference differs from verified evidence/);
 });
 
-test('a public page cannot change its canonical route by moving files without withdrawal approval', async t => {
+test('a public page cannot be replaced by a new route without withdrawal', async t => {
   const f = fixture(t);
   const old = pagePair('about.md');
   const newer = pageDraftPair('different.md');
@@ -294,7 +266,7 @@ test('a public page cannot change its canonical route by moving files without wi
     f.remove(old[locale]);
     f.remove(newer[locale]);
   }
-  await assert.rejects(plan(f.commit(), f.initial), /Missing .*removal\.md/);
+  await assert.rejects(plan(f.commit(), f.initial), /Public content must be withdrawn before deletion/);
 });
 
 
@@ -359,4 +331,83 @@ test('first deployment accepts a public page verified through the normal workflo
 test('an unchanged legacy page may remain unsealed after a deployment', async t => {
   const f = fixture(t);
   assert.deepEqual(await plan(f.initial, f.initial), ['No public content changes']);
+});
+
+
+test('a deployed article must be withdrawn as draft before deletion', async t => {
+  const f = fixture(t);
+  const paths = articlePair('withdraw.md');
+  f.writePair(paths, 'Published', 'draft: true\n');
+  const candidate = f.commit();
+  const first = await identities(candidate, paths);
+  f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], first.projected[locale].bytes);
+  const publicState = f.commit();
+
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), publicState), /Public content must be withdrawn before deletion/);
+
+  f.writePair(paths, 'Published', 'draft: true\n');
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, publicState)).join('\n'), /Withdrawn article\/withdraw/);
+
+  for (const locale of locales) f.remove(paths[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('a deployed page must move to an off-site draft before deletion', async t => {
+  const f = fixture(t);
+  const pages = pagePair('about.md');
+  const draft = pageDraftPair('about.md');
+
+  for (const locale of locales) {
+    f.write(draft[locale], '---\ntitle: About\ndraft: true\n---\n# About\n');
+    f.remove(pages[locale]);
+  }
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, f.initial)).join('\n'), /Withdrawn page\/about/);
+
+  for (const locale of locales) f.remove(draft[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('unlisted is still public and cannot serve as withdrawal', async t => {
+  const f = fixture(t);
+  const paths = articlePair('preview.md');
+  f.writePair(paths, 'Published');
+  const candidate = f.commit();
+  const {data, projected} = await identities(candidate, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], projected[locale].bytes);
+  const publicState = f.commit();
+
+  f.writePair(paths, 'Published', 'unlisted: true\n');
+  await assert.rejects(plan(f.commit(), publicState), /Public content must be withdrawn before deletion/);
+});
+
+test('a never-deployed draft and its rationale may be deleted directly', async t => {
+  const f = fixture(t);
+  const paths = articlePair('temporary.md');
+  const capture = '.42p/rationale-units/temporary/capture.md';
+  f.write(capture, '# Temporary idea\n');
+  for (const locale of locales) {
+    f.write(paths[locale], '---\ntitle: Temporary\ndraft: true\nrationale: ' + capture + '\n---\n# Working copy\n');
+  }
+  f.commit();
+  for (const locale of locales) f.remove(paths[locale]);
+  f.remove(capture);
+  assert.deepEqual(await plan(f.commit(), f.initial), ['No public content changes']);
+});
+
+test('a shared rationale cannot be deleted while another document still references it', async t => {
+  const f = fixture(t);
+  const capture = '.42p/rationale-units/shared/capture.md';
+  const paths = articlePair('retained.md');
+  f.write(capture, '# Shared knowledge\n');
+  for (const locale of locales) {
+    f.write(paths[locale], '---\ntitle: Retained\ndraft: true\nrationale: ' + capture + '\n---\n# Keep me\n');
+  }
+  f.commit();
+  f.remove(capture);
+  await assert.rejects(plan(f.commit(), f.initial), /Missing/);
 });

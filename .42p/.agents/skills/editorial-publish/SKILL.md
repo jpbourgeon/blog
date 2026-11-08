@@ -31,12 +31,11 @@ must cover the exact set of public changes since the last deployment.
 Merging a PR does not itself grant editorial publication approval. No push
 or PR may deploy. Confirm the CI and Pages outcome before reporting a live URL.
 
-A permanent-page withdrawal requires an explicit author decision and a
-versioned report at `.42p/editorial-reviews/page/<slug>.removal.md`:
-`action: remove`, `result: PASS`, `reason` (substantive explanation), and
-`baseline: {fr: <published Git blob SHA>, en: <published Git blob SHA>}`.
-The report body must include `Human editorial approval: not granted by this report`.
-Verify the report and obtain explicit human authorization for the withdrawal,
-independently of how changes are grouped into PRs. Squash & merge may put
-report and withdrawal in one authoritative commit; the gate binds both
-removed FR/EN Git blobs to that report. PASS is not human publication consent.
+To withdraw any publicly deployed content, obtain explicit author approval
+for the visibility change and include it in the manual deployment decision.
+Articles become `draft: true` in both locales; move page files to their FR/EN
+off-site drafts with `draft: true`. Do not delete a publicly deployed item in
+the same deployment. After the withdrawn state has been deployed, the document
+pair and any unshared rationale-unit or resources may be deleted without a
+separate editorial PASS or deletion report. Never delete shared references.
+`unlisted` remains publicly accessible and is not a withdrawal.
