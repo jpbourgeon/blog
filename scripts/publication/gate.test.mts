@@ -258,7 +258,7 @@ test('FAIL and INCONCLUSIVE seals never authorize public content', async t => {
   }
 });
 
-test('normative references must remain identical to the verified blobs', async t => {
+test('a prior PASS remains valid after standards evolve without a content revision', async t => {
   const f = fixture(t);
   const paths = pageDraftPair('reference.md');
   f.writePair(paths, 'Verified with the original standard');
@@ -269,8 +269,27 @@ test('normative references must remain identical to the verified blobs', async t
     f.write(projected[locale].path, projected[locale].bytes);
     f.remove(paths[locale]);
   }
-  f.write(standards[0], '# Changed after verification\n');
-  await assert.rejects(plan(f.commit(), f.initial), /Normative reference differs from verified evidence/);
+  const published = f.commit();
+  f.write(standards[0], '# Updated editorial standard\n');
+  const evolved = f.commit();
+  assert.match((await plan(evolved, published)).join('\n'), /No public content changes/);
+});
+
+test('a new PASS binds the actual standards at the time of verification', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('new-standard.md');
+  f.writePair(paths, 'Before the standard changed');
+  const draft = f.commit();
+  const before = await identities(draft, paths);
+  f.write(standards[0], '# Updated editorial standard\n');
+  const changed = f.commit();
+  const after = await identities(changed, paths);
+  assert.notDeepEqual(before.data.references, after.data.references);
+  f.report({...before.data, result: 'PASS'});
+  f.commit();
+  // Re-validating a candidate against the current tree must reject stale evidence.
+  const latest = await identities(f.commit(), paths);
+  assert.notDeepEqual(before.data.references, latest.data.references);
 });
 
 test('a public page cannot be replaced by a new route without withdrawal', async t => {

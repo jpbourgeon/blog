@@ -33,6 +33,9 @@ and this exact notice:
 `Human editorial approval: not granted by this report`
 
 Commit the report **before** public promotion. Then run
-`npm run publication -- check <report>`. A change to content identity,
-normative references or revision baseline invalidates PASS. The verifier
-does not modify candidates or grant approval. Present the result to the author.
+`npm run publication -- check <report>`. Before promotion, a change to
+content identity, current normative references or revision baseline requires
+a new verification. Once the exact FR/EN content is published, references
+remain historical evidence: later standard or Capture edits do not expire
+the existing PASS. The verifier does not modify candidates or grant approval.
+Present the result to the author.

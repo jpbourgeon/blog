@@ -28,10 +28,6 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
         'Temporary candidate left in publication: ' + candidate);
     }
   }
-  for (const ref of report.references) {
-    requireThat(target.blob(ref.path) === ref.git_blob_sha,
-      'Normative reference differs from verified evidence: ' + ref.path);
-  }
   return location;
 }
 

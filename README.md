@@ -58,6 +58,9 @@ produit les octets à promouvoir pour un rapport PASS autorisé.
 
 Le gate valide les contenus publics présents dans le commit cible à partir de
 leurs sceaux PASS exacts, sans imposer la validité des révisions intermédiaires.
+Les empreintes des standards et de la Capture éventuelle sont des preuves
+historiques : leur évolution ultérieure n'invalide pas un PASS existant.
+Une nouvelle vérification utilise les versions courantes des références.
 La comparaison avec le dernier déploiement sert au contrôle des retraits et au
 relevé des changements à autoriser. **Dès le premier déploiement**, toute page
 ou tout article public doit disposer d'un sceau PASS, y compris s'il est
