@@ -42,8 +42,8 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run test:publication
-      - name: Exercise the publication gate against the PR base
-        run: npm run publication -- gate "$(git merge-base origin/main HEAD)"
+      - name: Validate proposed public state without assuming a deployment
+        run: npm run publication -- gate none
       - run: npm run build
 
   gate:
