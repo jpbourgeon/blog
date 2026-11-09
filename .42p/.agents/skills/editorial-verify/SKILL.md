@@ -1,24 +1,41 @@
----
-name: editorial-verify
-description: Verify bidirectional semantic coverage between a blog article and its main Capture when applicable, and check fidelity, both standards and FR/EN parity. Use for pre-publication review or after substantive edits; write a version-bound editorial review without approving or publishing the article.
----
-
 # editorial-verify
 
-Examine the candidate article independently of its authoring pass. Verification is evidence for an authorial decision, not that decision.
+Read `AGENTS.md`, both standards, exact FR/EN candidates, established author
+decisions, relevant independent sources, and the main Capture if applicable.
+A Capture is not independent evidence. Evaluate pages and articles identically.
 
-1. Read `AGENTS.md`, `standards/editorial.md`, `standards/voice.md`, the exact FR/EN candidates and the main Capture, when applicable. Check identical provenance in FR/EN, the cardinality for the logical article, and the shape and validity of all declared Capture paths against `AGENTS.md`. Read contextual Captures as useful for context or source discovery. Inspect available original sources and author decisions when necessary to verify facts, authorial intent and authority. A Capture is non-authoritative and must not corroborate itself. Where a Capture is applicable, only the main Capture defines the scope of coverage.
-2. Resolve initial publication versus revision and the exact FR/EN candidate paths, canonical target paths, effective URLs and (for a revision) unchanged canonical baselines. With the **one tested shared** normalization/projection implementation from `AGENTS.md`, record `SHA256(N(candidate))` and `SHA256(N(P(candidate, baseline)))` for each language. `N` excludes only top-level `draft`/`unlisted`. Temporary and canonical `slug` values remain significant in their respective identities, as does the `rationaleContext` field. `P` may remove visibility, restore the prior canonical slug and target path, but must make no other editorial repairs. Use Git blob IDs for the two standards, the main Capture when applicable, and (for revisions) canonical baselines. Contextual Capture blobs do not bind the verdict. Do not invent additional source-version hashes. Confirm effective routes, relative assets/links and that no unapproved metadata is altered. Missing either locale or reproducible target bytes makes publication readiness `INCONCLUSIVE` unless a defect already warrants `FAIL`. From a clean checkout of the exact candidate commit, run `npm run --silent publication -- prepare <fr> <en> [<canonical-fr> <canonical-en>]` to obtain the report path and technical frontmatter. After the editorial review has been recorded and committed, run `npm run --silent publication -- check <report-path>` to validate its technical binding.
-3. Examine fidelity to the author's established intent independently of coverage, even when no Capture applies. Check adopted positions and their reasoning, scope, conditions, uncertainty and authority against the available evidence. Distinguish limitations in source evidence from established mismatches. Check both standards separately.
-   - **Editorial standard:** accuracy and attribution, separation of fact and inference, meaningful structure, intelligibility, historical context, terminology, functioning links and code examples to the extent verifiable. Do not judge whether the article is worth publishing, sufficiently original, impactful or useful: these are the author's editorial choices.
-   - **Voice standard:** personal and measured expression, natural connected prose, proportionate abstraction, and no invented experience, conviction, or promotional posture.
-4. Check substantive FR/EN parity, including claim strength, exceptions, technical examples, outbound references, provenance, effective canonical URLs and visibility metadata. If a requested preliminary review examines only one locale, state the limited scope. It cannot certify bilingual readiness.
-5. For an article with a main Capture, perform two separate, exhaustive semantic checks for each locale. Use stable handles or precise passage locators for the mappings. Assess meaning, modality and authority without requiring matching words or claiming an algorithmic proof.
-   - **Capture → article (completeness).** Read the main Capture in full and inventory all material components, including prose outside explicit handles. Include adopted positions and conclusions, arguments, criteria, constraints, hypotheses, material uncertainties and open questions, alternatives and their statuses, conditions, exceptions, limits, trade-offs, dependencies and distinctions that affect the reasoning. Map each component to passages in both versions and check that they preserve its meaning and strength. An unselected alternative must retain its status, a hypothesis its uncertainty, and an unadopted proposal its provisional status. Every material component must be represented. If a material component is intentionally omitted, reconcile the scope of the main Capture or complete the article. Account for identifiers, source locators, provenance and internal working mechanisms in the report, with their function and treatment. They need not be reproduced in the article. Preserve any material meaning they carry.
-   - **Article → Capture (conformity).** Read each version in full. Inventory every substantive notion, assertion and position and map each to its basis in the main Capture. Flag new arguments, conclusions presented as adopted without support, invented alternatives, restrictions or personal experiences, changed certainty, context-only extrapolations and substantive additions made in translation. Allow editorial clarifications and sourced supporting facts only when they do not expand the substantive scope. Independent sources substantiate facts. They cannot supply an otherwise missing substantive basis. If the author wants to retain a legitimate new notion, return to `42p-capture` to reconcile it explicitly, then rerun writing and independent verification.
-6. Record `PASS`, `FAIL` or `INCONCLUSIVE` for each applicable axis. For coverage, `PASS` requires a complete examination in both directions in both locales, faithful correspondence for every material element and sufficient evidence. A missing, distorted, contradictory or unsupported material element warrants `FAIL`. A material correspondence that cannot be established from the available evidence warrants `INCONCLUSIVE` unless a confirmed defect already warrants `FAIL`. Missing evidence never warrants `PASS`. For an article with no applicable Capture, coverage is `N/A` and all other checks still apply. Overall `PASS` requires all applicable axes to pass, including fidelity, both standards, FR/EN parity, references and technical readiness. Cite passages and evidence for material findings.
-7. Write a compact report at `.42p/editorial-reviews/<canonical-article-slug>.md`. Its machine-readable YAML frontmatter records `article`, `mode` (`new`/`revision`), `candidates.fr/en` (`path`, `content_sha256`), `targets.fr/en` (`path`, `content_sha256`), `references[]` (`path`, `git_blob_sha` for the two standards and the main Capture when applicable) and overall `result` (`PASS`/`FAIL`/`INCONCLUSIVE`). For revisions include `baseline.fr/en` (`path`, `git_blob_sha`). In the body identify the main Capture or its absence, show both coverage mappings for both locales, record evidence, material defects, uncertainties, justifications, and verdicts by axis and overall. Include `Human editorial approval: not granted by this report`. Keep the mappings auditable without a numerical quality score. A change to normalized candidate content (including the `rationaleContext` list), the canonical projection, a normative reference blob or a baseline blob makes the report stale. A permitted visibility-only change keeps the review valid. An edit to a contextual Capture's contents does not automatically make it stale. Keep only the useful current report and use Git for its history. Commit a publication-ready `PASS` report **before** the publication commit. The independent deployment gate checks its prior existence and integrity without treating it as authorization or repeating the semantic assessment.
-8. Present the report and material findings to the author for an explicit decision concerning the exact FR/EN candidate and projected target versions. The report is evidence, not a request that an agent approve its own output; `PASS` does not institute publication authority.
-9. Do not change the article, sources, standards, canonical baseline or visibility while verifying. Report blockers and the exact scope of conclusions. Do not ask the author to perform routine checks.
+Verify factual support, fidelity to the author's intent, both standards,
+bilingual semantic parity, links and technical publication readiness.
+When a main Capture exists, map every material component **Capture → content**
+(completeness) and **content → Capture** (no unsupported substantive additions),
+in both languages. Context Captures supply references, not additional coverage.
 
-The report establishes only the correspondence and quality supported by the examined evidence. It does not institute a decision, prove unexamined source truth, or authorize deployment.
+Record axis-level `PASS`, `FAIL` or `INCONCLUSIVE`. An overall `PASS`
+requires all applicable axes to pass; missing material evidence cannot PASS.
+A content without a main Capture has `N/A` for Capture coverage.
+
+For exact source identities, from a clean commit run:
+
+```sh
+npm run publication -- prepare <candidate-fr> <candidate-en> [<canonical-fr> <canonical-en>]
+```
+
+The resulting report frontmatter has `content` (`article/<slug>` or
+`page/<slug>`), `mode` (`new`/`revision`), FR/EN `candidates` and
+`targets` (path and normalized content SHA-256), `references` (Git blob
+IDs for both standards and optional main Capture), optional `baseline`
+(published FR/EN blob IDs), and overall `result`.
+Write the report to `.42p/editorial-reviews/<type>/<slug>.md`.
+
+Its body provides sources, mapped evidence, categorical verdicts, limitations,
+and this exact notice:
+
+`Human editorial approval: not granted by this report`
+
+Commit the report **before** public promotion. Then run
+`npm run publication -- check <report>`. Before promotion, a change to
+content identity, current normative references or revision baseline requires
+a new verification. Once the exact FR/EN content is published, references
+remain historical evidence: later standard or Capture edits do not expire
+the existing PASS. The verifier does not modify candidates or grant approval.
+Present the result to the author.

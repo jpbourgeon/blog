@@ -28,20 +28,7 @@ export class Repository {
     return new Snapshot(this, commit);
   }
 
-  changed(from: string, to: string): string[] {
-    return this.paths('diff', '--name-only', '-z', '--no-renames', from, to, '--');
-  }
 
-  parent(commit: string): string {
-    return this.text('rev-parse', '--verify', `${commit}^1`);
-  }
-
-  firstParentRange(from: string, to: string): string[] {
-    const history = this.text('rev-list', '--first-parent', '--reverse', `${from}..${to}`).split('\n').filter(Boolean);
-    requireThat(from === to || (history.length && this.parent(history[0]) === from),
-      'Last deployed commit is not on the selected first-parent history');
-    return history;
-  }
 }
 
 export class Snapshot {

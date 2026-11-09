@@ -5,220 +5,481 @@ import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import test, {type TestContext} from 'node:test';
 import {stringify} from 'yaml';
-import {articlePair, type Pair, locales, pagePaths, standards} from './content.mts';
-import {plan} from './gate.mts';
+import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
-import {identities, inventory, readReview, reviewPath, type Review} from './review.mts';
+import {identities, matchReview, reviewPath, type Review} from './review.mts';
+import {plan} from './gate.mts';
 
-const canonical = articlePair('2026-11-06-article.md');
-const preview = articlePair('2026-11-06-preview.mdx');
-const main = '.42p/rationale-units/topic/capture.md';
-const context = '.42p/rationale-units/context/capture.md';
-const authority = 'Human editorial approval: not granted by this report';
-const note = 'Fixture evidence, independently constructed by the test.';
-
+const approvalNotice = 'Human editorial approval: not granted by this report';
 function fixture(t: TestContext) {
-  const dir = mkdtempSync(join(tmpdir(), 'blog-publication-'));
-  t.after(() => rmSync(dir, {recursive: true, force: true}));
-  execFileSync('git', ['init', '-q', '-b', 'main', dir]);
-  const repo = new Repository(dir);
-  repo.text('config', 'user.email', 'fixture@example.org');
-  repo.text('config', 'user.name', 'Test fixture');
-  const write = (path: string, content: string | Buffer) => {
-    mkdirSync(dirname(join(dir, path)), {recursive: true});
-    writeFileSync(join(dir, path), content);
-  };
-  const remove = (path: string) => rmSync(join(dir, path));
-  const commit = () => {
-    repo.text('add', '-A');
-    repo.text('commit', '-qm', 'Test state');
-    return repo.tree(repo.text('rev-parse', 'HEAD'));
-  };
-  for (const path of [...standards, ...pagePaths, main, context, '.github/workflows/pages.yml']) write(path, '# Fixture\n');
-  const baseline = commit();
-  function pair(paths: Pair<string>, options: {visibility?: string; provenance?: string; text?: string; slug?: string} = {}) {
-    for (const locale of locales) {
-      write(paths[locale], `---\ntitle: Example ${locale}\n${options.slug ? 'slug: ' + options.slug + '\n' : ''}` +
-        `${options.visibility ?? ''}${options.provenance ?? ''}---\n# Example\n\n${options.text ?? 'First version'} ${locale}.\n`);
-    }
+  const root = mkdtempSync(join(tmpdir(), 'editorial-'));
+  t.after(() => rmSync(root, {recursive: true, force: true}));
+  execFileSync('git', ['init', '-q', '-b', 'main', root]);
+  const repo = new Repository(root);
+  repo.text('config', 'user.email', 'test@example.org');
+  repo.text('config', 'user.name', 'Test');
+  function write(path: string, content: string | Buffer) {
+    mkdirSync(dirname(join(root, path)), {recursive: true});
+    writeFileSync(join(root, path), content);
   }
-  function writeReview(review: Review) {
-    const path = reviewPath(review.article);
-    write(path, `---\n${stringify(review)}---\n${note}\n\n${authority}\n`);
+  function remove(path: string) {rmSync(join(root, path));}
+  function commit() {
+    repo.text('add', '-A');
+    repo.text('commit', '-qm', 'State');
+    return repo.tree(repo.text('rev-parse', 'HEAD'));
+  }
+  for (const path of standards) write(path, '# Verified standard\n');
+  const about = pagePair('about.md');
+  for (const locale of locales) write(about[locale], '---\ntitle: About\n---\n# About\n');
+  const seed = commit();
+  const hash = sha256(normalize({fields: {title: 'About'}, body: '# About\n'}));
+  const candidate = pageDraftPair('about.md');
+  const signed: Review = {
+    content: 'page/about',
+    mode: 'new',
+    candidates: {
+      fr: {path: candidate.fr, content_sha256: hash},
+      en: {path: candidate.en, content_sha256: hash},
+    },
+    targets: {
+      fr: {path: about.fr, content_sha256: hash},
+      en: {path: about.en, content_sha256: hash},
+    },
+    references: standards.map(path => ({path, git_blob_sha: seed.requireBlob(path)})),
+    result: 'PASS',
+  };
+  write(reviewPath(signed.content), '---\n' + stringify(signed) +
+    '---\nVerified evidence\n\n' + approvalNotice + '\n');
+  const initial = commit();
+  function writePair(paths: Pair<string>, body: string, state = 'draft: true\n') {
+    for (const locale of locales) write(paths[locale],
+      '---\ntitle: Example\n' + state + '---\n# Example\n\n' + body + ' ' + locale + '\n');
+  }
+  function report(review: Review) {
+    const path = reviewPath(review.content);
+    write(path, '---\n' + stringify(review) + '---\nVerified evidence\n\n' + approvalNotice + '\n');
     return path;
   }
-  async function review(paths: Pair<string>, original?: Pair<string>, verdict: Review['result'] = 'PASS') {
-    const candidate = commit();
-    const {data, projected} = await identities(candidate, paths, original);
-    const path = writeReview({...data, result: verdict});
-    const checked = commit();
-    return {path, data, projected, checked};
-  }
-  return {repo, baseline, write, remove, commit, pair, review, writeReview};
+  return {repo, initial, write, remove, commit, writePair, report};
 }
 
-const withMain = `rationale: ${main}\n`;
-const withContext = withMain + `rationaleContext: [${context}]\n`;
-
-test('fresh exposure of a draft or preview and technical-only dispatch are distinguished', async t => {
+test('a page and an article each require a matching PASS for the published state', async t => {
   const f = fixture(t);
-  assert.equal((await plan(f.baseline, 'bootstrap')).articles.length, 0);
-  await assert.rejects(plan(f.baseline, 'publish'), /verified deployed commit/);
-  f.pair(canonical, {visibility: 'draft: true\n'});
+  const page = pageDraftPair('note.md');
+  f.writePair(page, 'New page');
   const draft = f.commit();
-  assert.equal((await plan(draft, 'publish', f.baseline)).articles.length, 0);
-  f.pair(canonical, {visibility: 'unlisted: true\n', provenance: withMain});
-  const first = f.commit();
-  assert.match((await plan(first, 'publish', draft)).classification[0], /First preview exposure/);
-  await assert.rejects(plan(first, 'bootstrap'), /exposed article/);
-  f.pair(canonical, {visibility: 'unlisted: true\n', provenance: withMain, text: 'New preview text'});
-  const update = f.commit();
-  assert.match((await plan(update, 'publish', first)).classification[0], /Updated preview/);
-  f.write('README.md', 'Technical-only change');
-  assert.deepEqual((await plan(f.commit(), 'publish', update)).classification, ['Only non-rendering files changed']);
-});
-
-test('initial bilingual publication binds an earlier review and permits changed context contents', async t => {
-  const f = fixture(t);
-  f.pair(canonical, {visibility: 'draft: true\n', provenance: withContext});
-  const {path, checked} = await f.review(canonical);
-  const report = await readReview(checked, path);
-  assert.deepEqual(report.references.map(ref => ref.path), [...standards, main]);
-  f.write(context, '# Later context');
-  f.pair(canonical, {visibility: 'unlisted: true\n', provenance: withContext});
-  f.commit();
-  f.pair(canonical, {provenance: withContext});
-  const promoted = f.commit();
-  f.write('README.md', 'Technical-only follow-up');
-  const latest = f.commit();
-  assert.equal((await plan(latest, 'publish', f.baseline)).articles.length, 2);
-  assert.equal((await plan(latest, 'publish', promoted)).articles.length, 2);
-  f.remove(context);
-  await assert.rejects(plan(f.commit(), 'publish', promoted), /Missing .*context/);
-});
-
-test('revision identity uses the real baseline and promotes both exact projections atomically', async t => {
-  const f = fixture(t);
-  f.pair(canonical, {provenance: withMain, slug: '/published'});
-  const deployed = f.commit();
-  f.pair(preview, {visibility: 'unlisted: true\n', provenance: withMain, slug: '/preview', text: 'Second version'});
-  const unbound = f.commit();
-  await assert.rejects(inventory(unbound), /unbound/);
-  const {data, projected} = await identities(unbound, preview, canonical);
-  f.writeReview({...data, result: 'INCONCLUSIVE'});
-  const prepared = f.commit();
-  assert.equal((await plan(prepared, 'publish', deployed)).articles.length, 4);
-  f.writeReview({...data, result: 'PASS'});
+  const data = await identities(draft, page);
+  const location = f.report({...data.data, result: 'PASS'});
   f.commit();
   for (const locale of locales) {
-    f.write(canonical[locale], projected[locale].bytes);
-    f.remove(preview[locale]);
+    f.write(data.projected[locale].path, data.projected[locale].bytes);
+    f.remove(page[locale]);
   }
-  const target = f.commit();
-  const final = await plan(target, 'publish', deployed);
-  assert.deepEqual(final.articles.map(article => article.route).sort(), ['/blog/en/published/', '/blog/published/']);
-});
+  const published = f.commit();
+  assert.match((await plan(published, f.initial)).join('\n'), /Public page\/note/);
+  assert.match(location, /editorial-reviews\/page\/note.md/);
 
-for (const variant of [
-  'missing', 'fail', 'inconclusive', 'simultaneous', 'report-edited', 'standard', 'main-capture',
-  'context-field', 'slug', 'partial', 'wrong-references', 'additional-change',
-] as const) {
-  test(`initial publication rejects ${variant}`, async t => {
-    const f = fixture(t);
-    f.pair(canonical, {visibility: 'draft: true\n', provenance: withContext});
-    const candidate = f.commit();
-    const {data} = await identities(candidate, canonical);
-    const altered = variant === 'wrong-references' ? {...data, references: data.references.slice(0, 2)} : data;
-    const report: Review = {...altered, result: variant === 'fail' ? 'FAIL' : variant === 'inconclusive' ? 'INCONCLUSIVE' : 'PASS'};
-    if (variant !== 'missing' && variant !== 'simultaneous') {
-      f.writeReview(report);
-      f.commit();
-    }
-    if (variant === 'standard' || variant === 'main-capture') {
-      f.write(variant === 'standard' ? standards[0] : main, 'Changed evidence');
-      f.commit();
-    }
-    f.pair(canonical, {
-      provenance: variant === 'context-field' ? withMain : withContext,
-      slug: variant === 'slug' ? '/changed' : undefined,
-    });
-    if (variant === 'simultaneous') f.writeReview(report);
-    if (variant === 'partial') f.write(canonical.en, `---\ndraft: true\n${withContext}---\n# Draft\n`);
-    if (variant === 'additional-change') f.write('README.md', 'Additional change in promotion');
-    let target = f.commit();
-    if (variant === 'report-edited') {
-      f.writeReview({...report, result: 'FAIL'});
-      target = f.commit();
-    }
-    await assert.rejects(plan(target, 'publish', f.baseline));
-  });
-}
-
-for (const variant of ['baseline-edited', 'one-candidate-left', 'wrong-bytes', 'candidate-edited'] as const) {
-  test(`revision rejects ${variant}`, async t => {
-    const f = fixture(t);
-    f.pair(canonical);
-    const deployed = f.commit();
-    f.pair(preview, {visibility: 'draft: true\n', slug: '/preview', text: 'Revision'});
-    const {projected} = await f.review(preview, canonical);
-    if (variant === 'baseline-edited' || variant === 'candidate-edited') {
-      if (variant === 'baseline-edited') f.pair(canonical, {text: 'Direct public edit'});
-      else f.pair(preview, {visibility: 'draft: true\n', slug: '/preview', text: 'Unreviewed edit'});
-      f.commit();
-    }
-    for (const locale of locales) {
-      f.write(canonical[locale], variant === 'wrong-bytes' ? projected[locale].bytes.toString().replace('Revision', 'Different') :
-        projected[locale].bytes);
-      if (variant !== 'one-candidate-left' || locale === 'fr') f.remove(preview[locale]);
-    }
-    await assert.rejects(plan(f.commit(), 'publish', deployed));
-  });
-}
-
-test('rejects a cumulative direct edit even behind a successful technical commit', async t => {
-  const f = fixture(t);
-  f.pair(canonical, {provenance: withMain});
-  const deployed = f.commit();
-  f.pair(canonical, {provenance: withMain, text: 'Direct edit'});
+  const article = articlePair('example.md');
+  f.writePair(article, 'New article');
+  const articleDraft = f.commit();
+  const articleData = await identities(articleDraft, article);
+  f.report({...articleData.data, result: 'PASS'});
   f.commit();
-  f.write('README.md', 'Unrelated change');
-  await assert.rejects(plan(f.commit(), 'publish', deployed), /Missing .*editorial-reviews/);
+  for (const locale of locales) f.write(article[locale], articleData.projected[locale].bytes);
+  const result = f.commit();
+  assert.match((await plan(result, published)).join('\n'), /Public article\/example/);
 });
 
-test('no Capture is valid, while missing paths, duplicate ownership and FR/EN divergence fail', async t => {
+test('a public page edit without a matching PASS is rejected', async t => {
   const f = fixture(t);
-  f.pair(canonical, {visibility: 'draft: true\n'});
-  const noCapture = await f.review(canonical);
-  assert.deepEqual(noCapture.data.references.map(ref => ref.path), standards);
-  f.pair(canonical, {visibility: 'draft: true\n', provenance: withMain});
-  f.pair(preview, {visibility: 'draft: true\n', provenance: withMain});
-  await assert.rejects(inventory(f.commit()), /more than one logical article/);
-  for (const locale of locales) f.remove(preview[locale]);
-  f.write(canonical.en, '---\ndraft: true\n---\n# Draft\n');
-  await assert.rejects(inventory(f.commit()), /FR\/EN provenance/);
-  f.pair(canonical, {visibility: 'draft: true\n', provenance: withContext});
-  f.remove(context);
-  await assert.rejects(inventory(f.commit()), /Missing .*context/);
+  f.write('src/pages/about.md', '---\ntitle: About\n---\n# Changed without approval\n');
+  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
 });
 
-test('permanent pages require a dedicated manual operation and unclassified inputs fail closed', async t => {
-  const f = fixture(t);
-  f.write(pagePaths[0], '# New permanent page text');
-  const page = f.commit();
-  await assert.rejects(plan(page, 'publish', f.baseline), /separate pages dispatch/);
-  assert.match((await plan(page, 'pages', f.baseline)).classification[0], /Permanent page/);
-  f.pair(canonical, {visibility: 'unlisted: true\n'});
-  await assert.rejects(plan(f.commit(), 'pages', f.baseline), /exposed article/);
-  f.write('docusaurus.config.ts', 'Potentially changed page output');
-  await assert.rejects(plan(f.commit(), 'publish', page), /unclassified/);
-  f.write('.github/workflows/other.yml', 'Alternate deploy');
-  await assert.rejects(plan(f.commit(), 'publish', page), /alternate workflow/);
-});
 
-test('public output may not load executable MDX or unrelated Markdown as an asset', async t => {
+test('squash merge retains a PASS and exact target without retaining the candidate', async t => {
   const f = fixture(t);
-  for (const text of ["import Draft from './draft.mdx'\n\n<Draft />", '![Source](./draft.md)', '{process.env.SECRET}']) {
-    f.pair(canonical, {visibility: 'unlisted: true\n', text});
-    await assert.rejects(plan(f.commit(), 'publish', f.baseline), /Markdown|dependency/);
+  const paths = pageDraftPair('squash.md');
+  f.repo.text('checkout', '-qb', 'review');
+  f.writePair(paths, 'Prepared outside main');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.repo.text('checkout', 'main');
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
   }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/squash/);
+});
+
+test('unlisted article previews are reported even on the first deployment', async t => {
+  const f = fixture(t);
+  const article = articlePair('preview.md');
+  f.writePair(article, 'Preview', 'unlisted: true\n');
+  const preview = f.commit();
+  assert.match((await plan(preview)).join('\n'), /Unlisted preview: preview.md/);
+  assert.match((await plan(preview, f.initial)).join('\n'), /Unlisted preview/);
+});
+
+
+
+
+test('a reviewed permanent-page revision preserves its public route', async t => {
+  const f = fixture(t);
+  const draftPaths = pageDraftPair('about.md');
+  const currentPaths = pagePair('about.md');
+  f.writePair(draftPaths, 'Revised page');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, draftPaths, currentPaths);
+  assert.equal(data.mode, 'revision');
+  f.report({...data, result: 'PASS'});
+  f.commit();
+  for (const locale of locales) {
+    f.write(currentPaths[locale], projected[locale].bytes);
+    f.remove(draftPaths[locale]);
+  }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
+});
+
+
+test('public promotion cannot publish only one language', async t => {
+  const f = fixture(t);
+  const paths = articlePair('partial.md');
+  f.writePair(paths, 'Candidate');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  f.commit();
+  f.write(paths.fr, projected.fr.bytes);
+  await assert.rejects(plan(f.commit(), f.initial), /FR\/EN visibility differs/);
+});
+
+test('executable MDX is rejected even when the FR/EN drafts agree', async t => {
+  const f = fixture(t);
+  const article = articlePair('unsafe.mdx');
+  for (const executable of [
+    "import Widget from '../src/components/Widget'\\n\\n<Widget />",
+    '{1 + 2}',
+    '<Widget />',
+    "export const token = 1",
+  ]) {
+    f.writePair(article, executable.replaceAll('\\n', '\n'));
+    await assert.rejects(plan(f.commit(), f.initial), /Executable MDX or JSX dependency/);
+  }
+});
+
+
+
+test('several revisions of the same page use only the final PASS even if V2 was never deployed', async t => {
+  const f = fixture(t);
+  const temporary = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  let previous = f.initial;
+  for (const revision of ['V2', 'V3']) {
+    f.writePair(temporary, revision);
+    const candidate = f.commit();
+    const {data, projected} = await identities(candidate, temporary, canonical);
+    f.report({...data, result: 'PASS'});
+    for (const locale of locales) {
+      f.write(canonical[locale], projected[locale].bytes);
+      f.remove(temporary[locale]);
+    }
+    previous = f.commit();
+  }
+  assert.match((await plan(previous, f.initial)).join('\n'), /Public page\/about/);
+});
+
+test('multiple public documents can share a single publication commit', async t => {
+  const f = fixture(t);
+  const pages = [pageDraftPair('one.md'), pageDraftPair('two.md')];
+  for (const paths of pages) f.writePair(paths, 'Independent');
+  const draft = f.commit();
+  for (const paths of pages) {
+    const {data, projected} = await identities(draft, paths);
+    f.report({...data, result: 'PASS'});
+    for (const locale of locales) {
+      f.write(projected[locale].path, projected[locale].bytes);
+      f.remove(paths[locale]);
+    }
+  }
+  const published = f.commit();
+  const messages = (await plan(published, f.initial)).join('\n');
+  assert.match(messages, /Public page\/one/);
+  assert.match(messages, /Public page\/two/);
+});
+
+test('invalid intermediate revision does not block a final valid seal', async t => {
+  const f = fixture(t);
+  const temporary = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  f.write('src/pages/about.md', '---\ntitle: About\n---\n# Unverified interim\n');
+  f.write('i18n/en/docusaurus-plugin-content-pages/about.md', '---\ntitle: About\n---\n# Unverified interim\n');
+  f.commit();
+  f.writePair(temporary, 'Final verified');
+  const candidate = f.commit();
+  const {data, projected} = await identities(candidate, temporary, canonical);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(canonical[locale], projected[locale].bytes);
+    f.remove(temporary[locale]);
+  }
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
+});
+
+
+test('final public FR/EN bytes must match the exact PASS fingerprint', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('sealed.md');
+  f.writePair(paths, 'Original');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(paths[locale]);
+  }
+  f.write(projected.fr.path, projected.fr.bytes.toString('utf8').replace('Original', 'Tampered'));
+  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
+});
+
+test('FAIL and INCONCLUSIVE seals never authorize public content', async t => {
+  for (const result of ['FAIL', 'INCONCLUSIVE'] as const) {
+    const f = fixture(t);
+    const paths = pageDraftPair('rejected.md');
+    f.writePair(paths, 'Not approved');
+    const draft = f.commit();
+    const {data, projected} = await identities(draft, paths);
+    f.report({...data, result});
+    for (const locale of locales) {
+      f.write(projected[locale].path, projected[locale].bytes);
+      f.remove(paths[locale]);
+    }
+    await assert.rejects(plan(f.commit(), f.initial), /No PASS for publication/, result);
+  }
+});
+
+test('a prior PASS remains valid after standards evolve without a content revision', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('reference.md');
+  f.writePair(paths, 'Verified with the original standard');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(paths[locale]);
+  }
+  const published = f.commit();
+  f.write(standards[0], '# Updated editorial standard\n');
+  const evolved = f.commit();
+  assert.match((await plan(evolved, published)).join('\n'), /No public content changes/);
+});
+
+test('a new PASS binds the actual standards at the time of verification', async t => {
+  const f = fixture(t);
+  const paths = pageDraftPair('new-standard.md');
+  f.writePair(paths, 'Before the standard changed');
+  const draft = f.commit();
+  const before = await identities(draft, paths);
+  f.write(standards[0], '# Updated editorial standard\n');
+  const changed = f.commit();
+  const after = await identities(changed, paths);
+  assert.notDeepEqual(before.data.references, after.data.references);
+  // A candidate sealed against previous references cannot be promoted
+  // without a new verification; this does not affect already published work.
+  assert.throws(
+    () => matchReview({...before.data, result: 'PASS'}, after.data),
+    /Stale or inapplicable editorial report/,
+  );
+  assert.doesNotThrow(() => matchReview({...after.data, result: 'PASS'}, after.data));
+});
+
+test('a public page cannot be replaced by a new route without withdrawal', async t => {
+  const f = fixture(t);
+  const old = pagePair('about.md');
+  const newer = pageDraftPair('different.md');
+  f.writePair(newer, 'Different route');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, newer);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(old[locale]);
+    f.remove(newer[locale]);
+  }
+  await assert.rejects(plan(f.commit(), f.initial), /Exposed content must be withdrawn before deletion/);
+});
+
+
+test('a published article keeps its FR/EN route across revisions', async t => {
+  const f = fixture(t);
+  const paths = articlePair('stable.md');
+  f.writePair(paths, 'First version');
+  const draft = f.commit();
+  const first = await identities(draft, paths);
+  f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], first.projected[locale].bytes);
+  const deployed = f.commit();
+
+  // A valid final seal alone must not authorize a change to an existing URL.
+  f.writePair(paths, 'Revised version', 'draft: true\nslug: changed-route\n');
+  const revised = f.commit();
+  const replacement = await identities(revised, paths);
+  f.report({...replacement.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], replacement.projected[locale].bytes);
+  await assert.rejects(plan(f.commit(), deployed), /Exposed article route changed/);
+});
+
+test('an article revision preserving its FR/EN route remains publishable', async t => {
+  const f = fixture(t);
+  const paths = articlePair('stable.md');
+  f.writePair(paths, 'First version', 'draft: true\nslug: permanent-route\n');
+  const draft = f.commit();
+  const first = await identities(draft, paths);
+  f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], first.projected[locale].bytes);
+  const deployed = f.commit();
+
+  f.writePair(paths, 'Updated version', 'draft: true\nslug: permanent-route\n');
+  const revised = f.commit();
+  const replacement = await identities(revised, paths);
+  f.report({...replacement.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], replacement.projected[locale].bytes);
+  assert.match((await plan(f.commit(), deployed)).join('\n'), /Public article\/permanent-route/);
+});
+
+
+test('first deployment refuses an unsealed public placeholder', async t => {
+  const f = fixture(t);
+  f.remove('.42p/editorial-reviews/page/about.md');
+  await assert.rejects(plan(f.commit()), /Missing .*editorial-reviews\/page\/about\.md/);
+});
+
+test('first deployment accepts a public page verified through the normal workflow', async t => {
+  const f = fixture(t);
+  const candidate = pageDraftPair('about.md');
+  const canonical = pagePair('about.md');
+  f.writePair(candidate, 'Reviewed introduction');
+  const draft = f.commit();
+  const {data, projected} = await identities(draft, candidate, canonical);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(canonical[locale], projected[locale].bytes);
+    f.remove(candidate[locale]);
+  }
+  assert.match((await plan(f.commit())).join('\n'), /Public page\/about/);
+});
+
+
+
+test('a deployed article must be withdrawn as draft before deletion', async t => {
+  const f = fixture(t);
+  const paths = articlePair('withdraw.md');
+  f.writePair(paths, 'Published', 'draft: true\n');
+  const candidate = f.commit();
+  const first = await identities(candidate, paths);
+  f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], first.projected[locale].bytes);
+  const publicState = f.commit();
+
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), publicState), /Exposed content must be withdrawn before deletion/);
+
+  f.writePair(paths, 'Published', 'draft: true\n');
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, publicState)).join('\n'), /Withdrawn article\/withdraw/);
+
+  for (const locale of locales) f.remove(paths[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('a deployed page must move to an off-site draft before deletion', async t => {
+  const f = fixture(t);
+  const pages = pagePair('about.md');
+  const draft = pageDraftPair('about.md');
+
+  for (const locale of locales) {
+    f.write(draft[locale], '---\ntitle: About\ndraft: true\n---\n# About\n');
+    f.remove(pages[locale]);
+  }
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, f.initial)).join('\n'), /Withdrawn page\/about/);
+
+  for (const locale of locales) f.remove(draft[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('unlisted is still public and cannot serve as withdrawal', async t => {
+  const f = fixture(t);
+  const paths = articlePair('preview.md');
+  f.writePair(paths, 'Published');
+  const candidate = f.commit();
+  const {data, projected} = await identities(candidate, paths);
+  f.report({...data, result: 'PASS'});
+  for (const locale of locales) f.write(paths[locale], projected[locale].bytes);
+  const publicState = f.commit();
+
+  f.writePair(paths, 'Published', 'unlisted: true\n');
+  const stillExposed = f.commit();
+  assert.match((await plan(stillExposed, publicState)).join('\n'), /Unlisted preview/);
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), stillExposed), /Exposed content must be withdrawn before deletion/);
+});
+
+test('a never-deployed draft and its rationale may be deleted directly', async t => {
+  const f = fixture(t);
+  const paths = articlePair('temporary.md');
+  const capture = '.42p/rationale-units/temporary/capture.md';
+  f.write(capture, '# Temporary idea\n');
+  for (const locale of locales) {
+    f.write(paths[locale], '---\ntitle: Temporary\ndraft: true\nrationale: ' + capture + '\n---\n# Working copy\n');
+  }
+  f.commit();
+  for (const locale of locales) f.remove(paths[locale]);
+  f.remove(capture);
+  assert.deepEqual(await plan(f.commit(), f.initial), ['No public content changes']);
+});
+
+test('a shared rationale cannot be deleted while another document still references it', async t => {
+  const f = fixture(t);
+  const capture = '.42p/rationale-units/shared/capture.md';
+  const paths = articlePair('retained.md');
+  f.write(capture, '# Shared knowledge\n');
+  for (const locale of locales) {
+    f.write(paths[locale], '---\ntitle: Retained\ndraft: true\nrationale: ' + capture + '\n---\n# Keep me\n');
+  }
+  f.commit();
+  f.remove(capture);
+  await assert.rejects(plan(f.commit(), f.initial), /Missing/);
+});
+
+
+test('a deployed unlisted article cannot be deleted without a deployed draft withdrawal', async t => {
+  const f = fixture(t);
+  const paths = articlePair('unlisted.md');
+  f.writePair(paths, 'Accessible by URL', 'unlisted: true\n');
+  const exposed = f.commit();
+  for (const locale of locales) f.remove(paths[locale]);
+  await assert.rejects(plan(f.commit(), exposed), /Exposed content must be withdrawn before deletion/);
+
+  f.writePair(paths, 'Now private', 'draft: true\n');
+  const withdrawn = f.commit();
+  assert.match((await plan(withdrawn, exposed)).join('\n'), /Withdrawn article\/unlisted/);
+  for (const locale of locales) f.remove(paths[locale]);
+  assert.deepEqual(await plan(f.commit(), withdrawn), ['No public content changes']);
+});
+
+test('a deployed unlisted article cannot silently change route', async t => {
+  const f = fixture(t);
+  const paths = articlePair('preview-route.md');
+  f.writePair(paths, 'Accessible by URL', 'unlisted: true\nslug: original-route\n');
+  const exposed = f.commit();
+  f.writePair(paths, 'Same article', 'unlisted: true\nslug: changed-route\n');
+  await assert.rejects(plan(f.commit(), exposed), /Exposed article route changed/);
+});
+
+test('unchanged unsealed public pages are no longer exempt from PASS', async t => {
+  const f = fixture(t);
+  f.remove('.42p/editorial-reviews/page/about.md');
+  await assert.rejects(plan(f.commit(), f.initial), /Missing .*page\/about\.md/);
 });
