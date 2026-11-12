@@ -25,8 +25,10 @@ Published pages live under `src/pages/` and
 `i18n/en/docusaurus-plugin-content-pages/` after promotion.
 
 Do not change visibility or public canonical files. Any new substantive
-argument arising during drafting must be validated by the author and, when a
-main Capture exists, reconciled in that Capture before verification.
+argument arising during drafting must be flagged separately in the drafting
+handoff. Include it in the FR/EN candidates only after the author validates it.
+When a main Capture exists, reconcile the validated argument in that Capture
+before verification.
 
 Check meaning, links, assets, FR/EN parity and route intent. Report the
 candidate paths, proposed public targets, unresolved points and readiness for
