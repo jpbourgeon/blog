@@ -1,66 +1,64 @@
 ---
 title: À propos
-description: Une perspective personnelle sur le management, l'ingénierie logicielle et la gouvernance des systèmes.
+description: Management public, ingénierie logicielle et gouvernance des systèmes.
 draft: true
 rationale: .42p/rationale-units/page_about/capture.md
 ---
 
 # À propos
 
-<!-- Portrait statique issu de l'avatar LinkedIn de l'auteur à acquérir et valider avant publication. -->
+<!-- Ajouter une copie locale du portrait LinkedIn après vérification du rendu. -->
 
-Je travaille à la croisée du management public et de l'ingénierie logicielle. Directeur technique et directeur adjoint d'une DSI du secteur public, je m'intéresse autant à la conception des systèmes qu'aux responsabilités de celles et ceux qui les font fonctionner.
+Je suis directeur technique et directeur adjoint d'une DSI du secteur public. Mon travail mêle management, organisation et ingénierie logicielle.
 
-Ce blog est un espace personnel de réflexion et de partage. J'y rassemble des idées, des pratiques et des réalisations techniques, sans prétendre parler au nom de mon employeur.
+Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
 
-## Perspective
+## Ce qui m'intéresse
 
-Un système ne se résume pas à son architecture ou à ses fonctionnalités. Il organise aussi des décisions, des responsabilités et des possibilités d'action. Qu'il s'agisse d'un logiciel, d'un service informatique ou d'une organisation, je cherche à comprendre comment ces dimensions se tiennent — et où elles cessent de le faire.
+Je cherche à comprendre comment fonctionnent les systèmes, qu'il s'agisse de logiciels, de services informatiques ou d'organisations. Leur conception compte, mais aussi les décisions prises, les responsabilités et les moyens de garder le contrôle.
 
-Je m'intéresse particulièrement aux conditions qui permettent de garder la maîtrise : rendre les choix explicites, vérifier ce qui est produit, préserver la capacité à corriger et à faire évoluer les systèmes. Ces questions deviennent plus pressantes à mesure que nous déléguons davantage aux outils et à l'intelligence artificielle.
+Je privilégie des solutions simples, dont les choix sont explicites et les résultats vérifiables. C'est particulièrement important lorsque l'on automatise davantage de tâches ou que l'on confie du travail à l'intelligence artificielle.
 
-La simplicité n'est pas pour moi une recherche de minimalisme abstrait. C'est une discipline de conception : ne retenir que la complexité nécessaire, rendre les compromis visibles et privilégier ce qui reste intelligible et durable.
+## Sujets et projets
 
-## Territoires d'exploration
+**APE** — Le management tel qu'il se pratique : les responsabilités, le travail quotidien et les écarts entre les décisions et leur mise en œuvre.
 
-**APE** explore les pratiques du management et l'expérience humaine des organisations : les responsabilités, les tensions du travail réel et les écarts entre ce que l'on décide et ce qui se passe effectivement.
+**42P** — La maîtrise des changements apportés aux productions, notamment logicielles : spécifier, justifier, vérifier et conserver la trace des décisions.
 
-**42P** s'intéresse à la gouvernance des productions et de leurs changements. Spécifier, justifier, vérifier et conserver la trace des décisions sont autant de moyens de maîtriser l'évolution d'un système, particulièrement lorsque sa réalisation mobilise des agents logiciels.
+**STI — Sovereignty Through Institution** — La souveraineté humaine face à l'IA : ce que nous pouvons déléguer, ce qui doit rester sous contrôle humain et comment organiser cette maîtrise.
 
-**STI — Sovereignty Through Institution** interroge les conditions de la souveraineté humaine face à l'intelligence artificielle : ce que nous déléguons, ce qui fait autorité et les institutions nécessaires pour conserver le contrôle.
+**FluidJ** — Un projet applicatif consacré à la gouvernance des responsabilités individuelles.
 
-**FluidJ** est un projet applicatif consacré à la gouvernance des responsabilités individuelles. Il explore la manière de rendre les engagements et responsabilités plus explicites et plus maîtrisables dans le travail quotidien.
+**Cybernetic ITSM** (nom provisoire) — Le management des services informatiques, en rapprochant ITIL d'une approche systémique et cybernétique.
 
-**Cybernetic ITSM** (nom provisoire) aborde le management des services informatiques à la rencontre d'ITIL et d'une lecture systémique et cybernétique des organisations, de leurs boucles de régulation et de leurs modes de pilotage.
-
-Ces domaines se répondent sans enfermer chaque article dans une collection. D'autres sujets peuvent aussi trouver leur place ici lorsqu'ils éclairent cette même démarche.
+Ces sujets peuvent se croiser. Tous les articles n'ont pas vocation à appartenir à une collection.
 
 ## Productions et contributions
 
-Certaines de ces réflexions prennent la forme de logiciels et de contributions open source. J'y mets à l'épreuve des choix d'architecture, des compromis techniques et des exigences de maintenance qui seraient autrement faciles à laisser au niveau des intentions.
+Je développe aussi des logiciels open source. Ils me permettent de confronter mes idées aux contraintes de conception, d'usage et de maintenance.
 
-Mes travaux sont accessibles notamment dans l'[organisation GitHub at-rama](https://github.com/at-rama). Les dépôts documentent les réalisations elles-mêmes ; les articles de ce blog en éclairent les motivations, les décisions et les limites.
+Les projets et leur code sont disponibles notamment sur [GitHub, dans l'organisation at-rama](https://github.com/at-rama).
 
-## Me retrouver et échanger
+## Me retrouver
 
-On peut retrouver mon code et mes contributions sur [GitHub](https://github.com/jpbourgeon), mes publications et échanges techniques sur [dev.to](https://dev.to/jpbourgeon), et mon parcours ainsi que mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon). Ce sont aussi les canaux par lesquels poursuivre une discussion.
+Je suis présent sur [GitHub](https://github.com/jpbourgeon) pour le code et les contributions, sur [dev.to](https://dev.to/jpbourgeon) pour les publications techniques et sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon) pour les échanges professionnels.
 
 ---
 
 ## Mentions légales
 
-Ce blog personnel est édité **à titre non professionnel** par **jpbourgeon**, responsable de la publication.
+Ce blog personnel est édité à titre non professionnel par **jpbourgeon**, responsable de sa publication.
 
-Il est hébergé avec [GitHub Pages](https://docs.github.com/fr/pages), service de GitHub, Inc.
+Il est hébergé sur [GitHub Pages](https://docs.github.com/fr/pages), un service de GitHub, Inc.
 
-<!-- Avant publication : vérifier et compléter les coordonnées légalement requises de l'hébergeur, ainsi que les conditions d'identification de l'éditeur non professionnel auprès de celui-ci. Ne pas divulguer de coordonnées privées superflues. -->
+<!-- Avant publication : vérifier les coordonnées obligatoires de l'hébergeur et les modalités d'identification de l'éditeur non professionnel. Ne pas exposer de coordonnées privées inutiles. -->
 
-Sauf indication contraire, les textes originaux de ce blog sont diffusés sous licence [Creative Commons BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr). Les logiciels, extraits de code et ressources tierces peuvent relever de licences distinctes, précisées dans leurs dépôts ou leurs notices respectives.
+Sauf mention contraire, mes textes originaux sont publiés sous licence [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr). Les logiciels et ressources tierces peuvent avoir leurs propres licences, indiquées dans leurs dépôts ou notices.
 
 ## Confidentialité
 
-Le blog est un site statique hébergé sur GitHub Pages. GitHub peut conserver des données techniques de connexion, notamment les adresses IP, à des fins de sécurité, selon sa [déclaration de confidentialité](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement).
+Ce site est hébergé sur GitHub Pages. L'hébergeur peut traiter des données techniques de connexion, dont les adresses IP, selon sa [politique de confidentialité](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement).
 
-La fréquentation du site est mesurée avec [GoatCounter](https://www.goatcounter.com/), sans cookies de suivi. La configuration retenue porte sur les visites et sessions, la provenance des visites (référent) et le pays ; les statistiques sont conservées **365 jours**. GoatCounter indique ne pas enregistrer les adresses IP dans sa base de statistiques ; certaines données techniques sont utilisées temporairement pour distinguer les sessions. Voir sa [documentation relative à la confidentialité](https://www.goatcounter.com/help/privacy).
+J'utilise [GoatCounter](https://www.goatcounter.com/) pour mesurer la fréquentation, sans cookies de suivi. Les statistiques portent sur les sessions, les sites d'origine des visites (référents) et les pays. Elles sont conservées **365 jours**. GoatCounter précise les données techniques utilisées et leur traitement dans sa [documentation sur la confidentialité](https://www.goatcounter.com/help/privacy).
 
-<!-- Avant publication : confirmer les réglages effectifs du compte GoatCounter, les informations liées aux droits des visiteurs et la conformité du dispositif de mesure d'audience. -->
+<!-- Avant publication : confirmer la configuration effective, les mentions relatives aux droits des visiteurs et les conditions d'exemption éventuelle de consentement. -->
