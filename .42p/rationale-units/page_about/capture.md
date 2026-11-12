@@ -29,7 +29,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 
 ## Portrait : choix de mise en œuvre
 
-**O-avatar-local (choix validé et fichier fourni par l'auteur)** : le portrait choisi par l'auteur est désormais versionné dans la branche de cette PR à `static/img/avatar.webp`. Utiliser directement cette ressource locale dans les pages FR/EN, avec un texte alternatif approprié ; vérifier le rendu, notamment sur mobile. Portrait discret près de l'introduction. Aucune récupération depuis LinkedIn, intégration distante, synchronisation, dépendance ou composant React dédié.
+**O-avatar-local (choix validé et fichier fourni par l'auteur)** : le portrait choisi par l'auteur est versionné dans la branche de cette PR à `static/img/avatar.webp`. L'intégrer directement dans les candidates FR/EN, avec un texte alternatif approprié. **Présentation validée : profil compact, sans hero** ; avatar circulaire d'environ 96–112 px à gauche du nom et de la fonction professionnelle, en haut de page. Conserver une disposition compacte et lisible sur mobile, suivie de l'introduction en paragraphes courts. Aucun slogan, fond décoratif, service Gravatar, image distante, synchronisation, dépendance ou composant React dédié. Vérifier le rendu réel avant publication.
 
 ## Cadre technique et publication
 
@@ -48,7 +48,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 
 ## Sources de travail
 
-- Décision éditoriale ultérieure de l'auteur : la page « À propos » présente les thèmes de réflexion sans inventorier les collections ; celles-ci sont accessibles par la navigation. L'auteur a validé le principe d'un court paragraphe intégré au corps de la page, puis demandé son intégration à cette Capture.
+- Décisions éditoriales ultérieures de l'auteur : la page « À propos » présente les thèmes de réflexion sans inventorier les collections, accessibles par la navigation ; court paragraphe intégré au corps de page. L'auteur a également validé la proposition visuelle d'un en-tête de profil compact avec avatar circulaire local, plutôt qu'un hero ou une intégration Gravatar.
 
 - Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix des contacts et du statut juridiquement non professionnel ; confirmation des quatre URL ; déclaration de configuration GoatCounter (session, referrer, country, 365 jours) ; choix d'une copie locale de l'avatar et retrait de l'email des contacts éditoriaux ; dépôt par l'auteur de `static/img/avatar.webp` dans la PR ; demande de capturer le plan V2.
 - Plan V2 de l'assistant dans la discussion : source dérivée **explicitement désignée** pour cette capture ; recommandations et formulations non validées individuellement restent distinguées des décisions de l'auteur.
