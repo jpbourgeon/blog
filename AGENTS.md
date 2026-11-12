@@ -6,10 +6,12 @@ l'historique Git avant toute intervention.
 
 ## Autorité
 
-L'auteur décide du sens, de la valeur et de la publication. Un agent peut
-explorer, rédiger, traduire, vérifier et préparer ; il ne s'auto-autorise
-ni à exposer un aperçu ni à publier. Un rapport PASS prouve une vérification,
-pas un consentement. Toute publication substantielle exige un accord explicite.
+L’auteur décide du sens, de la valeur et de la publication. L’agent peut
+explorer, rédiger, traduire, vérifier et préparer. Obtenir l’accord explicite
+de l’auteur avant d’exposer un aperçu ou de lancer un déploiement public.
+Pour un déploiement, l’accord doit couvrir tous les changements publics du
+commit cible depuis le dernier déploiement. Le PASS atteste la vérification.
+L’accord de l’auteur reste requis.
 
 ## Références
 
@@ -18,7 +20,7 @@ pas un consentement. Toute publication substantielle exige un accord explicite.
 - [`42p-capture`](.42p/.agents/skills/42p-capture/SKILL.md) — consolider l’état de travail d’un changement pour permettre sa reprise, en distinguant les décisions établies des pistes ouvertes.
 - [`editorial-write`](.42p/.agents/skills/editorial-write/SKILL.md) — rédiger les versions candidates FR/EN d’une page ou d’un article en préservant l’intention, les sources et la voix de l’auteur.
 - [`editorial-verify`](.42p/.agents/skills/editorial-verify/SKILL.md) — vérifier indépendamment les versions candidates FR/EN et consigner le verdict dans un rapport éditorial.
-- [`editorial-publish`](.42p/.agents/skills/editorial-publish/SKILL.md) — promouvoir les versions FR/EN couvertes par un PASS et déployer le commit exact après accord explicite de l’auteur.
+- [`editorial-publish`](.42p/.agents/skills/editorial-publish/SKILL.md) — gérer les aperçus exposés, les publications et les retraits autorisés. Pour une promotion canonique, vérifier le PASS correspondant et déployer le commit exact.
 
 Lire le skill concerné avant l’opération.
 
@@ -30,10 +32,10 @@ Articles et pages utilisent le même cycle. Ne jamais modifier directement
 une version publique avant son approbation : préparer une candidate distincte.
 Les drafts de pages vont dans `.42p/editorial-drafts/pages/{fr,en}/` ;
 les articles utilisent `draft: true` et, avec autorisation, `unlisted`.
-Un contenu déployé et exposé (`public` ou `unlisted`) doit d'abord être retiré (article en `draft`,
-page déplacée vers les drafts FR/EN), puis ce retrait doit être déployé
-avant toute suppression physique. Aucun rapport de suppression spécifique ;
-conserver les ressources et Captures encore référencées.
+Pour supprimer un contenu déployé et exposé (`public` ou `unlisted`),
+déployer d’abord son retrait. Passer l’article en `draft` ou déplacer la page
+vers les drafts FR/EN. La suppression physique peut ensuite être effectuée
+sans rapport spécifique. Conserver les ressources et Captures encore référencées.
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
 
