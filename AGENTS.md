@@ -15,8 +15,12 @@ pas un consentement. Toute publication substantielle exige un accord explicite.
 
 - [Éditorial](standards/editorial.md) : fidélité, sources, pages et articles.
 - [Voix](standards/voice.md) : style et authenticité.
-- Skills : `.42p/.agents/skills/{42p-capture,editorial-write,editorial-verify,editorial-publish}/SKILL.md`.
-  Lire le skill concerné avant l'opération.
+- [`42p-capture`](.42p/.agents/skills/42p-capture/SKILL.md) — consolider l’état de travail d’un changement pour permettre sa reprise, en distinguant les décisions établies des pistes ouvertes.
+- [`editorial-write`](.42p/.agents/skills/editorial-write/SKILL.md) — rédiger les versions candidates FR/EN d’une page ou d’un article en préservant l’intention, les sources et la voix de l’auteur.
+- [`editorial-verify`](.42p/.agents/skills/editorial-verify/SKILL.md) — vérifier indépendamment les versions candidates FR/EN et consigner le verdict dans un rapport éditorial.
+- [`editorial-publish`](.42p/.agents/skills/editorial-publish/SKILL.md) — promouvoir les versions FR/EN couvertes par un PASS et déployer le commit exact après accord explicite de l’auteur.
+
+Lire le skill concerné avant l’opération.
 
 ## Cycle
 
