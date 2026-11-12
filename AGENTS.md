@@ -39,7 +39,7 @@ sans rapport spécifique. Conserver les ressources et Captures encore référenc
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
 
-Captures : `.42p/rationale-units/<slug>/capture.md`.
+Captures : `.42p/rationale-units/<slug>/capture.md` ; pour une page ou un article, nommer le dossier `page_<slug>` ou `article_<slug>` (identifiant stable, sans date).
 Rapports : `.42p/editorial-reviews/<type>/<slug>.md`.
 Le frontmatter `rationale` peut référencer une seule Capture principale ;
 `rationaleContext` peut ajouter des références contextuelles FR/EN identiques.
