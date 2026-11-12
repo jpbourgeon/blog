@@ -18,8 +18,8 @@ La structure a été explicitement validée par l'auteur ; les corrections ulté
   - **Cybernetic ITSM** (nom provisoire) : management des services informatiques, ITIL, approche systémique et cybernétique.
   Ces descriptions sont des propositions de cadrage pour le texte, non des définitions définitives de chaque projet.
 - **C-productions** — Distinguer territoires de réflexion et réalisations. Orienter vers l'organisation GitHub `at-rama` et les productions effectivement publiques (par exemple `sqlite-vector-wasm`), sans inventaire de projets ni annonces non publiées.
-- **C-contact** — Mettre en avant GitHub, dev.to, LinkedIn et l'adresse électronique personnelle de l'auteur, avec liens/coordonnées exacts à fournir ou confirmer. Pas de formulaire.
-- **C-statut** — L'intention de l'auteur est un **blog personnel** ; cette intention ne résout pas automatiquement la qualification juridique de l'édition professionnelle/non professionnelle.
+- **C-contact** — Mettre en avant les profils personnels [GitHub](https://github.com/jpbourgeon), [dev.to](https://dev.to/jpbourgeon), [LinkedIn](https://www.linkedin.com/in/jpbourgeon) et l'adresse électronique personnelle de l'auteur (adresse exacte non encore fournie). Présenter séparément l'organisation de production [at-rama](https://github.com/at-rama). Pas de formulaire.
+- **C-statut** — L'auteur confirme que le blog personnel est **édité à titre juridiquement non professionnel** et demande de ne pas publier de coordonnées privées inutiles. Rédiger les mentions en conséquence et vérifier les informations légalement exigées.
 
 ## Structure de page retenue
 
@@ -35,7 +35,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 
 ## Portrait : choix de mise en œuvre
 
-**O-gravatar-local (recommandation du plan V2, à confirmer éditorialement)** : utiliser comme portrait une **copie statique du Gravatar** dans `static/img/`, chargée localement et non via un service tiers à chaque visite. Portrait circulaire et discret (ordre de grandeur : 88–112 px), près du nom/introduction, adapté au mobile. Intérêt : identité humaine et continuité visuelle entre plateformes ; coût : mise à jour manuelle occasionnelle. Ne pas ajouter d'API, de synchronisation, de dépendance, ni de composant React dédié. Le pictogramme montré en maquette était un substitut, non le portrait réel.
+**O-gravatar-local (stratégie validée par l'auteur)** : utiliser comme portrait une **copie statique du Gravatar** dans `static/img/`, chargée localement et non via un service tiers à chaque visite. Portrait circulaire et discret (ordre de grandeur : 88–112 px), près du nom/introduction, adapté au mobile. Intérêt : identité humaine et continuité visuelle entre plateformes ; coût : mise à jour manuelle occasionnelle. Ne pas ajouter d'API, de synchronisation, de dépendance, ni de composant React dédié. Le pictogramme montré en maquette était un substitut, non le portrait réel.
 
 Alternatives considérées : absence de portrait (techniquement minimale mais moins identifiante) ; Gravatar distant (automatique mais requête tierce et dépendance). La recommandation privilégie la copie locale pour souveraineté, confidentialité des visiteurs et KISS.
 
@@ -47,19 +47,19 @@ Alternatives considérées : absence de portrait (techniquement minimale mais mo
 - Pages candidates hors des routes publiques dans `.42p/editorial-drafts/pages/{fr,en}/` ; vérification indépendante, décision de l'auteur, gate et déploiement manuel sur accord explicite. **Cette PR de Capture ne prépare ni n'expose un aperçu, et ne publie aucun contenu.**
 - Réutiliser les licences existantes : contenus originaux CC BY-NC-ND 4.0, exceptions et code selon `LICENSE-ADDITIONAL.md`.
 
-## Points à établir avant la version publiée
+## Décisions complémentaires et points résiduels
 
-- **Q-legal** — Vérifier la qualification juridique effective du blog personnel et les mentions requises : ne pas assimiler « personnel » à « juridiquement non professionnel », ni publier de coordonnées privées inutiles.
-- **Q-privacy** — Décrire à partir de la configuration déployée les traitements GitHub Pages et GoatCounter, les données/conditions de conservation, l'information et l'éventuelle exemption de consentement ; ne pas conclure à une exemption du seul fait de l'absence de cookies.
-- **Q-profiles** — Confirmer les URL exactes GitHub, dev.to, LinkedIn et l'adresse email personnelle à afficher.
-- **Q-avatar** — Obtenir/valider l'image Gravatar et confirmer l'option locale au moment de la rédaction.
+- **Q-legal** — Statut **non professionnel** explicitement confirmé par l'auteur ; publier uniquement les mentions légalement nécessaires, sans coordonnées privées superflues. La rédaction doit encore vérifier les mentions et modalités de contact de l'éditeur et de l'hébergeur effectivement requises.
+- **Q-privacy** — Configuration GoatCounter déclarée par l'auteur : statistiques anonymes de **session, referrer et country**, avec **rétention de 365 jours**. Reprendre ces paramètres sans étendre la déclaration à d'autres données non confirmées ; vérifier la correspondance avec les traitements réels du site et les exigences d'information/consentement avant publication. Le terme « anonyme » reflète ici la déclaration de configuration, pas une qualification juridique auditée.
+- **Q-profiles** — Profils validés : https://github.com/jpbourgeon ; https://dev.to/jpbourgeon ; https://www.linkedin.com/in/jpbourgeon ; organisation GitHub https://github.com/at-rama. Seule l'adresse email personnelle exacte à afficher reste à préciser.
+- **Q-avatar** — Copie locale de l'avatar Gravatar **validée** ; reste à récupérer l'image appropriée pour son intégration statique.
 
 ## Sources de travail
 
-- Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix de contacts et de blog personnel ; demande d'évaluation Gravatar ; demande de capturer le plan V2.
+- Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix des contacts et du statut juridiquement non professionnel ; confirmation des quatre URL ; déclaration de configuration GoatCounter (session, referrer, country, 365 jours) ; validation de la copie locale Gravatar ; demande de capturer le plan V2.
 - Plan V2 de l'assistant dans la discussion : source dérivée **explicitement désignée** pour cette capture ; recommandations et formulations non validées individuellement restent distinguées des décisions de l'auteur.
 - Dépôt : `AGENTS.md`, `standards/editorial.md`, `standards/voice.md`, `docusaurus.config.ts`, `src/client/goatcounter.ts`, `LICENSE`, `README.md`.
 
 ## Suite envisagée
 
-Consolider les formulations ; acquérir le portrait et les coordonnées ; rédiger FR, vérifier le cadre légal et confidentialité, traduire EN ; vérifier éditorialement ; demander validation et autorisation distincte avant tout aperçu ou déploiement.
+Consolider les formulations ; acquérir le portrait et l'adresse email à afficher ; rédiger FR, vérifier les mentions légales et la description de confidentialité contre la configuration effective, traduire EN ; vérifier éditorialement ; demander validation et autorisation distincte avant tout aperçu ou déploiement.
