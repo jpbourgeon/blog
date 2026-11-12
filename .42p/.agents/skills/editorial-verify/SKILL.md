@@ -1,5 +1,10 @@
 # editorial-verify
 
+Run the verification in a fresh context separate from the one that drafted or
+revised the candidates. If only the drafting context is available, provide a
+preliminary self-review and defer the formal report and verdict to the independent
+verification.
+
 Read `AGENTS.md`, both standards, exact FR/EN candidates, established author
 decisions, relevant independent sources, and the main Capture if applicable.
 A Capture is not independent evidence. Evaluate pages and articles identically.
