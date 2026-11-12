@@ -35,7 +35,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 
 ## Portrait : choix de mise en œuvre
 
-**O-avatar-local (choix validé par l'auteur)** : l'agent récupère de préférence l'avatar public du [profil LinkedIn](https://www.linkedin.com/in/jpbourgeon) et en intègre une copie statique dans `static/img/`, après vérification du rendu. Portrait discret près du nom et de l'introduction, adapté au mobile. Aucune intégration distante, synchronisation, dépendance ou composant React dédié.
+**O-avatar-local (choix validé et fichier fourni par l'auteur)** : le portrait choisi par l'auteur est désormais versionné dans la branche de cette PR à `static/img/avatar.webp`. Utiliser directement cette ressource locale dans les pages FR/EN, avec un texte alternatif approprié ; vérifier le rendu, notamment sur mobile. Portrait discret près de l'introduction. Aucune récupération depuis LinkedIn, intégration distante, synchronisation, dépendance ou composant React dédié.
 
 ## Cadre technique et publication
 
@@ -50,14 +50,14 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 - **Q-legal** — Statut **non professionnel** explicitement confirmé par l'auteur ; publier uniquement les mentions légalement nécessaires, sans coordonnées privées superflues. La rédaction doit encore vérifier les mentions et modalités de contact de l'éditeur et de l'hébergeur effectivement requises.
 - **Q-privacy** — Configuration GoatCounter déclarée par l'auteur : statistiques anonymes de **session, referrer et country**, avec **rétention de 365 jours**. Reprendre ces paramètres sans étendre la déclaration à d'autres données non confirmées ; vérifier la correspondance avec les traitements réels du site et les exigences d'information/consentement avant publication. Le terme « anonyme » reflète ici la déclaration de configuration, pas une qualification juridique auditée.
 - **Q-profiles** — Profils validés : https://github.com/jpbourgeon ; https://dev.to/jpbourgeon ; https://www.linkedin.com/in/jpbourgeon ; organisation GitHub https://github.com/at-rama. Aucun email personnel à afficher dans les contacts éditoriaux ; les exigences légales de contact restent traitées séparément en Q-legal.
-- **Q-avatar** — Copie locale de l'avatar **LinkedIn privilégiée et validée** ; reste à récupérer l'image et à vérifier son rendu.
+- **Q-avatar** — **Fichier fourni par l'auteur et présent dans la PR** : `static/img/avatar.webp`. Acquisition terminée ; restent l'intégration dans les candidates FR/EN et la vérification du rendu avant publication.
 
 ## Sources de travail
 
-- Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix des contacts et du statut juridiquement non professionnel ; confirmation des quatre URL ; déclaration de configuration GoatCounter (session, referrer, country, 365 jours) ; choix d'une copie locale de l'avatar LinkedIn et retrait de l'email des contacts éditoriaux ; demande de capturer le plan V2.
+- Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix des contacts et du statut juridiquement non professionnel ; confirmation des quatre URL ; déclaration de configuration GoatCounter (session, referrer, country, 365 jours) ; choix d'une copie locale de l'avatar et retrait de l'email des contacts éditoriaux ; dépôt par l'auteur de `static/img/avatar.webp` dans la PR ; demande de capturer le plan V2.
 - Plan V2 de l'assistant dans la discussion : source dérivée **explicitement désignée** pour cette capture ; recommandations et formulations non validées individuellement restent distinguées des décisions de l'auteur.
 - Dépôt : `AGENTS.md`, `standards/editorial.md`, `standards/voice.md`, `docusaurus.config.ts`, `src/client/goatcounter.ts`, `LICENSE`, `README.md`.
 
 ## Suite envisagée
 
-Consolider les formulations ; acquérir le portrait LinkedIn ; rédiger FR, vérifier les mentions légales et la description de confidentialité contre la configuration effective, traduire EN ; vérifier éditorialement ; demander validation et autorisation distincte avant tout aperçu ou déploiement.
+Intégrer le portrait local déjà fourni dans les candidates FR/EN et vérifier son rendu ; finaliser les vérifications des mentions légales et de la confidentialité contre la configuration effective ; procéder à la vérification éditoriale indépendante, puis demander validation et autorisation distincte avant tout aperçu ou déploiement.
