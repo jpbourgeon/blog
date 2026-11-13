@@ -1,6 +1,6 @@
 ---
 title: À propos
-description: Management public, ingénierie logicielle et gouvernance des systèmes.
+description: Papa Poule, directeur technique et directeur adjoint d'une DSI publique, amateur de systèmes.
 draft: true
 rationale: .42p/rationale-units/page_about/capture.md
 ---
@@ -9,18 +9,18 @@ rationale: .42p/rationale-units/page_about/capture.md
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
   <img src="/blog/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div><strong>jpbourgeon</strong><div>Directeur technique et directeur adjoint d'une DSI du secteur public.</div></div>
+  <div><strong>jpbourgeon</strong><div>Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes</div></div>
 </div>
 
 Mon travail mêle management, organisation et ingénierie logicielle. Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-Je m'intéresse à la façon dont les systèmes fonctionnent et évoluent : logiciels, services informatiques, organisations. Concevoir une solution ne suffit pas. Il faut aussi comprendre les décisions qui la façonnent, les responsabilités qu'elle engage et les moyens de vérifier qu'elle répond au besoin.
+Comprendre comment les choses fonctionnent, imaginer comment elles pourraient fonctionner autrement. C'est ce qui nourrit ma curiosité pour les systèmes, qu'il s'agisse de logiciels, de services informatiques ou d'organisations. Concevoir une solution ne suffit pas : il faut aussi comprendre les décisions qui la façonnent, les responsabilités qu'elle engage et les moyens de vérifier qu'elle répond au besoin.
 
 Je privilégie les solutions simples, les choix explicites et la capacité à garder la maîtrise de ce que l'on construit. Ces questions prennent une place particulière avec l'automatisation et l'intelligence artificielle.
 
-J'aborde ainsi l'ingénierie logicielle, le management, la gouvernance et le pilotage des systèmes d'information. Certains sujets se prolongent dans des collections qui réunissent articles et ressources associées.
+Mes centres d'intérêt vont de l'architecture logicielle à la cybernétique et aux systèmes sociotechniques, en passant par l'intelligence artificielle, l'ingénierie frugale, l'open source et les technologies local-first. Certains sujets se prolongent dans des collections qui réunissent articles et ressources associées.
 
 ## Productions et contributions
 
