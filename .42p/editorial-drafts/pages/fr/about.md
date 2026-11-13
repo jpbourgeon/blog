@@ -8,12 +8,8 @@ rationale: .42p/rationale-units/page_about/capture.md
 # À propos
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-  <img src="/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div>
-    **jpbourgeon**
-
-    Directeur technique et directeur adjoint d'une DSI du secteur public.
-  </div>
+  <img src="/blog/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+  <div><strong>jpbourgeon</strong><div>Directeur technique et directeur adjoint d'une DSI du secteur public.</div></div>
 </div>
 
 Mon travail mêle management, organisation et ingénierie logicielle. Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
