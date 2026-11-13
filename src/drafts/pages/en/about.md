@@ -1,6 +1,6 @@
 ---
 title: About
-description: Public-sector management, software engineering, and systems governance.
+description: Papa Bear, public-sector IT technical director and deputy director, systems enthusiast.
 draft: true
 rationale: .42p/rationale-units/page_about/capture.md
 ---
@@ -9,18 +9,18 @@ rationale: .42p/rationale-units/page_about/capture.md
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
   <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div><strong>jpbourgeon</strong><div>Technical director and deputy director of a public-sector IT department.</div></div>
+  <div><strong>jpbourgeon</strong><div>Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast</div></div>
 </div>
 
 My work combines management, organizational responsibilities, and software engineering. On this personal blog, I share my thoughts, working practices, and technical projects. I write in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-I'm interested in how systems work and evolve: software, IT services, and organizations. Designing a solution is not enough. We also need to understand the decisions behind it, the responsibilities it creates, and how to verify that it meets its purpose.
+Understanding how things work and imagining how they could work differently. That curiosity draws me to systems, whether software, IT services, or organizations. Designing a solution is not enough: we also need to understand the decisions behind it, the responsibilities it creates, and how to verify that it meets its purpose.
 
 I favor simple solutions, explicit decisions, and the ability to stay in control of what we build. These questions matter especially as automation and artificial intelligence take on a greater role.
 
-I write about software engineering, management, governance, and the operation of IT systems. Some topics also have dedicated collections bringing together articles and related resources.
+My interests include software architecture, cybernetics, sociotechnical systems, artificial intelligence, frugal engineering, open source, and local-first technologies. Some topics also have dedicated collections bringing together articles and related resources.
 
 ## Projects and contributions
 
