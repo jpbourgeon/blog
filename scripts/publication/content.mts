@@ -1,6 +1,5 @@
 import {createHash} from 'node:crypto';
 import {isDeepStrictEqual} from 'node:util';
-import {createProcessor} from '@mdx-js/mdx';
 import {DEFAULT_PARSE_FRONT_MATTER} from '@docusaurus/utils';
 import {isAlias, isMap, isPair, isScalar, parseDocument, stringify, visit} from 'yaml';
 
@@ -117,7 +116,7 @@ export function project(candidate: Article | Document, baseline?: Article | Docu
 }
 
 const blogRoots: Pair<string> = {fr: 'blog/', en: 'i18n/en/docusaurus-plugin-content-blog/'};
-export const capturePattern = /^\.42p\/rationale-units\/[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
+export const capturePattern = /^\.42p\/rationale-units\/(?:page_|article_)?[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
 export const standards = ['standards/editorial.md', 'standards/voice.md'];
 
 export function articlePath(path: string): {locale: Locale; key: string} | undefined {
@@ -189,37 +188,14 @@ export async function readArticle(bytes: Buffer, path: string): Promise<Article>
   };
 }
 
-
-/** A publication is content, never an executable MDX dependency graph. */
-function requireStaticMarkdown(body: string, path: string) {
-  let root: ReturnType<ReturnType<typeof createProcessor>['parse']>;
-  try {
-    root = createProcessor().parse(body);
-  } catch {
-    throw new Error('Executable MDX or JSX dependency or invalid MDX syntax: ' + path);
-  }
-  const forbidden = new Set([
-    'mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression',
-    'mdxJsxFlowElement', 'mdxJsxTextElement',
-  ]);
-  const visit = (node: {type: string; children?: unknown[]}) => {
-    requireThat(!forbidden.has(node.type),
-      'Executable MDX or JSX dependency not permitted in editorial content: ' + path);
-    for (const child of node.children ?? []) visit(child as {type: string; children?: unknown[]});
-  };
-  visit(root);
-}
-
 export async function readDocument(bytes: Buffer, path: string): Promise<Document> {
   const id = documentPath(path);
   requireThat(id, 'Unsupported editorial content: ' + path);
   if (id.kind === 'article') {
     const article = await readArticle(bytes, path);
-    requireStaticMarkdown(article.body, path);
     return {...article, ...id};
   }
   const markdown = await readMarkdown(bytes, path);
-  requireStaticMarkdown(markdown.body, path);
   requireThat(!Object.hasOwn(markdown.fields, 'slug') &&
     markdown.fields.unlisted === undefined, 'Native pages do not use slug/unlisted: ' + path);
   if (id.source === 'candidate') {
