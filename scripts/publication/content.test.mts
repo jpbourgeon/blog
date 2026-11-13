@@ -94,6 +94,10 @@ test('provenance requires a valid sole main Capture and distinct context paths',
 test('page draft projects to the native FR/EN page routes without exposure', async () => {
   const {readDocument, pageDraftPair, pagePair, documentPath} = await import('./content.mts');
   const draftPaths = pageDraftPair('topics/intro.md');
+  assert.deepEqual(draftPaths, {
+    fr: 'src/drafts/pages/fr/topics/intro.md',
+    en: 'src/drafts/pages/en/topics/intro.md',
+  });
   const targetPaths = pagePair('topics/intro.md');
   for (const locale of ['fr', 'en'] as const) {
     const draft = await readDocument(Buffer.from('---\ntitle: Intro\ndraft: true\n---\n# Introduction\n'), draftPaths[locale]);
