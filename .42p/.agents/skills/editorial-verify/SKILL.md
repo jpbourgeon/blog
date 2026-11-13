@@ -48,6 +48,24 @@ word-count thresholds or automated scores. The verifier assesses conformity
 to the stated voice standard; the author alone judges whether the result
 genuinely sounds like them and whether it merits publication.
 
+## Editorial improvement opportunities
+
+Independently of the compliance verdict, identify material opportunities to
+improve the editorial quality of each FR/EN candidate.
+
+Focus on concrete passages where the writing could better express the author's
+intent, develop a distinctive perspective, improve the progression of ideas,
+or replace generic statements with useful substance.
+
+For each opportunity, cite the passage, explain its limitation and suggest
+the direction of improvement without rewriting the candidate.
+
+Distinguish these recommendations from compliance failures. They are
+non-blocking and do not affect `PASS` / `FAIL` / `INCONCLUSIVE`.
+
+Report only meaningful opportunities. Do not invent weaknesses to populate
+this section. If none are identified, state so explicitly.
+
 Record axis-level `PASS`, `FAIL` or `INCONCLUSIVE`. An overall `PASS`
 requires all applicable axes to pass; missing material evidence cannot PASS.
 A content without a main Capture has `N/A` for Capture coverage.
