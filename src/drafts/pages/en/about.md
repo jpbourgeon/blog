@@ -12,42 +12,46 @@ rationale: .42p/rationale-units/page_about/capture.md
   <div><strong>jpbourgeon</strong><div>Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast</div></div>
 </div>
 
-My work combines management, organizational responsibilities, and software engineering. On this personal blog, I share my thoughts, working practices, and technical projects. I write in a personal capacity, not on behalf of my employer.
+I work with both organizations and IT systems: how they are designed, how they operate, and the decisions needed to change them. I am a technical director and deputy director in a public-sector IT department. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-Understanding how things work and imagining how they could work differently. That curiosity draws me to systems, whether software, IT services, or organizations. Designing a solution is not enough: we also need to understand the decisions behind it, the responsibilities it creates, and how to verify that it meets its purpose.
+Understanding how things work and imagining how they could work differently. That curiosity applies just as much to code as it does to organizations.
 
-I favor simple solutions, explicit decisions, and the ability to stay in control of what we build. These questions matter especially as automation and artificial intelligence take on a greater role.
+In my work, a solution is not judged only by what it can do. Its choices should be explainable, its maintenance manageable, its purpose verifiable, and responsibility for controlling it clear. That is why I am interested in software engineering as well as IT management and governance.
 
-My interests include software architecture, cybernetics, sociotechnical systems, artificial intelligence, frugal engineering, open source, and local-first technologies. Some topics also have dedicated collections bringing together articles and related resources.
+Simplicity and frugal engineering do not mean doing less for its own sake. They mean keeping only the complexity that serves a purpose. As automation and artificial intelligence become more prevalent, understanding and maintaining control matter even more.
+
+I explore software architecture, cybernetics, sociotechnical systems, artificial intelligence, open source, and local-first technologies. Some of these topics may eventually grow into collections of articles and resources.
 
 ## Projects and contributions
 
-I also develop open-source software. It is a way to test ideas against the constraints of design, use, and maintenance.
+I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.
 
-My projects and contributions are available on [GitHub, under the at-rama organization](https://github.com/at-rama).
+I publish open-source work, including [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm), through the [at-rama](https://github.com/at-rama) organization.
 
 ## Find me
 
-You can find my code and contributions on [GitHub](https://github.com/jpbourgeon), my technical writing on [dev.to](https://dev.to/jpbourgeon), and professional conversations on [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
+You can find my contributions on [GitHub](https://github.com/jpbourgeon), my writing on [dev.to](https://dev.to/jpbourgeon), and professional discussions on [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
 
 ---
 
 ## Legal notice
 
-This personal blog is published on a non-professional basis by **jpbourgeon**, who is responsible for its publication.
+This personal blog is published on a non-professional basis by **jpbourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
 
-It is hosted on [GitHub Pages](https://docs.github.com/en/pages), a service of GitHub, Inc.
+**Hosting:** GitHub Pages, a service of **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States. See the [GitHub Pages documentation](https://docs.github.com/en/pages) and [GitHub's contact information](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
 
-<!-- Before publication: verify the host's required contact details and identification arrangements for a non-professional publisher. Do not expose unnecessary private details. -->
+<!-- Before publication: verify that the identification and contact-data requirements for a non-professional publisher are met through the hosting provider. Confirm whether any additional contact details are legally required. -->
 
-Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Software and third-party resources may have their own licenses, specified in their repositories or notices.
+Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Software and third-party materials follow their own licenses; exceptions for the site repository are documented in [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
 ## Privacy
 
-This site is hosted on GitHub Pages. The host may process technical connection data, including IP addresses, as described in its [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
+The site is hosted on GitHub Pages, which processes technical connection data as described in its [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
-I use [GoatCounter](https://www.goatcounter.com/) to measure visits, without tracking cookies. Statistics cover sessions, referrers, and countries. They are retained for **365 days**. GoatCounter describes the technical data it uses and how it handles it in its [privacy documentation](https://www.goatcounter.com/help/privacy).
+The site uses [GoatCounter](https://www.goatcounter.com/) to measure visits without tracking cookies. Its script sends information including the requested page, its title, and the incoming referrer when available. The service temporarily uses IP addresses and browser information to distinguish visits. Depending on account settings, it can also produce aggregate statistics about browsers, operating systems, languages, screen widths, and countries. GoatCounter states that raw IP addresses are not stored in its database. See its [privacy documentation](https://www.goatcounter.com/help/privacy).
 
-<!-- Before publication: confirm the actual settings, information about visitors' rights, and any conditions for consent exemption. -->
+The settings declared for this site concern sessions, referrers, and countries, with a stated retention period of **365 days**.
+
+<!-- Before publication: confirm enabled data categories, 365-day retention, whether individual pageview collection is enabled, visitors' rights information, and whether a consent exemption applies. -->
