@@ -8,12 +8,8 @@ rationale: .42p/rationale-units/page_about/capture.md
 # About
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-  <img src="/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div>
-    **jpbourgeon**
-
-    Technical director and deputy director of a public-sector IT department.
-  </div>
+  <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+  <div><strong>jpbourgeon</strong><div>Technical director and deputy director of a public-sector IT department.</div></div>
 </div>
 
 My work combines management, organizational responsibilities, and software engineering. On this personal blog, I share my thoughts, working practices, and technical projects. I write in a personal capacity, not on behalf of my employer.
