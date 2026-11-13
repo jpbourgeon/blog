@@ -17,8 +17,8 @@ files with `draft: true`. For revisions, do not touch published originals:
 create a separate FR/EN temporary pair with distinct preview slugs.
 
 For **pages**, prepare paired Markdown candidates in
-`.42p/editorial-drafts/pages/fr/<path>.md` and
-`.42p/editorial-drafts/pages/en/<path>.md`, with `draft: true`.
+`src/drafts/pages/fr/<path>.md` and
+`src/drafts/pages/en/<path>.md`, with `draft: true`.
 Do not place an unapproved page in `src/pages/`. Native pages have no
 `unlisted` preview; use a review branch/site for visual approval.
 Published pages live under `src/pages/` and
