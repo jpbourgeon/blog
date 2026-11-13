@@ -8,9 +8,9 @@ La structure a été explicitement validée par l'auteur ; les corrections ulté
 
 ## Orientation éditoriale
 
-- **C-identite** — Exprimer une voix personnelle, à la première personne, sobre et précise ; éviter le CV, le manifeste, le discours institutionnel et l'autopromotion. Présenter le directeur technique et directeur adjoint d'une DSI du secteur public, à la croisée du management des organisations et de l'ingénierie logicielle. Ne pas parler au nom de l'employeur.
+- **C-identite** — Exprimer une voix personnelle, à la première personne, sobre et précise ; éviter le CV, le manifeste, le discours institutionnel et l'autopromotion. Présenter le directeur technique et directeur adjoint d'une DSI du secteur public, à la croisée du management des organisations et de l'ingénierie logicielle, sans répéter dans le premier paragraphe le titre déjà visible dans l'en-tête. Ne pas parler au nom de l'employeur.
 - **C-perspective** — Articuler deux dimensions validées de la perspective personnelle : la curiosité de comprendre et d'imaginer les systèmes autrement, et la responsabilité de concevoir des systèmes compréhensibles, maîtrisables et vérifiables. Les relier à la pratique de l'ingénierie et du management. La simplicité et la frugalité sont des choix de conception à expliquer, non des valeurs à énumérer. Ne pas transformer cette perspective en manifeste STI ni en slogan.
-- **C-domaines** — Dans la page « À propos », évoquer les thèmes qui structurent la réflexion de l'auteur (conception, développement et pilotage des systèmes d'information ; ingénierie logicielle, management, gouvernance et maîtrise humaine face à l'automatisation), sans dresser la liste ni détailler les cinq collections. Signaler sobrement que certains sujets se prolongent dans des collections réunissant publications et ressources. L'organisation et les intitulés des collections relèvent de la navigation et de leurs pages propres, non de la présentation personnelle. Ne pas imposer le rattachement d'un article à une collection, ni créer de collections vides ou de composants promotionnels. La formulation du paragraphe reste à travailler selon la voix de l'auteur.
+- **C-domaines** — Évoquer de manière compacte les thèmes qui structurent la réflexion de l'auteur (conception, développement et pilotage des systèmes d'information ; ingénierie logicielle, management, gouvernance et maîtrise humaine face à l'automatisation), en reliant les domaines déjà illustrés dans le texte plutôt qu'en répétant un inventaire. Ne pas annoncer de collections à venir dans la présentation personnelle : leur organisation et leurs intitulés relèvent de la navigation et de leurs pages propres lorsqu'elles existent. Ne pas imposer le rattachement d'un article à une collection, ni créer de collections vides ou de composants promotionnels.
 - **C-productions** — Distinguer territoires de réflexion et réalisations. Orienter vers l'organisation GitHub `at-rama` et les productions effectivement publiques (par exemple `sqlite-vector-wasm`), sans inventaire de projets ni annonces non publiées.
 - **C-contact** — Mettre en avant les profils personnels [GitHub](https://github.com/jpbourgeon), [dev.to](https://dev.to/jpbourgeon), [LinkedIn](https://www.linkedin.com/in/jpbourgeon). Présenter séparément l'organisation de production [at-rama](https://github.com/at-rama). Pas de formulaire.
 - **C-statut** — L'auteur confirme que le blog personnel est **édité à titre juridiquement non professionnel** et demande de ne pas publier de coordonnées privées inutiles. Rédiger les mentions en conséquence et vérifier les informations légalement exigées.
@@ -45,13 +45,17 @@ Conséquences rédactionnelles : préserver la dimension parentale et curieuse (
 
 1. **Identité — Qui je suis** : portrait, nom, situation professionnelle et introduction.
 2. **Perspective — Pourquoi ce blog** : concevoir/comprendre, gouverner/maîtriser, simplicité.
-3. **Thèmes de réflexion** : un court paragraphe dans le fil de la présentation, juste après la perspective personnelle, sans titre supplémentaire ni énumération des collections ; mentionner leur existence sans en faire le sommaire du site.
+3. **Thèmes de réflexion** : un passage bref dans le fil de la présentation, sans titre supplémentaire ni inventaire de thèmes déjà développés ; ne pas mentionner les collections futures.
 4. **Productions et contributions** : travaux open source, liens vérifiables.
 5. **Me retrouver et échanger** : GitHub, dev.to et LinkedIn.
 6. **Mentions légales** (longueur dictée par les besoins) : identification/statut, responsable de publication, hébergeur GitHub Pages, droits et licences.
 7. **Confidentialité** (courte et factuelle) : hébergement et mesure d'audience GoatCounter, traitements réels, information et éventuel consentement suivant configuration.
 
 Cette structure décrit les informations à couvrir, pas un ordre de paragraphes obligatoire : le rédacteur peut rapprocher, déplacer ou condenser des éléments sans perdre le sens ni les obligations de publication. Préserver une page courte et fluide, sans remplissage, cartes, icônes, section dédiée aux collections ou infrastructure de collections prématurées.
+
+## Finition éditoriale des candidats FR/EN
+
+La nouvelle rédaction de la page est jugée satisfaisante dans son ensemble ; procéder à une retouche ciblée plutôt qu'à une refonte. Éviter la répétition du titre professionnel déjà affiché dans l'en-tête ; condenser les centres d'intérêt pour ne pas interrompre le raisonnement ; supprimer la phrase annonçant des collections futures. Préserver la progression entre curiosité, responsabilité, simplicité et expérimentation par le code, notamment l'exemple public `sqlite-vector-wasm`. Pour l'anglais, privilégier des tournures idiomatiques sans traduction littérale des expressions françaises encore un peu mécaniques. Ne pas chercher à renforcer artificiellement l'aspect joueur de l'auteur ni à ajouter de contenu promotionnel.
 
 ## Portrait : choix de mise en œuvre
 
@@ -74,7 +78,7 @@ Cette structure décrit les informations à couvrir, pas un ordre de paragraphes
 
 ## Sources de travail
 
-- Décisions éditoriales ultérieures de l'auteur : la page « À propos » présente les thèmes de réflexion sans inventorier les collections, accessibles par la navigation ; court paragraphe intégré au corps de page. L'auteur a également validé la proposition visuelle d'un en-tête de profil compact avec avatar circulaire local, plutôt qu'un hero ou une intégration Gravatar.
+- Décisions éditoriales de l'auteur : la page « À propos » présente les thèmes de réflexion dans le corps du texte, sans inventorier les collections ; la dernière demande de finition retient la suppression de leur annonce prospective. L'auteur a également validé un en-tête de profil compact avec avatar circulaire local, plutôt qu'un hero ou une intégration Gravatar.
 
 - Décisions de l'auteur dans la présente discussion : validation de la structure ; correction FluidJ ; choix des contacts et du statut juridiquement non professionnel ; confirmation des quatre URL ; déclaration de configuration GoatCounter (session, referrer, country, 365 jours) ; choix d'une copie locale de l'avatar et retrait de l'email des contacts éditoriaux ; dépôt par l'auteur de `static/img/avatar.webp` dans la PR ; demande de capturer le plan V2.
 - Plan V2 de l'assistant dans la discussion : source dérivée **explicitement désignée** pour cette capture ; recommandations et formulations non validées individuellement restent distinguées des décisions de l'auteur.
@@ -82,4 +86,4 @@ Cette structure décrit les informations à couvrir, pas un ordre de paragraphes
 
 ## Suite envisagée
 
-Vérifier le rendu du portrait local intégré dans les candidates FR/EN ; finaliser les vérifications des mentions légales et de la confidentialité contre la configuration effective ; procéder à la vérification éditoriale indépendante, puis demander validation et autorisation distincte avant tout aperçu ou déploiement.
+Appliquer la finition éditoriale ciblée aux candidates FR/EN, puis vérifier le rendu du portrait local ; finaliser les mentions légales et la confidentialité contre les obligations et réglages effectifs ; procéder à une nouvelle vérification éditoriale indépendante, puis demander validation et autorisation distincte avant tout aperçu ou déploiement.
