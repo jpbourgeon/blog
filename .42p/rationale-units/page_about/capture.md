@@ -36,7 +36,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 - Docusaurus natif ; routes envisagées `/blog/about/` et `/blog/en/about/`, avec navigation « À propos » et lien de pied de page vers l'ancre des mentions légales.
 - Deux versions cohérentes FR/EN, traduction non nécessairement littérale ; page permanente non datée, indexable quand publique.
 - Pas de nouvelle dépendance ou mécanisme de publication. Respecter `AGENTS.md`, `standards/editorial.md` et `standards/voice.md`.
-- Pages candidates hors des routes publiques dans `.42p/editorial-drafts/pages/{fr,en}/` ; vérification indépendante, décision de l'auteur, gate et déploiement manuel sur accord explicite. **Cette PR de Capture ne prépare ni n'expose un aperçu, et ne publie aucun contenu.**
+- Pages candidates hors des routes publiques dans `src/drafts/pages/{fr,en}/` ; vérification indépendante, décision de l'auteur, gate et déploiement manuel sur accord explicite. **Cette PR de Capture ne prépare ni n'expose un aperçu, et ne publie aucun contenu.**
 - Réutiliser les licences existantes : contenus originaux CC BY-NC-ND 4.0, exceptions et code selon `LICENSE-ADDITIONAL.md`.
 
 ## Décisions complémentaires et points résiduels
@@ -44,7 +44,7 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 - **Q-legal** — Statut **non professionnel** explicitement confirmé par l'auteur ; publier uniquement les mentions légalement nécessaires, sans coordonnées privées superflues. La rédaction doit encore vérifier les mentions et modalités de contact de l'éditeur et de l'hébergeur effectivement requises.
 - **Q-privacy** — Configuration GoatCounter déclarée par l'auteur : statistiques anonymes de **session, referrer et country**, avec **rétention de 365 jours**. Reprendre ces paramètres sans étendre la déclaration à d'autres données non confirmées ; vérifier la correspondance avec les traitements réels du site et les exigences d'information/consentement avant publication. Le terme « anonyme » reflète ici la déclaration de configuration, pas une qualification juridique auditée.
 - **Q-profiles** — Profils validés : https://github.com/jpbourgeon ; https://dev.to/jpbourgeon ; https://www.linkedin.com/in/jpbourgeon ; organisation GitHub https://github.com/at-rama. Aucun email personnel à afficher dans les contacts éditoriaux ; les exigences légales de contact restent traitées séparément en Q-legal.
-- **Q-avatar** — **Fichier fourni par l'auteur et présent dans la PR** : `static/img/avatar.webp`. Acquisition terminée ; restent l'intégration dans les candidates FR/EN et la vérification du rendu avant publication.
+- **Q-avatar** — **Fichier fourni par l'auteur et présent dans la PR** : `static/img/avatar.webp`. Acquisition terminée ; l'intégration dans les candidates FR/EN est réalisée ; reste la vérification du rendu avant publication.
 
 ## Sources de travail
 
@@ -56,4 +56,4 @@ Les volumes sont indicatifs, non des seuils normatifs. Préserver une page court
 
 ## Suite envisagée
 
-Intégrer le portrait local déjà fourni dans les candidates FR/EN et vérifier son rendu ; finaliser les vérifications des mentions légales et de la confidentialité contre la configuration effective ; procéder à la vérification éditoriale indépendante, puis demander validation et autorisation distincte avant tout aperçu ou déploiement.
+Vérifier le rendu du portrait local intégré dans les candidates FR/EN ; finaliser les vérifications des mentions légales et de la confidentialité contre la configuration effective ; procéder à la vérification éditoriale indépendante, puis demander validation et autorisation distincte avant tout aperçu ou déploiement.
