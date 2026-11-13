@@ -139,7 +139,7 @@ export function articlePair(key: string): Pair<string> {
 export type Kind = 'article' | 'page';
 export type Document = Article & {kind: Kind; key: string; locale: Locale; source: 'canonical' | 'candidate'};
 const pageRoots: Pair<string> = {fr: 'src/pages/', en: 'i18n/en/docusaurus-plugin-content-pages/'};
-const pageDraftRoots: Pair<string> = {fr: '.42p/editorial-drafts/pages/fr/', en: '.42p/editorial-drafts/pages/en/'};
+const pageDraftRoots: Pair<string> = {fr: 'src/drafts/pages/fr/', en: 'src/drafts/pages/en/'};
 
 export function pagePair(key: string): Pair<string> {
   return {fr: pageRoots.fr + key, en: pageRoots.en + key};
