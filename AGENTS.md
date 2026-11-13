@@ -30,11 +30,13 @@ Capture facultative → rédaction FR/EN → vérification indépendante →
 décision de l'auteur → promotion et déploiement autorisés.
 Articles et pages utilisent le même cycle. Ne jamais modifier directement
 une version publique avant son approbation : préparer une candidate distincte.
-Les drafts de pages vont dans `.42p/editorial-drafts/pages/{fr,en}/` ;
+42P conserve le Canon (Captures, vérifications et preuves) ; pages et articles
+sont du Code, même à l'état candidat. Les drafts de pages vont dans
+`src/drafts/pages/{fr,en}/`, hors des routes Docusaurus ;
 les articles utilisent `draft: true` et, avec autorisation, `unlisted`.
 Pour supprimer un contenu déployé et exposé (`public` ou `unlisted`),
 déployer d’abord son retrait. Passer l’article en `draft` ou déplacer la page
-vers les drafts FR/EN. La suppression physique peut ensuite être effectuée
+vers `src/drafts/pages/{fr,en}/`. La suppression physique peut ensuite être effectuée
 sans rapport spécifique. Conserver les ressources et Captures encore référencées.
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
