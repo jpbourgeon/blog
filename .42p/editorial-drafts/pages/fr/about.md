@@ -7,41 +7,34 @@ rationale: .42p/rationale-units/page_about/capture.md
 
 # À propos
 
-<!-- Ajouter une copie locale du portrait LinkedIn après vérification du rendu. -->
+<div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+  <img src="/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+  <div>
+    **jpbourgeon**
 
-Je suis directeur technique et directeur adjoint d'une DSI du secteur public. Mon travail mêle management, organisation et ingénierie logicielle.
+    Directeur technique et directeur adjoint d'une DSI du secteur public.
+  </div>
+</div>
 
-Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
+Mon travail mêle management, organisation et ingénierie logicielle. Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
 
-## Ce qui m'intéresse
+## Pourquoi ce blog
 
-Je cherche à comprendre comment fonctionnent les systèmes, qu'il s'agisse de logiciels, de services informatiques ou d'organisations. Leur conception compte, mais aussi les décisions prises, les responsabilités et les moyens de garder le contrôle.
+Je m'intéresse à la façon dont les systèmes fonctionnent et évoluent : logiciels, services informatiques, organisations. Concevoir une solution ne suffit pas. Il faut aussi comprendre les décisions qui la façonnent, les responsabilités qu'elle engage et les moyens de vérifier qu'elle répond au besoin.
 
-Je privilégie des solutions simples, dont les choix sont explicites et les résultats vérifiables. C'est particulièrement important lorsque l'on automatise davantage de tâches ou que l'on confie du travail à l'intelligence artificielle.
+Je privilégie les solutions simples, les choix explicites et la capacité à garder la maîtrise de ce que l'on construit. Ces questions prennent une place particulière avec l'automatisation et l'intelligence artificielle.
 
-## Sujets et projets
-
-**APE** — Le management tel qu'il se pratique : les responsabilités, le travail quotidien et les écarts entre les décisions et leur mise en œuvre.
-
-**42P** — La maîtrise des changements apportés aux productions, notamment logicielles : spécifier, justifier, vérifier et conserver la trace des décisions.
-
-**STI — Sovereignty Through Institution** — La souveraineté humaine face à l'IA : ce que nous pouvons déléguer, ce qui doit rester sous contrôle humain et comment organiser cette maîtrise.
-
-**FluidJ** — Un projet applicatif consacré à la gouvernance des responsabilités individuelles.
-
-**Cybernetic ITSM** (nom provisoire) — Le management des services informatiques, en rapprochant ITIL d'une approche systémique et cybernétique.
-
-Ces sujets peuvent se croiser. Tous les articles n'ont pas vocation à appartenir à une collection.
+J'aborde ainsi l'ingénierie logicielle, le management, la gouvernance et le pilotage des systèmes d'information. Certains sujets se prolongent dans des collections qui réunissent articles et ressources associées.
 
 ## Productions et contributions
 
-Je développe aussi des logiciels open source. Ils me permettent de confronter mes idées aux contraintes de conception, d'usage et de maintenance.
+Je développe également des logiciels open source. C'est une façon de confronter les idées aux contraintes de conception, d'utilisation et de maintenance.
 
-Les projets et leur code sont disponibles notamment sur [GitHub, dans l'organisation at-rama](https://github.com/at-rama).
+Mes productions et contributions sont accessibles notamment sur [GitHub, au sein de l'organisation at-rama](https://github.com/at-rama).
 
-## Me retrouver
+## Me retrouver et échanger
 
-Je suis présent sur [GitHub](https://github.com/jpbourgeon) pour le code et les contributions, sur [dev.to](https://dev.to/jpbourgeon) pour les publications techniques et sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon) pour les échanges professionnels.
+Tu peux retrouver mon code et mes contributions sur [GitHub](https://github.com/jpbourgeon), mes publications techniques sur [dev.to](https://dev.to/jpbourgeon) et mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
 
 ---
 
