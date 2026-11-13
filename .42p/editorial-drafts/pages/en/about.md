@@ -7,41 +7,34 @@ rationale: .42p/rationale-units/page_about/capture.md
 
 # About
 
-<!-- Add a local copy of the LinkedIn profile picture after checking the result. -->
+<div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+  <img src="/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+  <div>
+    **jpbourgeon**
 
-I am the technical director and deputy director of a public-sector IT department. My work combines management, organizational responsibilities, and software engineering.
+    Technical director and deputy director of a public-sector IT department.
+  </div>
+</div>
 
-On this personal blog, I share my thoughts, working practices, and technical projects. I write in a personal capacity, not on behalf of my employer.
+My work combines management, organizational responsibilities, and software engineering. On this personal blog, I share my thoughts, working practices, and technical projects. I write in a personal capacity, not on behalf of my employer.
 
-## What interests me
+## Why this blog
 
-I try to understand how systems work, whether they are software, IT services, or organizations. Their design matters, but so do the decisions behind them, the responsibilities involved, and the ability to remain in control.
+I'm interested in how systems work and evolve: software, IT services, and organizations. Designing a solution is not enough. We also need to understand the decisions behind it, the responsibilities it creates, and how to verify that it meets its purpose.
 
-I favor simple solutions with explicit decisions and verifiable results. This matters especially as more tasks are automated or delegated to artificial intelligence.
+I favor simple solutions, explicit decisions, and the ability to stay in control of what we build. These questions matter especially as automation and artificial intelligence take on a greater role.
 
-## Topics and projects
-
-**APE** — Management as it is practiced: responsibilities, everyday work, and the gaps between decisions and their implementation.
-
-**42P** — Keeping control of changes to what we produce, particularly software: specifying, explaining decisions, verifying results, and keeping a record of changes.
-
-**STI — Sovereignty Through Institution** — Human sovereignty in the age of AI: what we can delegate, what should remain under human control, and how to organize that control.
-
-**FluidJ** — An application project focused on governing individual responsibilities.
-
-**Cybernetic ITSM** (working name) — IT service management, bringing ITIL together with a systemic and cybernetic approach.
-
-These topics sometimes overlap. Not every article needs to belong to a collection.
+I write about software engineering, management, governance, and the operation of IT systems. Some topics also have dedicated collections bringing together articles and related resources.
 
 ## Projects and contributions
 
-I also develop open-source software. It lets me test ideas against the practical constraints of design, use, and maintenance.
+I also develop open-source software. It is a way to test ideas against the constraints of design, use, and maintenance.
 
-The projects and their code can be found on [GitHub, under the at-rama organization](https://github.com/at-rama).
+My projects and contributions are available on [GitHub, under the at-rama organization](https://github.com/at-rama).
 
 ## Find me
 
-I use [GitHub](https://github.com/jpbourgeon) for code and contributions, [dev.to](https://dev.to/jpbourgeon) for technical writing, and [LinkedIn](https://www.linkedin.com/in/jpbourgeon) for professional conversations.
+You can find my code and contributions on [GitHub](https://github.com/jpbourgeon), my technical writing on [dev.to](https://dev.to/jpbourgeon), and professional conversations on [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
 
 ---
 
