@@ -9,7 +9,7 @@ La structure a été explicitement validée par l'auteur ; les corrections ulté
 ## Orientation éditoriale
 
 - **C-identite** — Exprimer une voix personnelle, à la première personne, sobre et précise ; éviter le CV, le manifeste, le discours institutionnel et l'autopromotion. Présenter le directeur technique et directeur adjoint d'une DSI du secteur public, à la croisée du management des organisations et de l'ingénierie logicielle. Ne pas parler au nom de l'employeur.
-- **C-perspective** — Relier conception et compréhension des systèmes, gouvernance des décisions/responsabilités, maîtrise humaine, simplicité, frugalité, vérifiabilité et pérennité ; ne pas anticiper un manifeste STI.
+- **C-perspective** — Articuler deux dimensions validées de la perspective personnelle : la curiosité de comprendre et d'imaginer les systèmes autrement, et la responsabilité de concevoir des systèmes compréhensibles, maîtrisables et vérifiables. Les relier à la pratique de l'ingénierie et du management. La simplicité et la frugalité sont des choix de conception à expliquer, non des valeurs à énumérer. Ne pas transformer cette perspective en manifeste STI ni en slogan.
 - **C-domaines** — Dans la page « À propos », évoquer les thèmes qui structurent la réflexion de l'auteur (conception, développement et pilotage des systèmes d'information ; ingénierie logicielle, management, gouvernance et maîtrise humaine face à l'automatisation), sans dresser la liste ni détailler les cinq collections. Signaler sobrement que certains sujets se prolongent dans des collections réunissant publications et ressources. L'organisation et les intitulés des collections relèvent de la navigation et de leurs pages propres, non de la présentation personnelle. Ne pas imposer le rattachement d'un article à une collection, ni créer de collections vides ou de composants promotionnels. La formulation du paragraphe reste à travailler selon la voix de l'auteur.
 - **C-productions** — Distinguer territoires de réflexion et réalisations. Orienter vers l'organisation GitHub `at-rama` et les productions effectivement publiques (par exemple `sqlite-vector-wasm`), sans inventaire de projets ni annonces non publiées.
 - **C-contact** — Mettre en avant les profils personnels [GitHub](https://github.com/jpbourgeon), [dev.to](https://dev.to/jpbourgeon), [LinkedIn](https://www.linkedin.com/in/jpbourgeon). Présenter séparément l'organisation de production [at-rama](https://github.com/at-rama). Pas de formulaire.
@@ -43,15 +43,15 @@ Conséquences rédactionnelles : préserver la dimension parentale et curieuse (
 
 ## Structure de page retenue
 
-1. **Identité — Qui je suis** (environ 70–100 mots) : portrait, nom, situation professionnelle et introduction.
-2. **Perspective — Pourquoi ce blog** (environ 100–150 mots) : concevoir/comprendre, gouverner/maîtriser, simplicité.
+1. **Identité — Qui je suis** : portrait, nom, situation professionnelle et introduction.
+2. **Perspective — Pourquoi ce blog** : concevoir/comprendre, gouverner/maîtriser, simplicité.
 3. **Thèmes de réflexion** : un court paragraphe dans le fil de la présentation, juste après la perspective personnelle, sans titre supplémentaire ni énumération des collections ; mentionner leur existence sans en faire le sommaire du site.
-4. **Productions et contributions** (environ 70–110 mots) : travaux open source, liens vérifiables.
-5. **Me retrouver et échanger** (environ 60–90 mots) : GitHub, dev.to et LinkedIn.
+4. **Productions et contributions** : travaux open source, liens vérifiables.
+5. **Me retrouver et échanger** : GitHub, dev.to et LinkedIn.
 6. **Mentions légales** (longueur dictée par les besoins) : identification/statut, responsable de publication, hébergeur GitHub Pages, droits et licences.
 7. **Confidentialité** (courte et factuelle) : hébergement et mesure d'audience GoatCounter, traitements réels, information et éventuel consentement suivant configuration.
 
-Les volumes sont indicatifs, non des seuils normatifs. Préserver une page courte et fluide, sans cartes, icônes, section dédiée aux collections ou infrastructure de collections prématurées.
+Cette structure décrit les informations à couvrir, pas un ordre de paragraphes obligatoire : le rédacteur peut rapprocher, déplacer ou condenser des éléments sans perdre le sens ni les obligations de publication. Préserver une page courte et fluide, sans remplissage, cartes, icônes, section dédiée aux collections ou infrastructure de collections prématurées.
 
 ## Portrait : choix de mise en œuvre
 
