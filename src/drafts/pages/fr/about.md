@@ -12,42 +12,46 @@ rationale: .42p/rationale-units/page_about/capture.md
   <div><strong>jpbourgeon</strong><div>Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes</div></div>
 </div>
 
-Mon travail mêle management, organisation et ingénierie logicielle. Sur ce blog personnel, je partage mes réflexions, mes pratiques et mes projets techniques. Je m'exprime à titre personnel, pas au nom de mon employeur.
+Je travaille à la fois sur les organisations et sur les systèmes informatiques : leur conception, leur fonctionnement et les décisions nécessaires pour les faire évoluer. Je suis directeur technique et directeur adjoint d'une DSI du secteur public. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-Comprendre comment les choses fonctionnent, imaginer comment elles pourraient fonctionner autrement. C'est ce qui nourrit ma curiosité pour les systèmes, qu'il s'agisse de logiciels, de services informatiques ou d'organisations. Concevoir une solution ne suffit pas : il faut aussi comprendre les décisions qui la façonnent, les responsabilités qu'elle engage et les moyens de vérifier qu'elle répond au besoin.
+Comprendre comment les choses fonctionnent, imaginer comment elles pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien devant du code que face à une organisation.
 
-Je privilégie les solutions simples, les choix explicites et la capacité à garder la maîtrise de ce que l'on construit. Ces questions prennent une place particulière avec l'automatisation et l'intelligence artificielle.
+Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer ses choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
 
-Mes centres d'intérêt vont de l'architecture logicielle à la cybernétique et aux systèmes sociotechniques, en passant par l'intelligence artificielle, l'ingénierie frugale, l'open source et les technologies local-first. Certains sujets se prolongent dans des collections qui réunissent articles et ressources associées.
+La simplicité et la frugalité ne consistent pas à faire moins par principe : elles invitent à ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
+
+J'explore notamment l'architecture logicielle, la cybernétique, les systèmes sociotechniques, l'intelligence artificielle, l'open source et les technologies local-first. Certains de ces sujets ont vocation à se prolonger dans des collections d'articles et de ressources.
 
 ## Productions et contributions
 
-Je développe également des logiciels open source. C'est une façon de confronter les idées aux contraintes de conception, d'utilisation et de maintenance.
+J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
 
-Mes productions et contributions sont accessibles notamment sur [GitHub, au sein de l'organisation at-rama](https://github.com/at-rama).
+Je publie des travaux open source, notamment [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm), au sein de l'organisation [at-rama](https://github.com/at-rama).
 
 ## Me retrouver et échanger
 
-Tu peux retrouver mon code et mes contributions sur [GitHub](https://github.com/jpbourgeon), mes publications techniques sur [dev.to](https://dev.to/jpbourgeon) et mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
+Tu peux retrouver mes contributions sur [GitHub](https://github.com/jpbourgeon), mes articles sur [dev.to](https://dev.to/jpbourgeon) et mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
 
 ---
 
 ## Mentions légales
 
-Ce blog personnel est édité à titre non professionnel par **jpbourgeon**, responsable de sa publication.
+Ce blog personnel est édité à titre non professionnel par **jpbourgeon**, responsable de sa publication. Il présente des réflexions et des travaux personnels, indépendants de mon employeur.
 
-Il est hébergé sur [GitHub Pages](https://docs.github.com/fr/pages), un service de GitHub, Inc.
+**Hébergement :** GitHub Pages, service de **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Voir les [informations GitHub Pages](https://docs.github.com/fr/pages) et les [coordonnées de GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
 
-<!-- Avant publication : vérifier les coordonnées obligatoires de l'hébergeur et les modalités d'identification de l'éditeur non professionnel. Ne pas exposer de coordonnées privées inutiles. -->
+<!-- Avant publication : vérifier que les conditions d'identification d'un éditeur non professionnel et de conservation de ses coordonnées auprès de l'hébergeur sont satisfaites. Vérifier si des coordonnées supplémentaires sont légalement requises. -->
 
-Sauf mention contraire, mes textes originaux sont publiés sous licence [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr). Les logiciels et ressources tierces peuvent avoir leurs propres licences, indiquées dans leurs dépôts ou notices.
+Sauf mention contraire, mes textes originaux sont placés sous licence [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr). Le code et les ressources tierces relèvent de leurs licences propres ; les exceptions applicables au dépôt sont indiquées dans [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
 ## Confidentialité
 
-Ce site est hébergé sur GitHub Pages. L'hébergeur peut traiter des données techniques de connexion, dont les adresses IP, selon sa [politique de confidentialité](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement).
+Le site est hébergé sur GitHub Pages, qui traite des données techniques de connexion dans les conditions décrites par sa [politique de confidentialité](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement).
 
-J'utilise [GoatCounter](https://www.goatcounter.com/) pour mesurer la fréquentation, sans cookies de suivi. Les statistiques portent sur les sessions, les sites d'origine des visites (référents) et les pays. Elles sont conservées **365 jours**. GoatCounter précise les données techniques utilisées et leur traitement dans sa [documentation sur la confidentialité](https://www.goatcounter.com/help/privacy).
+Pour mesurer la fréquentation, le site charge [GoatCounter](https://www.goatcounter.com/), sans cookie de suivi. Le script transmet notamment la page consultée, son titre et, lors de l'arrivée sur le site, le référent lorsqu'il est disponible. Le service utilise temporairement l'adresse IP et les informations du navigateur pour distinguer les visites ; selon les paramètres du compte, il peut produire des statistiques agrégées sur les navigateurs, systèmes, langues, tailles d'écran ou pays. GoatCounter indique ne pas conserver les adresses IP brutes dans sa base. Voir sa [documentation de confidentialité](https://www.goatcounter.com/help/privacy).
 
-<!-- Avant publication : confirmer la configuration effective, les mentions relatives aux droits des visiteurs et les conditions d'exemption éventuelle de consentement. -->
+La configuration déclarée pour ce site porte sur les sessions, les référents et les pays, avec une conservation annoncée de **365 jours**.
+
+<!-- Avant publication : confirmer dans le compte GoatCounter les catégories réellement activées, la rétention de 365 jours, l'éventuelle collecte des visites individuelles, la conformité de l'information sur les droits des personnes et l'applicabilité d'une exemption de consentement. -->
