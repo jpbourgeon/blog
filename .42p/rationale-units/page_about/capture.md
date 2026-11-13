@@ -15,6 +15,32 @@ La structure a été explicitement validée par l'auteur ; les corrections ulté
 - **C-contact** — Mettre en avant les profils personnels [GitHub](https://github.com/jpbourgeon), [dev.to](https://dev.to/jpbourgeon), [LinkedIn](https://www.linkedin.com/in/jpbourgeon). Présenter séparément l'organisation de production [at-rama](https://github.com/at-rama). Pas de formulaire.
 - **C-statut** — L'auteur confirme que le blog personnel est **édité à titre juridiquement non professionnel** et demande de ne pas publier de coordonnées privées inutiles. Rédiger les mentions en conséquence et vérifier les informations légalement exigées.
 
+## Présentation personnelle validée — référence FR/EN (13 novembre 2026)
+
+Les formulations suivantes sont fournies et validées par l'auteur. Elles priment sur les formulations illustratives antérieures pour l'identité, la perspective et les centres d'intérêt. La rédaction de la page peut les développer sans en changer le sens ; ne pas les traiter comme un nouveau slogan publicitaire ni comme un inventaire de collections.
+
+**Français — Présentation**
+
+> Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
+
+**Français — Centres d'intérêt**
+
+> Comprendre comment les choses fonctionnent, imaginer comment elles pourraient fonctionner autrement.
+>
+> Architecture logicielle, cybernétique, systèmes sociotechniques, intelligence artificielle, ingénierie frugale, open source et technologies local-first.
+
+**English — Bio**
+
+> Papa Bear · Public-sector IT Technical Director & Deputy Director · Systems Enthusiast
+
+**English — Interests**
+
+> Understanding how things work and imagining how they could work differently.
+>
+> Software architecture, cybernetics, sociotechnical systems, artificial intelligence, frugal engineering, open source, and local-first technologies.
+
+Conséquences rédactionnelles : préserver la dimension parentale et curieuse (sans l'instrumentaliser), conserver l'intitulé professionnel exact dans les deux langues, faire apparaître la compréhension et l'imagination comme moteur de la démarche, et traiter les centres d'intérêt comme des domaines ouverts plutôt que des expertises revendiquées. La formule anglaise « Papa Bear » est un choix de l'auteur, non une traduction à corriger.
+
 ## Structure de page retenue
 
 1. **Identité — Qui je suis** (environ 70–100 mots) : portrait, nom, situation professionnelle et introduction.
