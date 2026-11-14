@@ -16,11 +16,11 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 ## Pourquoi ce blog
 
-Comprendre comment les choses fonctionnent, imaginer comment elles pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien devant du code que face à une organisation.
+Comprendre comment les systèmes fonctionnent, imaginer comment elles pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien face à du code qu'auprès de mon équipe.
 
-Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer ses choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
+Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer les raisons de son choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
 
-La simplicité et la frugalité ne consistent pas à faire moins par principe : elles invitent à ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
+La simplicité et la frugalité, que je recherche dans le fonctionnement des choses, ne consistent pas à faire moins par principe : ces principes invitent à ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
 
 L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
 
@@ -28,21 +28,19 @@ L'architecture logicielle, la cybernétique et les systèmes sociotechniques nou
 
 J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
 
-Je publie des travaux open source, notamment [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm), au sein de l'organisation [at-rama](https://github.com/at-rama).
+Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
 
 ## Me retrouver et échanger
 
-Tu peux retrouver mes contributions sur [GitHub](https://github.com/jpbourgeon), mes articles sur [dev.to](https://dev.to/jpbourgeon) et mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
+Retrouvez mes contributions sur [GitHub](https://github.com/jpbourgeon), mes articles sur [dev.to](https://dev.to/jpbourgeon) et mes échanges professionnels sur [LinkedIn](https://www.linkedin.com/in/jpbourgeon).
 
 ---
 
 ## Mentions légales
 
-Ce blog personnel est édité à titre non professionnel par **jpbourgeon**, responsable de sa publication. Il présente des réflexions et des travaux personnels, indépendants de mon employeur.
+Ce blog personnel est édité à titre non professionnel par **Jean-Philippe Bourgeon**, responsable de sa publication. Il présente des réflexions et des travaux personnels, indépendants de mon employeur.
 
 **Hébergement :** GitHub Pages, service de **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Voir les [informations GitHub Pages](https://docs.github.com/fr/pages) et les [coordonnées de GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
-
-<!-- Avant publication : vérifier que les conditions d'identification d'un éditeur non professionnel et de conservation de ses coordonnées auprès de l'hébergeur sont satisfaites. Vérifier si des coordonnées supplémentaires sont légalement requises. -->
 
 Sauf mention contraire, mes textes originaux sont placés sous licence [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.fr). Le code et les ressources tierces relèvent de leurs licences propres ; les exceptions applicables au dépôt sont indiquées dans [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
@@ -54,4 +52,3 @@ Pour mesurer la fréquentation, le site charge [GoatCounter](https://www.goatcou
 
 La configuration déclarée pour ce site porte sur les sessions, les référents et les pays, avec une conservation annoncée de **365 jours**.
 
-<!-- Avant publication : confirmer dans le compte GoatCounter les catégories réellement activées, la rétention de 365 jours, l'éventuelle collecte des visites individuelles, la conformité de l'information sur les droits des personnes et l'applicabilité d'une exemption de consentement. -->
