@@ -36,7 +36,7 @@ You can find my contributions on [GitHub](https://github.com/jpbourgeon), my wri
 
 ---
 
-## Legal notice
+## Legal notice {#legal}
 
 This personal blog is published on a non-professional basis by **Jean-Philippe Bourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
 
