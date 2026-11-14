@@ -16,11 +16,11 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 ## Pourquoi ce blog
 
-Comprendre comment les systèmes fonctionnent, imaginer comment elles pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien face à du code qu'auprès de mon équipe.
+Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe.
 
 Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer les raisons de son choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
 
-La simplicité et la frugalité, que je recherche dans le fonctionnement des choses, ne consistent pas à faire moins par principe : ces principes invitent à ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
+Je recherche la simplicité et la frugalité, non pour faire moins par principe, mais pour ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
 
 L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
 
@@ -51,4 +51,3 @@ Le site est hébergé sur GitHub Pages, qui traite des données techniques de co
 Pour mesurer la fréquentation, le site charge [GoatCounter](https://www.goatcounter.com/), sans cookie de suivi. Le script transmet notamment la page consultée, son titre et, lors de l'arrivée sur le site, le référent lorsqu'il est disponible. Le service utilise temporairement l'adresse IP et les informations du navigateur pour distinguer les visites ; selon les paramètres du compte, il peut produire des statistiques agrégées sur les navigateurs, systèmes, langues, tailles d'écran ou pays. GoatCounter indique ne pas conserver les adresses IP brutes dans sa base. Voir sa [documentation de confidentialité](https://www.goatcounter.com/help/privacy).
 
 La configuration déclarée pour ce site porte sur les sessions, les référents et les pays, avec une conservation annoncée de **365 jours**.
-
