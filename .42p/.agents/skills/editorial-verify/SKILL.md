@@ -9,6 +9,17 @@ Read `AGENTS.md`, both standards, exact FR/EN candidates, established author
 decisions, relevant independent sources, and the main Capture if applicable.
 A Capture is not independent evidence. Evaluate pages and articles identically.
 
+For operational settings of external accounts that cannot be inspected from the
+repository (for example, GoatCounter retention and dashboard options), accept an
+explicit confirmation by the site owner as the authoritative declaration of those
+settings. Do not require a second dashboard inspection or mark the result
+`INCONCLUSIVE` solely because the verifier cannot access that account. Check that
+the declaration is reproduced faithfully in both languages and does not
+contradict observable repository configuration or independent documentation.
+Attribute account settings to the owner's declaration, not to independent
+technical verification. This does not waive checks of code, links, externally
+verifiable product behavior, or other material publication requirements.
+
 Verify factual support, fidelity to the author's intent, both standards,
 bilingual semantic parity, links and technical publication readiness.
 When a main Capture exists, map every material component **Capture → content**
