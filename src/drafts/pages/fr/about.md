@@ -12,7 +12,7 @@ rationale: .42p/rationale-units/page_about/capture.md
   <div><strong>jpbourgeon</strong><div>Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes</div></div>
 </div>
 
-Je travaille à la fois sur les organisations et sur les systèmes informatiques : leur conception, leur fonctionnement et les décisions nécessaires pour les faire évoluer. Je suis directeur technique et directeur adjoint d'une DSI du secteur public. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
+Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
 ## Pourquoi ce blog
 
@@ -22,7 +22,7 @@ Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de 
 
 La simplicité et la frugalité ne consistent pas à faire moins par principe : elles invitent à ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
 
-J'explore notamment l'architecture logicielle, la cybernétique, les systèmes sociotechniques, l'intelligence artificielle, l'open source et les technologies local-first. Certains de ces sujets ont vocation à se prolonger dans des collections d'articles et de ressources.
+L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
 
 ## Productions et contributions
 
