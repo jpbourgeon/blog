@@ -17,7 +17,7 @@ La structure a été explicitement validée par l'auteur ; les corrections ulté
 
 ## Présentation personnelle validée — référence FR/EN (13 novembre 2026)
 
-Les formulations suivantes sont fournies et validées par l'auteur. Elles priment sur les formulations illustratives antérieures pour l'identité, la perspective et les centres d'intérêt. La rédaction de la page peut les développer sans en changer le sens ; ne pas les traiter comme un nouveau slogan publicitaire ni comme un inventaire de collections.
+La signature FR/EN ci-dessous reste validée par l'auteur. Les formulations de centres d'intérêt du 13 novembre sont des références de provenance : la rédaction française finalisée ensuite, plus personnelle et condensée, prime pour le texte de la page et son adaptation anglaise. Ne pas réintroduire mécaniquement l'ancienne énumération, ni en faire un slogan ou un inventaire de collections.
 
 **Français — Présentation**
 
