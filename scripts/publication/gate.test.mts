@@ -154,21 +154,25 @@ test('public promotion cannot publish only one language', async t => {
   await assert.rejects(plan(f.commit(), f.initial), /FR\/EN visibility differs/);
 });
 
-test('executable MDX is rejected even when the FR/EN drafts agree', async t => {
+test('a page with JSX requires a PASS for the exact reviewed source', async t => {
   const f = fixture(t);
-  const article = articlePair('unsafe.mdx');
-  for (const executable of [
-    "import Widget from '../src/components/Widget'\\n\\n<Widget />",
-    '{1 + 2}',
-    '<Widget />',
-    "export const token = 1",
-  ]) {
-    f.writePair(article, executable.replaceAll('\\n', '\n'));
-    await assert.rejects(plan(f.commit(), f.initial), /Executable MDX or JSX dependency/);
+  const candidates = pageDraftPair('profile.mdx');
+  const body = '<div style={{ display: "flex" }}><img src="/blog/img/avatar.webp" alt="Portrait" /></div>';
+  f.writePair(candidates, body);
+  const {data, projected} = await identities(f.commit(), candidates);
+  f.report({...data, result: 'PASS'});
+  f.commit();
+
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes);
+    f.remove(candidates[locale]);
   }
+  const published = f.commit();
+  assert.match((await plan(published, f.initial)).join('\n'), /Public page\/profile/);
+
+  f.write(projected.fr.path, projected.fr.bytes.toString().replace('Portrait', 'Photo'));
+  await assert.rejects(plan(f.commit(), published), /Published content differs from verified target/);
 });
-
-
 
 test('several revisions of the same page use only the final PASS even if V2 was never deployed', async t => {
   const f = fixture(t);

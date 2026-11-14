@@ -9,11 +9,73 @@ Read `AGENTS.md`, both standards, exact FR/EN candidates, established author
 decisions, relevant independent sources, and the main Capture if applicable.
 A Capture is not independent evidence. Evaluate pages and articles identically.
 
+For operational settings of external accounts that cannot be inspected from the
+repository (for example, GoatCounter retention and dashboard options), accept an
+explicit confirmation by the site owner as the authoritative declaration of those
+settings. Do not require a second dashboard inspection or mark the result
+`INCONCLUSIVE` solely because the verifier cannot access that account. Check that
+the declaration is reproduced faithfully in both languages and does not
+contradict observable repository configuration or independent documentation.
+Attribute account settings to the owner's declaration, not to independent
+technical verification. This does not waive checks of code, links, externally
+verifiable product behavior, or other material publication requirements.
+
 Verify factual support, fidelity to the author's intent, both standards,
 bilingual semantic parity, links and technical publication readiness.
 When a main Capture exists, map every material component **Capture → content**
 (completeness) and **content → Capture** (no unsupported substantive additions),
 in both languages. Context Captures supply references, not additional coverage.
+
+## Authorial voice review
+
+Assess `standards/voice.md` as a distinct editorial axis, in both languages.
+Do not infer conformity from correct facts, a first-person voice, a sober tone,
+or the absence of promotional language alone.
+
+Read the text as a whole and inspect representative passages for:
+
+- **Naturalness:** Does it sound like a person explaining their work and ideas,
+  rather than an institution presenting a doctrine?
+- **Useful density:** Does each paragraph add information, reasoning or a
+  position, rather than repeat generic or decorative abstractions?
+- **Clarity:** Could convoluted phrasing be made simpler without losing meaning?
+- **Progression:** Do paragraphs develop connected ideas, not just enumerate
+  concepts or restate the same thought?
+- **Authenticity:** Are personal experiences, positions and motivations
+  supported by author decisions or source material, rather than inferred
+  or invented by the writer?
+- **Adaptation:** Is the depth, length and level of abstraction justified by
+  the page, technical article or essay and its intended readers?
+
+For the voice verdict, cite concrete passages and explain their effect on the
+reader. A pervasive generic, pompous or institutional register is a `FAIL`,
+even when all factual claims and formal requirements are satisfied. If the
+evidence of the author's own voice is insufficient, mark `INCONCLUSIVE`
+rather than asserting authenticity. Isolated stylistic improvements that do
+not compromise the standard may be recommendations without blocking `PASS`.
+
+These are editorial judgments, not mechanical checks, vocabulary bans,
+word-count thresholds or automated scores. The verifier assesses conformity
+to the stated voice standard; the author alone judges whether the result
+genuinely sounds like them and whether it merits publication.
+
+## Editorial improvement opportunities
+
+Independently of the compliance verdict, identify material opportunities to
+improve the editorial quality of each FR/EN candidate.
+
+Focus on concrete passages where the writing could better express the author's
+intent, develop a distinctive perspective, improve the progression of ideas,
+or replace generic statements with useful substance.
+
+For each opportunity, cite the passage, explain its limitation and suggest
+the direction of improvement without rewriting the candidate.
+
+Distinguish these recommendations from compliance failures. They are
+non-blocking and do not affect `PASS` / `FAIL` / `INCONCLUSIVE`.
+
+Report only meaningful opportunities. Do not invent weaknesses to populate
+this section. If none are identified, state so explicitly.
 
 Record axis-level `PASS`, `FAIL` or `INCONCLUSIVE`. An overall `PASS`
 requires all applicable axes to pass; missing material evidence cannot PASS.
