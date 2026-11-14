@@ -49,7 +49,7 @@ Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0]
 
 The site is hosted on GitHub Pages, which processes technical connection data as described in its [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 
-The site uses [GoatCounter](https://www.goatcounter.com/) to measure visits without tracking cookies. Its script sends information including the requested page, its title, and the incoming referrer when available. The service temporarily uses IP addresses and browser information to distinguish visits. Depending on account settings, it can also produce aggregate statistics about browsers, operating systems, languages, screen widths, and countries. GoatCounter states that raw IP addresses are not stored in its database. See its [privacy documentation](https://www.goatcounter.com/help/privacy).
+The site uses [GoatCounter](https://www.goatcounter.com/) to measure visits without tracking cookies. Its script sends information including the requested page, its title, the screen width, and the incoming referrer when available. The service temporarily uses IP addresses and browser information to distinguish visits. Depending on account settings, it can also produce aggregate statistics about browsers, operating systems, languages, and countries. This site does not use screen width in its statistics. GoatCounter states that raw IP addresses are not stored in its database. See its [privacy documentation](https://www.goatcounter.com/help/privacy).
 
 The settings declared for this site concern sessions, referrers, and countries, with a stated retention period of **365 days**.
 
