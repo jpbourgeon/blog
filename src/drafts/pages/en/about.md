@@ -16,11 +16,11 @@ My work spans IT systems and organizations: understanding how they work, designi
 
 ## Why this blog
 
-Understanding how things work and imagining how they could work differently. That curiosity applies just as much to code as it does to organizations.
+Understanding how systems work and imagining how they could work differently. That curiosity stays with me whether I'm writing code or working with a team.
 
-In my work, a solution is not judged only by what it can do. Its choices should be explainable, its maintenance manageable, its purpose verifiable, and responsibility for controlling it clear. That is why I am interested in software engineering as well as IT management and governance.
+In my work, a solution is not judged solely by what it can do. We also need to explain why it was chosen, be able to maintain it, verify that it meets the need, and know who remains in control. That is why I am as interested in software engineering as I am in IT management and governance.
 
-Simplicity and frugal engineering are not about doing less on principle. They are about keeping complexity only where it serves a purpose. As automation and artificial intelligence become more prevalent, understanding and maintaining control matter even more.
+I seek simplicity and frugality not for the sake of doing less, but to keep only the complexity that serves a purpose. With automation and artificial intelligence, this need for understanding and control becomes especially important.
 
 Software architecture, cybernetics, and sociotechnical systems inform this thinking, alongside open source and local-first technologies.
 
@@ -28,7 +28,7 @@ Software architecture, cybernetics, and sociotechnical systems inform this think
 
 I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.
 
-I publish open-source work, including [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm), through the [at-rama](https://github.com/at-rama) organization.
+I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
 
 ## Find me
 
@@ -38,11 +38,10 @@ You can find my contributions on [GitHub](https://github.com/jpbourgeon), my wri
 
 ## Legal notice
 
-This personal blog is published on a non-professional basis by **jpbourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
+This personal blog is published on a non-professional basis by **Jean-Philippe Bourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
 
 **Hosting:** GitHub Pages, a service of **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States. See the [GitHub Pages documentation](https://docs.github.com/en/pages) and [GitHub's contact information](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
 
-<!-- Before publication: verify that the identification and contact-data requirements for a non-professional publisher are met through the hosting provider. Confirm whether any additional contact details are legally required. -->
 
 Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Software and third-party materials follow their own licenses; exceptions for the site repository are documented in [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
@@ -54,4 +53,3 @@ The site uses [GoatCounter](https://www.goatcounter.com/) to measure visits with
 
 The settings declared for this site concern sessions, referrers, and countries, with a stated retention period of **365 days**.
 
-<!-- Before publication: confirm enabled data categories, 365-day retention, whether individual pageview collection is enabled, visitors' rights information, and whether a consent exemption applies. -->
