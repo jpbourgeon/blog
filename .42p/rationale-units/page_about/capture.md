@@ -86,4 +86,4 @@ Le candidat français révisé est désormais la référence éditoriale pour l'
 
 ## Suite envisagée
 
-Adapter le candidat anglais à partir du texte français arrêté, puis procéder à une vérification indépendante FR/EN, y compris des éléments techniques et juridiques de publication selon le protocole du dépôt. La levée des réserves par l'auteur ne vaut pas verdict indépendant. L'auteur contrôle le rendu mobile de l'avatar. Obtenir son accord explicite avant tout aperçu exposé ou déploiement.
+Adapter le candidat anglais à partir du texte français arrêté, puis procéder à une vérification indépendante FR/EN. La levée des réserves par l'auteur ne vaut pas verdict indépendant. L'auteur contrôle le rendu mobile de l'avatar. Obtenir son accord explicite avant tout aperçu exposé ou déploiement.
