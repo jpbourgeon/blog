@@ -36,7 +36,7 @@ Retrouvez mes contributions sur [GitHub](https://github.com/jpbourgeon), mes art
 
 ---
 
-## Mentions légales
+## Mentions légales {#legal}
 
 Ce blog personnel est édité à titre non professionnel par **Jean-Philippe Bourgeon**, responsable de sa publication. Il présente des réflexions et des travaux personnels, indépendants de mon employeur.
 
