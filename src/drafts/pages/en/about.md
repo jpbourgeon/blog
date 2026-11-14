@@ -12,7 +12,7 @@ rationale: .42p/rationale-units/page_about/capture.md
   <div><strong>jpbourgeon</strong><div>Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast</div></div>
 </div>
 
-I work with both organizations and IT systems: how they are designed, how they operate, and the decisions needed to change them. I am a technical director and deputy director in a public-sector IT department. I write here in a personal capacity, not on behalf of my employer.
+My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
@@ -20,9 +20,9 @@ Understanding how things work and imagining how they could work differently. Tha
 
 In my work, a solution is not judged only by what it can do. Its choices should be explainable, its maintenance manageable, its purpose verifiable, and responsibility for controlling it clear. That is why I am interested in software engineering as well as IT management and governance.
 
-Simplicity and frugal engineering do not mean doing less for its own sake. They mean keeping only the complexity that serves a purpose. As automation and artificial intelligence become more prevalent, understanding and maintaining control matter even more.
+Simplicity and frugal engineering are not about doing less on principle. They are about keeping complexity only where it serves a purpose. As automation and artificial intelligence become more prevalent, understanding and maintaining control matter even more.
 
-I explore software architecture, cybernetics, sociotechnical systems, artificial intelligence, open source, and local-first technologies. Some of these topics may eventually grow into collections of articles and resources.
+Software architecture, cybernetics, and sociotechnical systems inform this thinking, alongside open source and local-first technologies.
 
 ## Projects and contributions
 
