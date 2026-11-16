@@ -2,7 +2,7 @@ import type {Config} from '@docusaurus/types';
 import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 
 export default {
-  title: 'jpbourgeon',
+  title: 'jpbourgeon/blog',
   url: 'https://jpbourgeon.github.io',
   baseUrl: '/blog/',
   trailingSlash: true,
@@ -27,11 +27,11 @@ export default {
         feedOptions: {type: ['rss', 'atom']},
       },
       sitemap: {},
+      theme: {customCss: './src/css/custom.css'},
     } satisfies Options],
   ],
   themeConfig: {
     navbar: {
-      title: 'jpbourgeon',
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
         {to: '/search/', label: 'Rechercher', position: 'left'},

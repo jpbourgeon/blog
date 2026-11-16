@@ -1,0 +1,4 @@
+/* The classic theme renders a brand link even without a title or logo. */
+.navbar__brand:empty {
+  display: none;
+}
