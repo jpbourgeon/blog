@@ -26,6 +26,8 @@ I seek simplicity and frugality not for the sake of doing less, but to keep only
 
 Software architecture, cybernetics, and sociotechnical systems inform this thinking, alongside open source and local-first technologies.
 
+I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
+
 ## Projects and contributions
 
 I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.

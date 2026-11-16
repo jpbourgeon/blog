@@ -26,6 +26,8 @@ Je recherche la simplicité et la frugalité, non pour faire moins par principe,
 
 L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
 
+Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
+
 ## Productions et contributions
 
 J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
