@@ -8,9 +8,11 @@ rationale: .42p/rationale-units/page_about/capture.md
 # À propos
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-  <img src="/blog/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div><strong>jpbourgeon</strong><div>Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes</div></div>
-</div>
+  <img src="/blog/img/avatar.webp" alt="Portrait de jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} /></div>
+
+## Jean-Philippe Bourgeon
+
+> Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
 Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
@@ -36,7 +38,7 @@ Retrouvez mes contributions sur [GitHub](https://github.com/jpbourgeon), mes art
 
 ---
 
-## Mentions légales {#legal}
+## Mentions légales
 
 Ce blog personnel est édité à titre non professionnel par **Jean-Philippe Bourgeon**, responsable de sa publication. Il présente des réflexions et des travaux personnels, indépendants de mon employeur.
 
