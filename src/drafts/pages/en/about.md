@@ -8,9 +8,11 @@ rationale: .42p/rationale-units/page_about/capture.md
 # About
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-  <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-  <div><strong>jpbourgeon</strong><div>Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast</div></div>
-</div>
+  <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} /></div>
+
+## Jean-Philippe Bourgeon 
+
+> Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
 My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I write here in a personal capacity, not on behalf of my employer.
 
