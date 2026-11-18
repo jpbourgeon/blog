@@ -1,4 +1,5 @@
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import Translate from '@docusaurus/Translate';
 import {
   Bar, BarChart as RechartsBarChart, CartesianGrid, Cell, Legend,
   Line, LineChart as RechartsLineChart, Pie, PieChart as RechartsPieChart,
@@ -22,11 +23,11 @@ const tooltipStyle = {
 };
 const tooltipTextStyle = {color: 'var(--ifm-font-color-base)'};
 const pieColors = [
-  'var(--ifm-color-primary-darkest)',
-  'var(--ifm-color-primary-dark)',
-  'var(--ifm-color-primary)',
-  'var(--ifm-color-primary-light)',
-  'var(--ifm-color-primary-lightest)',
+  'var(--editorial-series-1)',
+  'var(--editorial-series-2)',
+  'var(--editorial-series-3)',
+  'var(--editorial-series-4)',
+  'var(--editorial-series-5)',
 ];
 
 function shortLabel(value: string) {
@@ -36,7 +37,10 @@ function shortLabel(value: string) {
 function ChartFallback({data, unit = ''}: Pick<Props, 'data' | 'unit'>) {
   return (
     <table>
-      <thead><tr><th>Catégorie</th><th>Valeur</th></tr></thead>
+      <thead><tr>
+        <th><Translate id="charts.category">Catégorie</Translate></th>
+        <th><Translate id="charts.value">Valeur</Translate></th>
+      </tr></thead>
       <tbody>
         {data.map(({name, value}) => (
           <tr key={name}><td>{name}</td><td>{value} {unit}</td></tr>

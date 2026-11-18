@@ -9,7 +9,13 @@
   --ifm-color-primary-lightest: #3474c9;
   --editorial-figure-fill: #edf4ff;
   --editorial-figure-alt: #f5f6f7;
-  --editorial-figure-on-primary: #ffffff;
+  /* Categorical colors shared by Mermaid and Recharts in both themes. */
+  --editorial-series-1: #245fb3;
+  --editorial-series-2: #b45309;
+  --editorial-series-3: #0f766e;
+  --editorial-series-4: #8b449e;
+  --editorial-series-5: #a63850;
+  --editorial-series-label: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -23,7 +29,6 @@
   --ifm-color-primary-lightest: #bad6fc;
   --editorial-figure-fill: #253858;
   --editorial-figure-alt: #242526;
-  --editorial-figure-on-primary: #1b1b1d;
 }
 
 /* The classic theme renders a brand link even without a title or logo. */
