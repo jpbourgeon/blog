@@ -36,6 +36,7 @@ export default {
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
     navbar: {
+      title: 'jpbourgeon/blog',
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
         {to: '/about/', label: 'À propos', position: 'left'},
