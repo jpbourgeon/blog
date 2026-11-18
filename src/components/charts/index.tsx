@@ -20,6 +20,7 @@ const tooltipStyle = {
   borderRadius: 'var(--ifm-global-radius)',
   color: 'var(--ifm-font-color-base)',
 };
+const tooltipTextStyle = {color: 'var(--ifm-font-color-base)'};
 const pieColors = [
   'var(--ifm-color-primary-darkest)',
   'var(--ifm-color-primary-dark)',
@@ -55,7 +56,7 @@ export function BarChart({data, height = 300, unit = ''}: Props) {
               <CartesianGrid vertical={false} stroke="var(--ifm-color-emphasis-300)" strokeDasharray="3 4" />
               <XAxis dataKey="name" tickFormatter={shortLabel} tick={axisTick} axisLine={false} tickLine={false} minTickGap={12} />
               <YAxis unit={unit} tick={axisTick} axisLine={false} tickLine={false} width={64} />
-              <Tooltip contentStyle={tooltipStyle} cursor={{fill: 'var(--ifm-color-emphasis-100)'}} />
+              <Tooltip contentStyle={tooltipStyle} itemStyle={tooltipTextStyle} cursor={{fill: 'var(--ifm-color-emphasis-100)'}} />
               <Bar dataKey="value" fill="var(--ifm-color-primary)" maxBarSize={64} />
             </RechartsBarChart>
           </ResponsiveContainer>
@@ -75,7 +76,7 @@ export function LineChart({data, height = 300, unit = ''}: Props) {
               <CartesianGrid vertical={false} stroke="var(--ifm-color-emphasis-300)" strokeDasharray="3 4" />
               <XAxis dataKey="name" tickFormatter={shortLabel} tick={axisTick} axisLine={false} tickLine={false} minTickGap={12} />
               <YAxis unit={unit} tick={axisTick} axisLine={false} tickLine={false} width={64} />
-              <Tooltip contentStyle={tooltipStyle} />
+              <Tooltip contentStyle={tooltipStyle} itemStyle={tooltipTextStyle} />
               <Line type="monotone" dataKey="value" stroke="var(--ifm-color-primary)" strokeWidth={2} dot={{r: 3}} activeDot={{r: 5}} />
             </RechartsLineChart>
           </ResponsiveContainer>
@@ -97,7 +98,7 @@ export function PieChart({data, height = 300}: Omit<Props, 'unit'>) {
                   <Cell key={item.name} fill={pieColors[index % pieColors.length]} stroke="var(--ifm-background-surface-color)" strokeWidth={2} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={tooltipStyle} />
+              <Tooltip contentStyle={tooltipStyle} itemStyle={tooltipTextStyle} />
               <Legend verticalAlign="bottom" />
             </RechartsPieChart>
           </ResponsiveContainer>

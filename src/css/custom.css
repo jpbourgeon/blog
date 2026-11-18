@@ -1,6 +1,39 @@
+:root {
+  --ifm-background-color: #ffffff;
+  --ifm-color-primary: #245fb3;
+  --ifm-color-primary-dark: #225aaa;
+  --ifm-color-primary-darker: #2055a1;
+  --ifm-color-primary-darkest: #174076;
+  --ifm-color-primary-light: #286ac7;
+  --ifm-color-primary-lighter: #2f70cc;
+  --ifm-color-primary-lightest: #3474c9;
+  --editorial-figure-fill: #edf4ff;
+  --editorial-figure-alt: #f5f6f7;
+  --editorial-figure-on-primary: #ffffff;
+}
+
+[data-theme='dark'] {
+  --ifm-background-color: #1b1b1d;
+  --ifm-color-primary: #6ca6f8;
+  --ifm-color-primary-dark: #609df3;
+  --ifm-color-primary-darker: #5394ee;
+  --ifm-color-primary-darkest: #4385df;
+  --ifm-color-primary-light: #87b7fa;
+  --ifm-color-primary-lighter: #94bffa;
+  --ifm-color-primary-lightest: #bad6fc;
+  --editorial-figure-fill: #253858;
+  --editorial-figure-alt: #242526;
+  --editorial-figure-on-primary: #1b1b1d;
+}
+
 /* The classic theme renders a brand link even without a title or logo. */
 .navbar__brand:empty {
   display: none;
+}
+
+.markdown,
+article {
+  --ifm-link-decoration: underline;
 }
 
 /* Recharts follows the Docusaurus light/dark palette without a separate theme. */
@@ -12,4 +45,9 @@
 
 .editorial-chart .recharts-legend-item-text {
   color: var(--ifm-font-color-base) !important;
+}
+
+.docusaurus-mermaid-container,
+.docusaurus-mermaid-container > svg {
+  max-width: 100%;
 }
