@@ -37,9 +37,11 @@ export default {
     navbar: {
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
+        {to: '/about/', label: 'À propos', position: 'left'},
         {to: '/search/', label: 'Rechercher', position: 'left'},
         {type: 'localeDropdown', position: 'right'},
       ],
     },
+    footer: {links: [{label: 'Mentions légales', to: '/about/#legal'}]},
   } satisfies ThemeConfig,
 } satisfies Config;
