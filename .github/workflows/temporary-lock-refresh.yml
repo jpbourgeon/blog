@@ -3,6 +3,8 @@ name: Temporary dependency lock refresh
 on:
   push:
     branches: [feat/mermaid-recharts]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
