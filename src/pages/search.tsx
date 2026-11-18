@@ -1,12 +1,14 @@
 import {useEffect} from 'react';
 import React from 'react';
 import Translate, {translate} from '@docusaurus/Translate';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 
 export default function SearchPage() {
-  const bundle = useBaseUrl('/pagefind/');
-  const base = useBaseUrl('/');
+  const {siteConfig} = useDocusaurusContext();
+  // The shared index stores routes relative to the site root, including locale prefixes.
+  const base = siteConfig.customFields?.pagefindBaseUrl as string;
+  const bundle = base + 'pagefind/';
   useEffect(() => {
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
