@@ -4,7 +4,7 @@ import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 const baseUrl = '/blog/';
 
 export default {
-  title: 'jpbourgeon',
+  title: 'jpbourgeon/blog',
   url: 'https://jpbourgeon.github.io',
   baseUrl,
   customFields: {pagefindBaseUrl: baseUrl},
@@ -30,11 +30,11 @@ export default {
         feedOptions: {type: ['rss', 'atom']},
       },
       sitemap: {},
+      theme: {customCss: './src/css/custom.css'},
     } satisfies Options],
   ],
   themeConfig: {
     navbar: {
-      title: 'jpbourgeon',
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
         {to: '/search/', label: 'Rechercher', position: 'left'},
