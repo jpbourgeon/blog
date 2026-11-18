@@ -15,6 +15,12 @@ Source structure defines coverage, not necessarily paragraph order. Preserve
 validated wording when appropriate; develop other captured ideas naturally without
 inventing experiences, positions or evidence.
 
+Consider diagrams and charts when they clarify a structure, relationship, process,
+comparison or quantitative result better than prose. Use the site's existing
+figure capabilities documented in `docs/figures.md` when available; verify
+that the referenced components exist in the current branch. Do not add
+decorative figures or new visualization dependencies without a demonstrated need.
+
 After drafting, revise substantively before handoff:
 
 - Replace interchangeable or generic statements with precise, supported meaning.
