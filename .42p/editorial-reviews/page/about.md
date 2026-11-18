@@ -22,12 +22,12 @@ references:
     git_blob_sha: 9de8dd5bff300acca547514bb6ae78eecc6185ff
   - path: .42p/rationale-units/page_about/capture.md
     git_blob_sha: 4deee6d1fc3e8bf0570bc1b9eed98984f9872473
-result: FAIL
+result: PASS
 ---
 
 # Vérification éditoriale — À propos / About
 
-**FAIL.** Les deux versions passent la revue éditoriale. La navigation commune de la PR contient un lien d’accueil vide accessible au clavier. Revue indépendante du 16 novembre 2026 sur le [commit b78d5ef](https://github.com/jpbourgeon/blog/commit/b78d5efdaa4f351bc99e47e4a9c28f7343c129a7) de la [PR 16](https://github.com/jpbourgeon/blog/pull/16).
+**PASS.** Les deux versions passent la revue éditoriale. Le contrôle complémentaire de la navigation au clavier passe sur le [commit 4135679](https://github.com/jpbourgeon/blog/commit/4135679c036be0683003416461a6aab3de8ae84c). Revue indépendante du 16 novembre 2026 sur le [commit b78d5ef](https://github.com/jpbourgeon/blog/commit/b78d5efdaa4f351bc99e47e4a9c28f7343c129a7) de la [PR 16](https://github.com/jpbourgeon/blog/pull/16).
 
 ## Verdicts
 
@@ -41,7 +41,7 @@ result: FAIL
 | Faits et liens | PASS | 13 destinations répondent HTTP 200. LinkedIn renvoie 999 en accès automatisé. Le profil public indexé confirme l’identité et le chemin. L’adresse de GitHub correspond à celle de sa documentation et les licences renvoient aux références du dépôt. |
 | Mentions légales | PASS | C-legal consigne la vérification et la décision de l’auteur. Les deux notices approuvées sont identiques à celles de f7162c5. Identité, statut déclaré, hébergeur, adresse et licences concordent dans les deux langues. |
 | Confidentialité et consentement | PASS | C-privacy consigne la vérification et la décision de l’auteur sur les notices et le consentement. Le code, le script chargé et la documentation corroborent les affirmations techniques examinées. Les paramètres du compte sont attestés par l’auteur. |
-| Intégration technique | FAIL | Projection locale des sources exactes, build FR/EN et Pagefind avec Node 26.13.1. Vérification des deux routes, URL canoniques, entrées de sitemap, ancres légales et référence au portrait local. Les 33 tests de publication et le contrôle TypeScript passent. La barre de navigation introduit un lien d’accueil vide sans nom accessible dans les deux langues. |
+| Intégration technique | PASS | Projection locale des sources exactes, build FR/EN et Pagefind avec Node 26.13.1. Vérification des deux routes, URL canoniques, entrées de sitemap, ancres légales et référence au portrait local. Les 33 tests de publication et le contrôle TypeScript passent. Le contrôle complémentaire confirme la suppression du lien d’accueil vide du parcours clavier et de l’arbre d’accessibilité dans les deux langues. |
 
 Les décisions C-legal et C-privacy sont attribuées à l’auteur, qui confirme avoir mené les vérifications et statué sur les deux notices de f7162c5. Les sections de mentions légales et de confidentialité sont identiques, octet pour octet, aux sections retenues. Le module GoatCounter est inchangé depuis ce commit. La présente revue vérifie l’application de ces décisions et la concordance des affirmations avec les éléments observables. Elle n’a identifié aucune contradiction dans le code ou la documentation qui justifie de rouvrir les points tranchés. La vérification juridique reste celle de l’auteur. [Commit des notices](https://github.com/jpbourgeon/blog/commit/f7162c580961daf6040a455025bb325082d5cb94)
 
@@ -71,6 +71,8 @@ Les descriptions de page condensent la signature. Chaque section substantielle d
 - En français, « L’architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion » gagnerait à préciser ce que l’un de ces domaines aide à comprendre ou à maîtriser, pour prolonger le raisonnement du paragraphe précédent.
 - En anglais, « Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper » préserve le sens, mais la tournure « make precise what » est moins naturelle que le reste du texte. Privilégier le vocabulaire usuel de la pratique logicielle.
 
-Le contrôle local sous Chromium couvre les deux langues à 320, 393 et 1 440 px. L’avatar circulaire affiche 104 × 104 px au-dessus du nom et de la signature. Aucun débordement horizontal ni erreur JavaScript relevés. Sur les deux accueils, le titre d’onglet est `jpbourgeon/blog`. Les deux pages À propos conservent leur titre propre suivi de ce nom. Le nom du site est absent de la barre de navigation. Après suppression du titre de la barre, Docusaurus génère encore un lien `a.navbar__brand` vide, sans nom accessible et atteignable au clavier, sur les deux accueils et les deux pages À propos. Ce défaut relève de la navigation commune de la PR et bloque le verdict technique. Vérifier sa suppression effective du parcours clavier avant de renouveler le verdict. La validation visuelle finale du portrait revient à l’auteur. Les liens de navigation vers la page et de pied de page vers `#legal` seront à contrôler après leur ajout lors de la promotion.
+Le contrôle local sous Chromium couvre les deux langues à 320, 393 et 1 440 px. L’avatar circulaire affiche 104 × 104 px au-dessus du nom et de la signature. Aucun débordement horizontal ni erreur JavaScript relevés. Sur les deux accueils, le titre d’onglet est `jpbourgeon/blog`. Les deux pages À propos conservent leur titre propre suivi de ce nom. Le nom du site est absent de la barre de navigation.
+
+Le contrôle complémentaire du 18 novembre 2026 sur 4135679 a réutilisé la projection locale des deux candidates. Les empreintes normalisées et les références correspondent au rapport. Le build Docusaurus FR/EN avec Pagefind, le contrôle TypeScript et les 33 tests de publication passent. Dans Chromium headless à 320, 393 et 1 440 px, une tabulation réelle sur chacune des routes `/blog/about/` et `/blog/en/about/` confirme que le lien de marque vide est masqué, absent de l’arbre d’accessibilité et inaccessible au clavier. Sur mobile, le menu s’ouvre à la touche Entrée. Les entrées Articles, Rechercher ou Search et le sélecteur de langue restent accessibles au clavier. La validation visuelle finale du portrait revient à l’auteur. Les liens de navigation vers la page et de pied de page vers `#legal` seront à contrôler après leur ajout lors de la promotion.
 
 Human editorial approval: not granted by this report
