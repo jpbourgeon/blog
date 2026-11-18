@@ -11,7 +11,7 @@ export default {
   trailingSlash: true,
   clientModules: ['./src/client/goatcounter.ts'],
   onBrokenLinks: 'throw',
-  markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
+  markdown: {mermaid: true, hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {
     defaultLocale: 'fr',
     locales: ['fr', 'en'],
@@ -33,6 +33,7 @@ export default {
       theme: {customCss: './src/css/custom.css'},
     } satisfies Options],
   ],
+  themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {
     navbar: {
       items: [
