@@ -1,10 +1,13 @@
 import type {Config} from '@docusaurus/types';
 import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 
+const baseUrl = '/blog/';
+
 export default {
   title: 'jpbourgeon/blog',
   url: 'https://jpbourgeon.github.io',
-  baseUrl: '/blog/',
+  baseUrl,
+  customFields: {pagefindBaseUrl: baseUrl},
   trailingSlash: true,
   clientModules: ['./src/client/goatcounter.ts'],
   onBrokenLinks: 'throw',
@@ -27,6 +30,7 @@ export default {
         feedOptions: {type: ['rss', 'atom']},
       },
       sitemap: {},
+      theme: {customCss: './src/css/custom.css'},
     } satisfies Options],
   ],
   themeConfig: {
