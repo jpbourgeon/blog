@@ -2,3 +2,14 @@
 .navbar__brand:empty {
   display: none;
 }
+
+/* Recharts follows the Docusaurus light/dark palette without a separate theme. */
+.editorial-chart {
+  width: 100%;
+  min-width: 0;
+  margin: 1.25rem 0;
+}
+
+.editorial-chart .recharts-legend-item-text {
+  color: var(--ifm-font-color-base) !important;
+}
