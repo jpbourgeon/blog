@@ -1,4 +1,4 @@
-import type {Config} from '@docusaurus/types';
+import type {Config, Plugin} from '@docusaurus/types';
 import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 
 const baseUrl = '/blog/';
@@ -11,7 +11,7 @@ export default {
   trailingSlash: true,
   clientModules: ['./src/client/goatcounter.ts'],
   onBrokenLinks: 'throw',
-  markdown: {hooks: {onBrokenMarkdownLinks: 'throw'}},
+  markdown: {mermaid: true, hooks: {onBrokenMarkdownLinks: 'throw'}},
   i18n: {
     defaultLocale: 'fr',
     locales: ['fr', 'en'],
@@ -33,8 +33,26 @@ export default {
       theme: {customCss: './src/css/custom.css'},
     } satisfies Options],
   ],
+  themes: ['@docusaurus/theme-mermaid'],
+  plugins: [function preserveLazyChunks(): Plugin {
+    return {
+      name: 'preserve-lazy-chunks',
+      configureWebpack(_config, isServer) {
+        if (isServer) return {};
+        return {
+          optimization: {
+            splitChunks: {
+              // A fixed shared chunk name merges lazy Mermaid dependencies into page bundles.
+              cacheGroups: {common: {name: false}},
+            },
+          },
+        };
+      },
+    };
+  }],
   themeConfig: {
     navbar: {
+      title: 'jpbourgeon/blog',
       items: [
         {to: '/', label: 'Articles', exact: true, position: 'left'},
         {to: '/about/', label: 'À propos', position: 'left'},
