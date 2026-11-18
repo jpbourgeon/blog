@@ -25,9 +25,13 @@ bilingual semantic parity, links and technical publication readiness.
 When a main Capture exists, map every material component **Capture → content**
 (completeness) and **content → Capture** (no unsupported substantive additions),
 in both languages. Context Captures supply references, not additional coverage.
-When figures are present, verify their consistency with the accompanying text,
-underlying data, sources and FR/EN versions. Check that they do not misrepresent
-material information; figures are not required when prose is sufficient.
+When figures are requested by established editorial decisions or the applicable
+Capture, verify that the candidates faithfully include them. For figures present,
+check consistency with the intended meaning, accompanying text, relevant sources
+and FR/EN versions. For quantitative charts, verify the underlying data, units
+and scales; for conceptual diagrams, verify the represented relationships and
+distinctions. Check that figures do not misrepresent material information.
+Do not require figures in the absence of an established editorial request.
 
 ## Authorial voice review
 
