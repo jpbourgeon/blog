@@ -15,6 +15,16 @@ Source structure defines coverage, not necessarily paragraph order. Preserve
 validated wording when appropriate; develop other captured ideas naturally without
 inventing experiences, positions or evidence.
 
+Produce diagrams and charts when requested by established editorial decisions or
+the applicable Capture. A Capture records decisions but is not itself an authority,
+and its absence does not prevent an established editorial request. Use the site's
+existing figure capabilities documented in `docs/figures.md` when available;
+verify that the referenced components exist in the current branch. Preserve the
+intended meaning, relationships and supporting evidence. Do not introduce
+substantive figures or interpretations independently; flag material gaps or
+ambiguities for editorial resolution. Do not add new visualization dependencies
+without a demonstrated need.
+
 After drafting, revise substantively before handoff:
 
 - Replace interchangeable or generic statements with precise, supported meaning.
