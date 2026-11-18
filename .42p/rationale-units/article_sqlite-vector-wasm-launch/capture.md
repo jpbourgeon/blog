@@ -26,7 +26,29 @@ Les proportions servent à régler la densité relative ; elles ne sont pas des 
 
 Présenter rapidement la nécessité de pouvoir **exploiter et rechercher** des données locales lorsque la connexion au serveur manque ; le stockage seul ne suffit pas. La recherche sémantique/vectorielle prolonge ce besoin sans faire disparaître SQL ou FTS5.
 
-**Accroche décidée :** après une très courte motivation, placer dès cette première partie le flash de code « **aussi simple que SQLite** ». Importer le module SQLite du package, ouvrir une base, appeler une fonction native de SQLite-Vector, fermer. Un appel à `vector_version()` **prouve la présence de l'extension**, pas une recherche de voisins : renvoyer au guide pour l'exemple fonctionnel complet et expliquer le mécanisme en IV.
+**Accroche décidée :** après une très courte motivation, placer dès cette première partie un flash de code « **aussi simple que SQLite** », mais qui **exécute une véritable recherche de voisins** et produit un résultat interprétable. Exemple minimal issu du [guide d'usage du package](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/usage.md#float32-nearest-neighbors), avec les assets servis sous `/sqlite/` (initialisation OO1 en mémoire, sans Worker ni persistance) :
+
+```js
+import sqlite3InitModule from '/sqlite/sqlite3.mjs';
+const sqlite3 = await sqlite3InitModule();
+const db = new sqlite3.oo1.DB(':memory:');
+try {
+  db.exec('CREATE TABLE items(embedding BLOB)');
+  // Deux vecteurs Float32 de dimension 2.
+  db.exec("INSERT INTO items(rowid, embedding) VALUES(1, vector_as_f32('[1,0]')), (2, vector_as_f32('[0,1]'))");
+  // Déclarer la colonne vectorielle pour cette connexion (distance L2).
+  db.exec("SELECT vector_init('items', 'embedding', 'type=FLOAT32,dimension=2,distance=L2')");
+  // Les deux plus proches de [1,0], classés par distance croissante.
+  const neighbors = db.selectArrays(
+    "SELECT rowid, distance FROM vector_full_scan('items', 'embedding', '[1,0]', 2) ORDER BY distance"
+  );
+  console.log(neighbors); // [[1, 0], [2, ≈1.414214]]
+} finally {
+  db.close();
+}
+```
+
+Le résultat montre que le vecteur identique est à distance zéro et que l'autre se trouve à distance √2. `vector_as_f32()`, `vector_init()` et `vector_full_scan()` sont des fonctions SQL de SQLite-Vector, invoquées via les API SQLite natives ; `vector_init()` initialise l'association de la colonne pour la connexion. Ne pas présenter ces deux vecteurs numériques comme des embeddings sémantiques. En rédaction, conserver cet exemple comme **base documentée à revérifier sur la version citée**, sans promettre la persistance ni un classement vectoriel optimisé.
 
 CAP/CouchDB : citer une explication pédagogique en appui, **sans présenter CAP comme la démonstration de l'offline-first** ni confondre le package avec une couche de réplication.
 
@@ -52,7 +74,7 @@ Montrer la complémentarité de SQL (filtrage/relations), FTS5 (recherche lexica
 
 **IV.B — Intégration statique.** SQLite-Vector est intégré au WASM et ses fonctions SQL sont automatiquement enregistrées à chaque nouvelle connexion : pas de chargement dynamique par l'application. **Distinguer** l'enregistrement de l'extension de `vector_init()`, qui initialise le contexte vectoriel des tables pour une connexion.
 
-**IV.C — Retour explicatif sur le flash d'ouverture.** Comment le code initial reste natif ; une brève extension SQL peut illustrer stockage/recherche sans transformer l'article en tutoriel. Documentation détaillée en lien.
+**IV.C — Retour explicatif sur le flash d'ouverture.** Expliquer les trois opérations déjà visibles dans l'exemple (stockage BLOB Float32 via `vector_as_f32()`, déclaration par connexion via `vector_init()`, recherche L2 via `vector_full_scan()`), et pourquoi elles passent par l'API OO1 native de SQLite. Ne pas répéter le code ni transformer la section en tutoriel ; renvoyer au guide pour les variantes binaires/Hamming, Workers et OPFS.
 
 **IV.D — Frontière de distribution.** Navigateur uniquement ; pas de runtime Node.js, natif ni WASI livré. La portabilité des principes ne signifie pas fournir le même package sur tous les environnements.
 
@@ -81,10 +103,9 @@ Conclure brièvement par la distribution utilisable, les API SQLite natives avec
 ## Questions et vérifications restant ouvertes
 
 - **Q-sources** — Avant la rédaction et la publication, contrôler les liens et les assertions factuelles concernant SQLite.ai, sqlite-vec, SQLite-Vector, les restrictions exactes des VFS/Workers et les garanties de publication à la version effectivement citée. Préserver la décision **C-licences** même si de nouvelles sources sont examinées, sauf nouvel arbitrage de l'auteur.
-- **Q-exemple** — Vérifier que le code d'ouverture correspond aux assets distribués et ne suggère pas que `vector_version()` constitue à lui seul une recherche vectorielle.
 - **Q-diffusion** — Préparer les versions éditoriales dans le dépôt canonique et décider séparément de leur publication ; la Capture n'autorise aucun aperçu exposé, déploiement ou cross-posting.
 
-Ces vérifications n'annulent pas le plan V4 validé. **Q-empreinte** est documentée par une mesure datée et reproductible pour le périmètre défini en VI.B ; les autres points portent sur l'exactitude et l'autorisation des versions à rédiger ou publier.
+Ces vérifications n'annulent pas le plan V4 validé. **Q-empreinte** est documentée par une mesure datée et reproductible pour le périmètre défini en VI.B ; **Q-exemple** dispose désormais d'un exemple de recherche effectif documenté par le package (vérification d'exécution à refaire pour la release citée dans l'article). Les points ouverts portent sur les assertions et les autorisations des versions à rédiger ou publier.
 
 ## Sources et provenance
 
