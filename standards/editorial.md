@@ -9,7 +9,7 @@ ressources publiées. Le niveau de détail dépend du lecteur et du format.
 4. Préserver le sens, le raisonnement, les conditions, les incertitudes et les nuances de l'auteur.
 5. Respecter le temps : les pages pérennes décrivent l'état courant ; les articles datés restent situés dans leur contexte.
 6. Conserver terminologie, exemples, liens et cohérence FR/EN.
-7. Préférer la prose utile, les structures sobres et des références vérifiables.
+7. Préférer la prose utile, les structures sobres et des références vérifiables. Utiliser des figures lorsqu'elles apportent un gain significatif de compréhension par rapport au texte ; préserver leur lisibilité, leur fidélité aux sources et leur cohérence avec le contenu.
 8. Une collection organise des contenus, sans imposer l'appartenance à chaque publication.
 9. Les pages suivent le même cycle de vérification et d'approbation que les articles.
 
