@@ -41,8 +41,8 @@ or PR may deploy. Confirm the CI and Pages outcome before reporting a live URL.
 
 To withdraw any deployed exposed content (`public` or `unlisted`), obtain explicit author approval
 for the visibility change and include it in the manual deployment decision.
-Articles become `draft: true` in both locales; move page files to their FR/EN
-off-site drafts with `draft: true`. Do not delete a publicly deployed item in
+Articles become `draft: true` in both locales; move page files to `src/drafts/pages/{fr,en}/` outside the published
+routes, with `draft: true`. Do not delete a publicly deployed item in
 the same deployment. After the withdrawn state has been deployed, the document
 pair and any unshared rationale-unit or resources may be deleted without a
 separate editorial PASS or deletion report. Never delete shared references.

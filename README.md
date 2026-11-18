@@ -18,8 +18,9 @@ rédaction FR/EN, vérification indépendante, accord explicite, publication.
 Chaque contenu conserve son rapport PASS ; les PR peuvent regrouper plusieurs
 contenus et un déploiement peut regrouper plusieurs PR. La fusion d'une PR
 ne constitue pas, à elle seule, une approbation éditoriale.
+42P conserve les Captures et rapports ; les contenus éditoriaux sont du Code.
 Les brouillons d'articles utilisent `draft: true` ; ceux des pages restent
-hors des routes publiques dans `.42p/editorial-drafts/pages/`. Les prévisualisations
+hors des routes publiques dans `src/drafts/pages/`. Les prévisualisations
 d'articles `unlisted` sont publiques par URL ; les pages sont prévisualisées
 dans une branche ou un site de revue avant leur publication.
 
@@ -79,7 +80,7 @@ publiées du sitemap, et exclut les brouillons et les aperçus non listés.
 Un contenu exposé par un déploiement (`public` ou `unlisted`) ne peut pas être supprimé directement.
 Après décision explicite de l'auteur, il est d'abord retiré de l'exposition :
 `draft: true` pour un article ; déplacement de la paire FR/EN d'une page
-vers `.42p/editorial-drafts/pages/`, hors des routes publiques.
+vers `src/drafts/pages/`, hors des routes publiques.
 L'état retiré doit être **déployé** avant de pouvoir supprimer les fichiers.
 
 La suppression ultérieure retire les versions FR/EN et, si elle n'est pas

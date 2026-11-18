@@ -6,6 +6,35 @@ Captures are references, not extensions of its scope. Preserve the author's
 intent, evidence, uncertainty, temporal context and distinctive voice.
 Never invent experiences or decide publication merit.
 
+## Editorial composition
+
+Before drafting, identify the intended reader, central idea, author's distinctive
+perspective and concrete supporting material. Organize the prose around the idea,
+not mechanically around Capture headings, topic inventories or indicative lengths.
+Source structure defines coverage, not necessarily paragraph order. Preserve
+validated wording when appropriate; develop other captured ideas naturally without
+inventing experiences, positions or evidence.
+
+After drafting, revise substantively before handoff:
+
+- Replace interchangeable or generic statements with precise, supported meaning.
+- Connect ideas through reasoning rather than lists of concepts or values.
+- Prefer a relevant, verified concrete example to multiple abstract declarations.
+- Remove repetitions and paragraphs without a distinct contribution.
+- Check that the text expresses this author's perspective rather than merely
+  describing a professional profile.
+
+When source material cannot support a distinctive claim or example, do not invent
+one. Keep the text concise and flag any material limitation in the handoff.
+
+## Source-dependent publication claims
+
+Before handoff, check claims about available site features, published projects,
+legal notices and privacy practices against current implementation and available
+evidence. Distinguish verified facts, unresolved assertions and future features;
+do not present unimplemented features as already available. Report outstanding
+publication requirements explicitly rather than silently treating them as met.
+
 Draft corresponding FR/EN Markdown or MDX. The same material assertions,
 sources, caveats and provenance must be present in both languages; natural
 translation is preferable to literal translation. Use a single optional
@@ -17,8 +46,8 @@ files with `draft: true`. For revisions, do not touch published originals:
 create a separate FR/EN temporary pair with distinct preview slugs.
 
 For **pages**, prepare paired Markdown candidates in
-`.42p/editorial-drafts/pages/fr/<path>.md` and
-`.42p/editorial-drafts/pages/en/<path>.md`, with `draft: true`.
+`src/drafts/pages/fr/<path>.md` and
+`src/drafts/pages/en/<path>.md`, with `draft: true`.
 Do not place an unapproved page in `src/pages/`. Native pages have no
 `unlisted` preview; use a review branch/site for visual approval.
 Published pages live under `src/pages/` and

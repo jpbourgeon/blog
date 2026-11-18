@@ -157,7 +157,7 @@ export function matchReview(review: Review, data: Identities): void {
 export async function inventory(tree: Snapshot) {
   const pairs = new Map<string, Pair<Document>>();
   const roots = ['blog', 'i18n/en/docusaurus-plugin-content-blog', 'src/pages',
-    'i18n/en/docusaurus-plugin-content-pages', '.42p/editorial-drafts/pages'];
+    'i18n/en/docusaurus-plugin-content-pages', 'src/drafts/pages'];
   for (const path of tree.paths(...roots)) {
     const id = documentPath(path);
     if (!id || id.locale !== 'fr') continue;
