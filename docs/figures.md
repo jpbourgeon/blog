@@ -31,3 +31,7 @@ Les données sont des couples `{name, value}`, avec `value` numérique.
 `height` peut ajuster la hauteur en pixels (défaut : 300).
 Le tableau de données reste disponible dans le HTML statique lorsque le graphique interactif n'est pas rendu.
 Les graphiques sont des illustrations : commenter la provenance des mesures et leurs conditions dans l'article.
+
+Les graphiques suivent automatiquement les couleurs Docusaurus, y compris en mode sombre.
+Les étiquettes des axes sont abrégées si elles sont longues ; l'infobulle conserve le nom entier.
+Pour un camembert lisible, privilégier un petit nombre de catégories (jusqu'à cinq).
