@@ -26,7 +26,7 @@ I use AI agents to explore ideas, draft, translate, and review the text. I decid
 
 ## Projects and contributions
 
-I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.
+Turning an idea into code also puts it to the test: design, use, and maintenance constraints force me to clarify what seemed obvious on paper.
 
 I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
 
