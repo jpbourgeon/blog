@@ -14,19 +14,19 @@
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-I work where computing and organizations meet, from writing code to guiding the evolution of information systems alongside the teams that run them. I like understanding why choices are made, being able to explain them, and checking what they actually change. Keeping things simple helps us stay in control, including when we automate. I write here in a personal capacity, not on behalf of my employer.
+My work ranges from software development to guiding the evolution of information systems, alongside the teams who build and run them. I like understanding why we make certain choices, being able to explain them, and seeing what difference they make in practice. I prefer simple solutions: they're easier to understand and keep under control, even when we automate. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-I share reflections, explorations, and things I've built about the systems we create and how we make them work together. The longer I explore an idea, the more obvious its assumptions can start to feel. Yet a line of reasoning can be coherent without having faced the objections that matter. Writing helps me see things more clearly and keep track of how I got there; publishing lets others discuss that reasoning, build on it, or challenge it.
+I share my thoughts, experiments, and things I've built about the systems we create and how we work together. The longer I explore an idea, the easier it is to lose sight of the assumptions behind it. A line of reasoning can be coherent without having faced the objections that matter. Writing helps me clarify my ideas and keep track of how I got there. Publishing them lets others discuss, build on, or challenge them.
 
-I don't want to share only finished results. The questions I start with, the things I try, and what resists along the way matter too. You can follow a line of reasoning, take what is useful to you, compare it with your experience, or choose another path. The blog is an experiment in its own right, especially in writing and giving my ideas a concrete form.
+I don't want to share only finished results. The starting questions, the experiments, and the difficulties along the way matter too: they help explain the choices that follow. You can trace the reasoning, take what seems useful, adapt it to your own context, or choose a different path. This blog is also a place for me to experiment, particularly with writing.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
 ## Projects and contributions
 
-Turning an idea into code also puts it to the test: design, use, and maintenance constraints force me to clarify what seemed obvious on paper.
+Turning an idea into code means confronting the constraints of design, use, and maintenance. What seemed obvious on paper is not always so clear in practice.
 
 I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
 
@@ -41,7 +41,6 @@ You can find my contributions on [GitHub](https://github.com/jpbourgeon), my wri
 This personal blog is published on a non-professional basis by **Jean-Philippe Bourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
 
 **Hosting:** GitHub Pages, a service of **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States. See the [GitHub Pages documentation](https://docs.github.com/en/pages) and [GitHub's contact information](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
-
 
 Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Software and third-party materials follow their own licenses; exceptions for the site repository are documented in [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
