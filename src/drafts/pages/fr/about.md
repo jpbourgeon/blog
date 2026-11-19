@@ -20,11 +20,11 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 ## Pourquoi ce blog
 
-J’écris ici pour mettre en ordre ce que j’apprends au fil de mes projets et en garder une trace. J’en profite pour essayer différentes formes d’écriture.
+Que change l’automatisation d’une tâche pour l’équipe qui en avait la charge ? C’est ce lien entre les choix techniques et la façon de travailler que j’explore ici, à partir de mes projets et de mes essais.
 
-Je publie pour confronter mes idées à d’autres expériences. Un contre-exemple peut rouvrir une question que je croyais réglée.
+Je reviens sur ce qui a pesé dans les décisions et sur les limites apparues à l’usage. Vous pouvez ainsi juger ce qui vaut aussi dans votre contexte, ce que vous adapteriez et où vous feriez un autre choix.
 
-Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
+Je m’appuie sur des agents d’IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
 ## Productions et contributions
 

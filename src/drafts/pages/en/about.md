@@ -20,11 +20,11 @@ I like finding out how systems work and imagining how they could work differentl
 
 ## Why this blog
 
-I write here to make sense of what I learn from my projects and keep a record of it. It also gives me a chance to try different forms of writing.
+What changes for a team when a task it used to do is automated? Here I use my projects and experiments to explore how technical choices shape the way people work.
 
-I publish to see how my ideas hold up against other people’s experience. A counterexample can reopen a question I thought was settled.
+I explain what shaped those decisions and where they ran up against limits in practice. That gives you a way to judge what holds up in your own setting, what you’d adapt, and where you’d make a different choice.
 
-I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
+I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
 ## Projects and contributions
 
