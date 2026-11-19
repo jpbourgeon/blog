@@ -4,10 +4,11 @@ import {mkdirSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import test, {type TestContext} from 'node:test';
+import {fileURLToPath} from 'node:url';
 import {stringify} from 'yaml';
 import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
-import {identities, matchReview, reviewPath, type Review} from './review.mts';
+import {identities, matchReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
 import {plan} from './gate.mts';
 
 const approvalNotice = 'Human editorial approval: not granted by this report';
@@ -55,12 +56,17 @@ function fixture(t: TestContext) {
     for (const locale of locales) write(paths[locale],
       '---\ntitle: Example\n' + state + '---\n# Example\n\n' + body + ' ' + locale + '\n');
   }
-  function report(review: Review) {
-    const path = reviewPath(review.content);
+  function report(review: Review, path = reviewPath(review.content)) {
     write(path, '---\n' + stringify(review) + '---\nVerified evidence\n\n' + approvalNotice + '\n');
     return path;
   }
   return {repo, initial, write, remove, commit, writePair, report};
+}
+
+const publicationCli = fileURLToPath(new URL('./cli.mts', import.meta.url));
+function publication(repo: Repository, ...args: string[]) {
+  return execFileSync(process.execPath, [publicationCli, ...args], {cwd: repo.root, encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe']});
 }
 
 test('a page and an article each require a matching PASS for the published state', async t => {
@@ -139,6 +145,74 @@ test('a reviewed permanent-page revision preserves its public route', async t =>
     f.remove(draftPaths[locale]);
   }
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
+});
+
+test('a page revision with a shared Capture preserves the public PASS until promotion', async t => {
+  const f = fixture(t);
+  const draft = pageDraftPair('profile.md');
+  const canonical = pagePair('profile.md');
+  const capture = '.42p/rationale-units/page_profile/capture.md';
+  const frontmatter = 'draft: true\nrationale: ' + capture + '\n';
+  f.write(capture, '# Profile\n');
+  f.writePair(draft, 'Public version', frontmatter);
+  const first = await identities(f.commit(), draft);
+  const publicReport = f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) {
+    f.write(canonical[locale], first.projected[locale].bytes);
+    f.remove(draft[locale]);
+  }
+  const deployed = f.commit();
+  f.writePair(draft, 'Revision', frontmatter);
+  assert.deepEqual(await plan(f.commit(), deployed), ['No public content changes']);
+  assert.throws(() => publication(f.repo, 'prepare', draft.fr, draft.en),
+    /Existing canonical content requires a revision baseline/);
+  const prepared = JSON.parse(publication(f.repo, 'prepare', draft.fr, draft.en, canonical.fr, canonical.en));
+  assert.equal(prepared.report, revisionReviewPath('page/profile'));
+
+  for (const result of ['FAIL', 'INCONCLUSIVE', 'PASS'] as const) {
+    f.report({...prepared.frontmatter, result}, prepared.report);
+    const reviewed = f.commit();
+    assert.equal(reviewed.blob(publicReport), deployed.blob(publicReport));
+    assert.deepEqual(await plan(reviewed, deployed), ['No public content changes']);
+    assert.match(publication(f.repo, 'check', prepared.report), new RegExp('Review ' + result));
+    if (result !== 'PASS') {
+      assert.throws(() => publication(f.repo, 'project', prepared.report), /matching PASS is required/);
+    }
+  }
+
+  const sealed = f.repo.tree(f.repo.text('rev-parse', 'HEAD'));
+  const promotion = JSON.parse(publication(f.repo, 'project', prepared.report));
+  for (const {path, content} of promotion.write) f.write(path, content);
+  for (const path of promotion.delete) f.remove(path);
+  const promoted = f.commit();
+  assert.equal(promoted.blob(publicReport), sealed.blob(prepared.report));
+  for (const path of [draft.fr, draft.en, prepared.report]) assert.equal(promoted.blob(path), undefined);
+  assert.deepEqual(await plan(promoted, deployed), ['Public page/profile']);
+});
+
+test('an article revision can prepare before its report without sharing a Capture with unrelated drafts', async t => {
+  const f = fixture(t);
+  const canonical = articlePair('article.md');
+  const draft = articlePair('article-v2.md');
+  const capture = '.42p/rationale-units/article_example/capture.md';
+  const frontmatter = 'draft: true\nrationale: ' + capture + '\n';
+  f.write(capture, '# Article\n');
+  f.writePair(canonical, 'Original', frontmatter);
+  const first = await identities(f.commit(), canonical);
+  f.report({...first.data, result: 'PASS'});
+  for (const locale of locales) f.write(canonical[locale], first.projected[locale].bytes);
+  const deployed = f.commit();
+  f.writePair(draft, 'Revision', frontmatter + 'slug: article-v2\n');
+  f.commit();
+  const prepare = () => JSON.parse(publication(f.repo, 'prepare', draft.fr, draft.en, canonical.fr, canonical.en));
+  const prepared = prepare();
+  assert.equal(prepared.report, revisionReviewPath('article/article'));
+  f.report({...prepared.frontmatter, result: 'FAIL'}, prepared.report);
+  assert.deepEqual(await plan(f.commit(), deployed), ['No public content changes']);
+  f.writePair(articlePair('unrelated.md'), 'Unrelated', frontmatter);
+  const unrelated = f.commit();
+  assert.throws(prepare, /Main Capture belongs to multiple contents/);
+  await assert.rejects(plan(unrelated, deployed), /Main Capture belongs to multiple contents/);
 });
 
 
