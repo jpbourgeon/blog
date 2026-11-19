@@ -9,27 +9,23 @@
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
   <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} /></div>
 
-## Jean-Philippe Bourgeon 
+## Jean-Philippe Bourgeon
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I write here in a personal capacity, not on behalf of my employer.
+My work ranges from software development to guiding the evolution of information systems, alongside the teams who build and run them. I like understanding what drives decisions, explaining the reasons behind them, and seeing their effects in practice. I prefer simple solutions: they're easier to understand and keep under control, including when automation is involved. I speak for myself, not on behalf of my employer.
 
 ## Why this blog
 
-Understanding how systems work and imagining how they could work differently. That curiosity stays with me whether I'm writing code or working with a team.
+I share my thoughts, experiments, and things I've built around systems, how they're used, and how they can evolve. Writing helps me clarify my ideas and keep track of how they evolve. But even a coherent line of reasoning benefits from other people's experiences and objections. That's why I publish it rather than keep it to myself.
 
-In my work, a solution is not judged solely by what it can do. We also need to explain why it was chosen, be able to maintain it, verify that it meets the need, and know who remains in control. That is why I am as interested in software engineering as I am in IT management and governance.
+I want to share the starting questions and the experiments as well as the results. They show how an idea takes shape, which choices were made, and what difficulties remain. You can follow the reasoning, take what interests you, adapt it to your own context, or challenge it. This blog is also a place for me to experiment, particularly with writing.
 
-I seek simplicity and frugality not for the sake of doing less, but to keep only the complexity that serves a purpose. With automation and artificial intelligence, this need for understanding and control becomes especially important.
-
-Software architecture, cybernetics, and sociotechnical systems inform this thinking, alongside open source and local-first technologies.
-
-I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
+I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
 ## Projects and contributions
 
-I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.
+Turning an idea into code means confronting the constraints of design, use, and maintenance. What seemed obvious on paper is not always so clear in practice.
 
 I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
 
@@ -44,7 +40,6 @@ You can find my contributions on [GitHub](https://github.com/jpbourgeon), my wri
 This personal blog is published on a non-professional basis by **Jean-Philippe Bourgeon**, who is responsible for its publication. It presents personal thoughts and work independently of my employer.
 
 **Hosting:** GitHub Pages, a service of **GitHub, Inc.**, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States. See the [GitHub Pages documentation](https://docs.github.com/en/pages) and [GitHub's contact information](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
-
 
 Unless otherwise stated, my original writing is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Software and third-party materials follow their own licenses; exceptions for the site repository are documented in [LICENSE-ADDITIONAL.md](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md).
 
