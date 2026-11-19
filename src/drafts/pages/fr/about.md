@@ -18,19 +18,17 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 ## Pourquoi ce blog
 
-Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe.
+J’aime comprendre comment les choses fonctionnent. Dès que j’y vois un peu plus clair, une autre question me vient assez naturellement : est-ce qu’on pourrait s’y prendre autrement ?
 
-Imaginer une solution ouvre des possibilités ; la concevoir oblige à faire des choix. Ce qui m'intéresse alors, c'est de pouvoir en expliquer les raisons, vérifier qu'elle répond au besoin et comprendre ce qu'il faudra pour la maintenir. Ces questions me font passer du logiciel à l'organisation : les décisions techniques engagent aussi les personnes qui utiliseront le système et le feront évoluer. C'est à cette rencontre entre ingénierie, management et gouvernance que se situent mes réflexions.
+Quand j’écris du code, je peux essayer. Avec une équipe, je dois aussi pouvoir expliquer pourquoi je propose de changer quelque chose. Qu’est-ce que cela faciliterait ? Et si je confie demain le logiciel à quelqu’un d’autre, que lui faudra-t-il comprendre pour le faire évoluer à son tour ? C’est souvent là que je reviens à une solution plus simple. La personne qui en héritera aura déjà fort à faire avec la complexité que le problème impose.
 
-Pour garder ces choix compréhensibles et maîtrisables, je recherche la simplicité et la frugalité. Chaque complication doit apporter quelque chose qui justifie de la conserver. L'automatisation et l'intelligence artificielle rendent cette question plus aiguë : déléguer une tâche ne dispense pas de comprendre ce que l'on attend du système ni de vérifier ce qu'il produit.
+C’est ce chemin que j’ai envie de partager ici. Un morceau de code montre la solution retenue. Un article laisse aussi de la place à la question de départ, aux autres possibilités et aux raisons du choix. Cela vaut pour une décision d’architecture comme pour une façon de travailler ensemble.
 
-Je partage ici ces réflexions sur la conception et le pilotage des systèmes, avec les raisons des choix et les contraintes qui les mettent à l'épreuve. Des agents d'IA m'aident à explorer les idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
+La rédaction de ce blog me donne elle-même l’occasion de préciser ce que je veux déléguer. Je travaille avec des agents d’IA pour explorer une idée, préparer un texte, le traduire et le vérifier. À moi de décider ce que je veux dire et de valider ce que vous lirez ici.
 
 ## Productions et contributions
 
-Le code me permet de confronter ces réflexions à ce qu'elles impliquent en pratique. Concevoir une solution, l'utiliser et la maintenir oblige à préciser ce qui semblait évident sur le papier.
-
-Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
+Il arrive aussi que le code me fasse revoir l’idée de départ. Sur le papier, je peux laisser un détail en suspens. Pour faire fonctionner le logiciel, il faut le trancher. Vous pouvez retrouver une partie de ce travail dans les dépôts open source d’[at-rama](https://github.com/at-rama).
 
 ## Me retrouver et échanger
 
