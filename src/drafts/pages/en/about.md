@@ -1,4 +1,5 @@
 ---
+draft: true
 "description": "Papa Bear, public-sector IT technical director and deputy director, systems enthusiast."
 "rationale": ".42p/rationale-units/page_about/capture.md"
 "title": "About"
@@ -19,17 +20,15 @@ My work spans IT systems and organizations: understanding how they work, designi
 
 Understanding how systems work and imagining how they could work differently. That curiosity stays with me whether I'm writing code or working with a team.
 
-In my work, a solution is not judged solely by what it can do. We also need to explain why it was chosen, be able to maintain it, verify that it meets the need, and know who remains in control. That is why I am as interested in software engineering as I am in IT management and governance.
+Imagining a solution opens up possibilities; designing it means making choices. What interests me then is being able to explain those choices, verify that the solution meets the need, and understand what maintaining it will involve. These questions take me from software to the organization: technical decisions also affect the people who will use the system and develop it further. My thinking sits at this meeting point of engineering, management, and governance.
 
-I seek simplicity and frugality not for the sake of doing less, but to keep only the complexity that serves a purpose. With automation and artificial intelligence, this need for understanding and control becomes especially important.
+To keep those choices understandable and under human control, I seek simplicity and frugality. Each complication needs to contribute enough to justify keeping it. Automation and artificial intelligence make this question more pressing: delegating a task does not remove the need to understand what we expect of a system or to check what it produces.
 
-Software architecture, cybernetics, and sociotechnical systems inform this thinking, alongside open source and local-first technologies.
-
-I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
+Here I share these reflections on designing and managing systems, including the reasons behind choices and the constraints that put them to the test. AI agents help me explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
 
 ## Projects and contributions
 
-I also like testing ideas in code. Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper.
+Code lets me test what these reflections mean in practice. Designing, using, and maintaining a solution means clarifying what seemed obvious on paper.
 
 I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
 
