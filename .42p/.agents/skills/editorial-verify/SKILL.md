@@ -108,7 +108,12 @@ The resulting report frontmatter has `content` (`article/<slug>` or
 `targets` (path and normalized content SHA-256), `references` (Git blob
 IDs for both standards and optional main Capture), optional `baseline`
 (published FR/EN blob IDs), and overall `result`.
-Write the report to `.42p/editorial-reviews/<type>/<slug>.md`.
+Use the `report` path returned by `prepare`. A first review uses
+`.42p/editorial-reviews/<type>/<slug>.md`. A revision uses
+`.42p/editorial-reviews/revisions/<type>/<slug>.md` for any verdict, while
+the first path retains the PASS for the currently public version.
+Always supply both canonical paths when preparing a revision. Record the
+review date in the report body as YYYY-MM-DD. Git retains earlier reviews.
 
 Its body provides sources, mapped evidence, categorical verdicts, limitations,
 and this exact notice:

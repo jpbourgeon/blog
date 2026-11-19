@@ -78,6 +78,8 @@ Do not place an unapproved page in `src/pages/`. Native pages have no
 `unlisted` preview; use a review branch/site for visual approval.
 Published pages live under `src/pages/` and
 `i18n/en/docusaurus-plugin-content-pages/` after promotion.
+Keep the same relative path for a page revision and provide both canonical
+paths in the verification handoff for every revision.
 
 Do not change visibility or public canonical files. Any new substantive
 argument arising during drafting must be flagged separately in the drafting
