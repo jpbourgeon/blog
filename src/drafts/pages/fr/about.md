@@ -18,9 +18,9 @@ Mon travail va du développement logiciel au pilotage des systèmes d'informatio
 
 ## Pourquoi ce blog
 
-Je partage ici mes réflexions, mes essais et mes réalisations sur les systèmes que nous construisons et sur notre façon de travailler ensemble. À force de creuser une idée, je risque de ne plus voir les hypothèses sur lesquelles elle repose. Un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à clarifier mes idées et à garder une trace du chemin parcouru. Les publier permet à d'autres de les discuter, de les prolonger ou de les contester.
+Je partage ici mes réflexions, mes essais et mes réalisations sur les systèmes que nous construisons et sur notre façon de travailler ensemble. Écrire m'aide à mettre mes idées au clair et à garder une trace de leur évolution. Mais une réflexion, aussi cohérente soit-elle, gagne à rencontrer d'autres expériences et d'autres objections. C'est pour cela que je la publie, plutôt que de la garder pour moi.
 
-Je ne souhaite pas montrer seulement des résultats aboutis. Les questions de départ, les essais et les difficultés rencontrées comptent aussi : ils éclairent les choix qui suivent. Vous pouvez ainsi suivre un raisonnement, en retenir ce qui vous semble utile, l'adapter à votre contexte ou prendre une autre voie. Ce blog est également un terrain d'essai pour moi, notamment dans l'écriture.
+Je souhaite partager aussi bien les questions de départ et les essais que les résultats. Ils permettent de comprendre comment une idée prend forme, quels choix ont été faits et quelles difficultés demeurent. Vous pouvez ainsi suivre le raisonnement, en retenir ce qui vous intéresse, l'adapter à votre contexte ou le contester. Ce blog est aussi pour moi un terrain d'essai, notamment dans l'écriture.
 
 Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
