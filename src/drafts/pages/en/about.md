@@ -10,17 +10,17 @@
 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
   <img src="/blog/img/avatar.webp" alt="Portrait of jpbourgeon" width="104" height="104" style={{ borderRadius: '50%', objectFit: 'cover' }} /></div>
 
-## Jean-Philippe Bourgeon 
+## Jean-Philippe Bourgeon
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I want to be able to explain those choices, check that they meet the need, and keep systems simple enough to remain manageable over time. I write here in a personal capacity, not on behalf of my employer.
+My work spans IT systems and organizations: designing software, working with teams, and guiding the evolution of information systems. These activities raise a common question: how can we make decisions that remain explainable, verifiable, and under our control over time? Simplicity matters to me because it helps keep complexity manageable, especially when automation changes how people work and make decisions. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-I like finding out how systems work and imagining how they could work differently. That curiosity leads me to explore ideas, try them out, and discover the questions they raise. But the longer I work on an idea, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me give it shape and keep track of how I got there; publishing opens it to other perspectives, where it can be taken further or challenged.
+I like finding out how systems work and imagining how they could work differently. That curiosity leads me to explore both technical choices and their human and organizational consequences, from code to management and governance. But the longer I work through an idea, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me structure my thinking and keep track of how I got there; publishing brings my reasoning before other people, who can build on it or challenge it.
 
-The work I share here is at different stages. A question may lead to reflection, open up a line of inquiry, call for an experiment, or eventually take shape as something I build. I want to make room for those stages, not just the results: what I’m trying to understand, what I test, and what proves difficult are part of the work too.
+The work I share here is at different stages. A question may open up an inquiry, lead to an experiment, or take shape in something I build. I want to share that process, not just the results: you can trace the questions, follow the choices and their limits, then draw on them in your own context, adapt them, or challenge them. The blog is itself part of that experimentation, particularly through writing and finding ways to give my ideas shape.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
