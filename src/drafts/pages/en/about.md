@@ -20,9 +20,9 @@ I like finding out how systems work and imagining how they could work differentl
 
 ## Why this blog
 
-I’m wary of ideas that start to feel obvious to the person working on them. They can be internally consistent without ever facing the objections that matter. Writing helps me give them shape and keep a record of them; publishing takes them out of that private conversation. Once a line of reasoning is visible, others can build on it, question it, or challenge it.
+I enjoy following an idea, seeing what it helps me understand and discovering the questions it raises. But the longer I work on it, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me give it shape and keep track of how I got there; publishing opens it to other perspectives, where it can be taken further or challenged.
 
-This is where I bring together things I’ve built, experiments, and questions I haven’t settled. Software sits alongside teamwork, IT management, and the place we give automation in our work. These subjects overlap more than they divide. I’d rather show how I approach a problem, including what remains unresolved, than offer only finished conclusions. You can follow the reasoning, make something of it, or approach the problem from another angle.
+The work I share here is at different stages. A question may lead to reflection, open up a line of inquiry, call for an experiment, or eventually take shape as something I build. I want to make room for those stages, not just the results: what I’m trying to understand, what I test, and what proves difficult are part of the work too.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
