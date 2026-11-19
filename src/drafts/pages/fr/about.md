@@ -1,6 +1,7 @@
 ---
 "description": "Papa Poule, directeur technique et directeur adjoint d'une DSI publique, amateur de systèmes."
 "rationale": ".42p/rationale-units/page_about/capture.md"
+"draft": true
 "title": "À propos"
 ---
 
@@ -17,13 +18,13 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 ## Pourquoi ce blog
 
-Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe.
+J’écris ici pour garder une trace de mes réflexions et de mes expériences. Leur donner une forme que je peux relire m’oblige à préciser ce que j’ai compris et les raisons de mes choix.
 
-Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer les raisons de son choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
+Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m’accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe. Pour choisir une solution, j’ai besoin de pouvoir expliquer à quoi elle répond, comment on pourra la maintenir et vérifier qu’elle remplit son rôle, et qui en gardera la maîtrise. C’est la même exigence qui guide mes choix d’architecture logicielle et ma façon d’aborder la gouvernance des systèmes d’information. Je cherche à ne garder que la complexité qui sert le besoin. L’automatisation et l’intelligence artificielle donnent encore plus de poids à cette exigence.
 
-Je recherche la simplicité et la frugalité, non pour faire moins par principe, mais pour ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
+J’applique la même exigence à mes propres idées. Une idée peut paraître solide tant qu’on l’examine avec les hypothèses qui lui ont donné naissance. La publier permet à des personnes qui ont d’autres expériences de l’examiner à leur tour. Une objection ou un contre-exemple peut alors me montrer ce qui m’a échappé et m’aider à reprendre le travail.
 
-L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
+Le blog fait partie de cette démarche, au même titre que les projets où j’essaie de concrétiser ces idées. C’est aussi un terrain de jeu. J’y essaie des manières d’écrire et j’y donne suite à des idées pour voir ce qu’elles peuvent devenir.
 
 Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
 
