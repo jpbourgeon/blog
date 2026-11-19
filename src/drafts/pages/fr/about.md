@@ -22,7 +22,7 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 J'aime creuser une idée, suivre ce qu'elle permet de comprendre et découvrir les questions qu'elle soulève. Mais à force de la travailler, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de le confronter à d'autres regards, de le prolonger ou de le contredire.
 
-J'y rassemble des réalisations, des essais et des questions encore ouvertes. Le logiciel y côtoie le travail des équipes, le pilotage des systèmes d'information et la place que nous laissons à l'automatisation : ces sujets se croisent davantage qu'ils ne se séparent. Je préfère montrer comment j'aborde un problème et ce qui reste en suspens plutôt que livrer seulement des conclusions. Vous pouvez suivre le raisonnement, vous en saisir ou prendre le problème par un autre bout.
+Tous les travaux que je partage ici n'en sont pas au même point. Une question peut nourrir une réflexion, ouvrir une exploration, appeler une expérience ou finir par prendre forme dans une réalisation. Je souhaite garder une place à ces étapes, pas seulement aux résultats : ce qu'on cherche, ce qu'on essaie et ce qui résiste font aussi partie du travail.
 
 Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
