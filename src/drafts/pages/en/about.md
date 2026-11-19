@@ -14,11 +14,11 @@
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-My work ranges from software development to guiding the evolution of information systems, alongside the teams who build and run them. I like understanding why we make certain choices, being able to explain them, and seeing what difference they make in practice. I prefer simple solutions: they're easier to understand and keep under control, even when we automate. I write here in a personal capacity, not on behalf of my employer.
+My work ranges from software development to guiding the evolution of information systems, alongside the teams who build and run them. I like understanding what drives decisions, explaining the reasons behind them, and seeing their effects in practice. I prefer simple solutions: they're easier to understand and keep under control, including when automation is involved. I speak for myself, not on behalf of my employer.
 
 ## Why this blog
 
-I share my thoughts, experiments, and things I've built about the systems we create and how we work together. Writing helps me clarify my ideas and keep track of how they evolve. But even a coherent line of reasoning benefits from other people's experiences and objections. That's why I publish it rather than keep it to myself.
+I share my thoughts, experiments, and things I've built around systems, how they're used, and how they can evolve. Writing helps me clarify my ideas and keep track of how they evolve. But even a coherent line of reasoning benefits from other people's experiences and objections. That's why I publish it rather than keep it to myself.
 
 I want to share the starting questions and the experiments as well as the results. They show how an idea takes shape, which choices were made, and what difficulties remain. You can follow the reasoning, take what interests you, adapt it to your own context, or challenge it. This blog is also a place for me to experiment, particularly with writing.
 
