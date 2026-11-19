@@ -20,9 +20,9 @@ I like finding out how systems work and imagining how they could work differentl
 
 ## Why this blog
 
-I share what I build, the ideas I’m trying out, and the questions that remain open. The starting point might be a piece of software to design, a way of working to rethink, or an organization that needs to change.
+Here you’ll find ideas I’ve turned into software and questions I’m still working through, some of them about how teams organize their work. Writing helps me pin down what I’m trying to understand and keep a record of what I’ve figured out along the way.
 
-I explain where the ideas come from, the reasoning behind them, and what I’ve been able to verify in practice. That gives you enough context to take an idea into your own work, adapt it, or question what it rests on.
+When I spend enough time on an idea, assumptions that come from the way I’ve framed the problem can start to feel obvious. If I show where I started, you can draw on your own experience to use the idea, adapt it, or decide the problem needs to be framed differently.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 

@@ -20,9 +20,9 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 ## Pourquoi ce blog
 
-Je partage ici ce que je construis, les idées que j’essaie et les questions qui restent ouvertes. Le point de départ peut être un logiciel à concevoir, une manière de travailler à revoir ou une organisation à faire évoluer.
+Vous trouverez ici des idées qui ont pris la forme d’un logiciel et des questions que je continue de creuser, par exemple sur la façon dont on s’organise pour travailler ensemble. Écrire m’aide à préciser ce que je cherche et à garder une trace de ce que j’ai compris en chemin.
 
-J’explique d’où viennent les idées, le raisonnement qui les sous-tend et ce que les essais ont permis de vérifier. Vous pouvez ainsi reprendre une idée dans votre propre contexte, l’adapter ou discuter ce sur quoi elle repose.
+À force de travailler sur une idée, je peux finir par trouver évident ce qui tient à ma façon de poser le problème. Si je montre d’où je pars, vous pouvez reprendre l’idée à partir de votre propre expérience, l’adapter ou juger que le problème se pose autrement.
 
 Je m’appuie sur des agents d’IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
