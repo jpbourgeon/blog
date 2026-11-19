@@ -18,7 +18,7 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 ## Pourquoi ce blog
 
-J'aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité me pousse à creuser des idées, à les essayer et à découvrir les questions qu'elles soulèvent. Mais à force d'en travailler une, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de la confronter à d'autres regards, de la prolonger ou de la contredire.
+J'aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité me pousse à creuser des idées, à les essayer et à découvrir les questions qu'elles soulèvent. Mais à force de travailler sur une idée, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de la confronter à d'autres regards, de la prolonger ou de la contredire.
 
 Tous les travaux que je partage ici n'en sont pas au même point. Une question peut nourrir une réflexion, ouvrir une exploration, appeler une expérience ou finir par prendre forme dans une réalisation. Je souhaite garder une place à ces étapes, pas seulement aux résultats : ce qu'on cherche, ce qu'on essaie et ce qui résiste font aussi partie du travail.
 
@@ -26,7 +26,7 @@ Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et 
 
 ## Productions et contributions
 
-J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
+Passer de l'idée au code est aussi une mise à l'épreuve : les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
 
 Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
 
