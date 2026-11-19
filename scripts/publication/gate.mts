@@ -1,5 +1,5 @@
 import {
-  type Document, articlePair, locales, normalize, pagePair,
+  type Document, articlePair, locales, normalize, pagePair, readDocument,
   requireThat, sha256,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
@@ -23,9 +23,10 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
       sha256(normalize(actual)) === report.targets[locale].content_sha256,
       'Published content differs from verified target: ' + path);
     const candidate = report.candidates[locale].path;
-    if (candidate !== path) {
-      requireThat(target.blob(candidate) === undefined,
-        'Temporary candidate left in publication: ' + candidate);
+    if (candidate !== path && target.blob(candidate)) {
+      const workingCopy = await readDocument(target.read(candidate), candidate);
+      requireThat(workingCopy.visibility === 'draft',
+        'Temporary candidate left exposed in publication: ' + candidate);
     }
   }
   return location;

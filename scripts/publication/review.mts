@@ -1,6 +1,6 @@
 import {isDeepStrictEqual} from 'node:util';
 import {
-  type Document, type Fields, type Kind, type Locale, type Pair,
+  type Document, type Fields, type Pair,
   articlePair, documentPath, locales, normalize, pageDraftPair, pagePair,
   project, readDocument, readMarkdown, record, requireThat, sameProvenance,
   sha256, capturePattern, standards,
@@ -20,6 +20,7 @@ export type Identities = {
 export type Review = Identities & {result: 'PASS' | 'FAIL' | 'INCONCLUSIVE'};
 export const reviewsDir = '.42p/editorial-reviews/';
 export const reviewPath = (content: string) => reviewsDir + content + '.md';
+export const revisionReviewPath = (content: string) => reviewsDir + 'revisions/' + content + '.md';
 const authorityNotice = 'Human editorial approval: not granted by this report';
 
 export function pairKey(pair: Pair<string>) {
@@ -56,14 +57,14 @@ function checkPair<K extends 'content_sha256' | 'git_blob_sha'>(value: unknown, 
 }
 
 export async function readReview(tree: Snapshot, path: string): Promise<Review> {
-  requireThat(/^\.42p\/editorial-reviews\/(article|page)\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.md$/.test(path),
+  requireThat(/^\.42p\/editorial-reviews\/(?:revisions\/)?(article|page)\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.md$/.test(path),
     'Invalid review location: ' + path);
   const {fields, body} = await readMarkdown(tree.read(path), path);
   const revision = fields.mode === 'revision';
   requireThat(exactKeys(fields, ['content', 'mode', 'candidates', 'targets', 'references', 'result',
     ...(revision ? ['baseline'] : [])]) &&
     (revision || fields.mode === 'new') && typeof fields.content === 'string' &&
-    reviewPath(fields.content) === path &&
+    (reviewPath(fields.content) === path || (revision && revisionReviewPath(fields.content) === path)) &&
     ['PASS', 'FAIL', 'INCONCLUSIVE'].includes(fields.result as string) &&
     checkPair(fields.candidates, 'content_sha256') &&
     checkPair(fields.targets, 'content_sha256') &&
@@ -118,6 +119,8 @@ export async function identities(tree: Snapshot, candidatePaths: Pair<string>, b
   for (const locale of locales) {
     const candidate = candidates[locale];
     const target = project(candidate, baseline?.[locale]);
+    requireThat(baseline || target.path === candidate.path || !tree.blob(target.path),
+      'Existing canonical content requires a revision baseline: ' + target.path);
     const document = await readDocument(target.bytes, target.path);
     requireThat(document.visibility === 'public' && document.kind === candidate.kind &&
       document.route === (baseline?.[locale] ?? candidate).route,
@@ -154,7 +157,7 @@ export function matchReview(review: Review, data: Identities): void {
     'Stale or inapplicable editorial report: ' + data.content);
 }
 
-export async function inventory(tree: Snapshot) {
+export async function inventory(tree: Snapshot, pending?: Identities) {
   const pairs = new Map<string, Pair<Document>>();
   const roots = ['blog', 'i18n/en/docusaurus-plugin-content-blog', 'src/pages',
     'i18n/en/docusaurus-plugin-content-pages', 'src/drafts/pages'];
@@ -187,18 +190,30 @@ export async function inventory(tree: Snapshot) {
     }
   }
   const revisions = new Map<string, string>();
-  for (const path of tree.paths(reviewsDir.slice(0, -1))) {
-    const review = await readReview(tree, path);
-    if (!review.baseline) continue;
+  function bindRevision(review: Identities) {
+    if (!review.baseline) return;
     const candidate = pairKey(refPaths(review.candidates));
     const target = pairKey(refPaths(review.baseline));
-    if (pairs.has(candidate) && pairs.has(target)) revisions.set(candidate, target);
+    const draft = pairs.get(candidate)?.fr;
+    const published = pairs.get(target)?.fr;
+    if (!draft || draft.visibility === 'public' || published?.visibility !== 'public' ||
+        draft.kind !== published.kind || review.content !== published.kind + '/' + canonicalSlug(published)) return;
+    requireThat(!revisions.has(candidate) || revisions.get(candidate) === target,
+      'Conflicting revision baselines: ' + draft.path);
+    revisions.set(candidate, target);
   }
+  for (const path of tree.paths(reviewsDir.slice(0, -1))) {
+    const review = await readReview(tree, path);
+    if (path === revisionReviewPath(review.content)) bindRevision(review);
+  }
+  if (pending) bindRevision(pending);
   const owners = new Map<string, string>();
   for (const [key, pair] of pairs) {
     const {main} = await checkProvenance(tree, pair);
     if (!main) continue;
-    const owner = revisions.get(key) ?? key;
+    const pageBaseline = pair.fr.source === 'candidate' ? pairKey(pagePair(pair.fr.key)) : undefined;
+    const owner = revisions.get(key) ??
+      (pageBaseline && pairs.has(pageBaseline) ? pageBaseline : key);
     requireThat(!owners.has(main) || owners.get(main) === owner,
       'Main Capture belongs to multiple contents or an unbound revision: ' + main);
     owners.set(main, owner);

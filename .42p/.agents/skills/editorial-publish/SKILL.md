@@ -14,10 +14,14 @@ npm run publication -- check <report>
 npm run publication -- project <report>
 ```
 
-After authorization, write the projected FR/EN canonical bytes and remove
-temporary candidates **in one commit**. Never repair or compose editorial
-prose during promotion. Any necessary correction returns to writing and
-independent verification.
+For a revision, use the report under
+`.42p/editorial-reviews/revisions/<type>/<slug>.md`. After authorization,
+apply every `write` and `delete` from `project` **in one commit**. This
+installs the projected FR/EN canonical bytes and removes temporary candidates.
+For a revision it also moves the exact PASS to the public report path,
+replacing the previous PASS. Never repair or compose editorial prose during
+promotion. Any necessary correction returns to writing and independent
+verification.
 
 ## Previews
 
