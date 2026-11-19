@@ -20,9 +20,9 @@ I like finding out how systems work and imagining how they could work differentl
 
 ## Why this blog
 
-What changes for a team when a task it used to do is automated? Here I use my projects and experiments to explore how technical choices shape the way people work.
+I share what I build, the ideas I’m trying out, and the questions that remain open. The starting point might be a piece of software to design, a way of working to rethink, or an organization that needs to change.
 
-I explain what shaped those decisions and where they ran up against limits in practice. That gives you a way to judge what holds up in your own setting, what you’d adapt, and where you’d make a different choice.
+I explain where the ideas come from, the reasoning behind them, and what I’ve been able to verify in practice. That gives you enough context to take an idea into your own work, adapt it, or question what it rests on.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 

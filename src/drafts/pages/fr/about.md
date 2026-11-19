@@ -20,9 +20,9 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 ## Pourquoi ce blog
 
-Que change l’automatisation d’une tâche pour l’équipe qui en avait la charge ? C’est ce lien entre les choix techniques et la façon de travailler que j’explore ici, à partir de mes projets et de mes essais.
+Je partage ici ce que je construis, les idées que j’essaie et les questions qui restent ouvertes. Le point de départ peut être un logiciel à concevoir, une manière de travailler à revoir ou une organisation à faire évoluer.
 
-Je reviens sur ce qui a pesé dans les décisions et sur les limites apparues à l’usage. Vous pouvez ainsi juger ce qui vaut aussi dans votre contexte, ce que vous adapteriez et où vous feriez un autre choix.
+J’explique d’où viennent les idées, le raisonnement qui les sous-tend et ce que les essais ont permis de vérifier. Vous pouvez ainsi reprendre une idée dans votre propre contexte, l’adapter ou discuter ce sur quoi elle repose.
 
 Je m’appuie sur des agents d’IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
