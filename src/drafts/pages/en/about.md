@@ -14,13 +14,13 @@
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-My work spans IT systems and organizations: designing software, working with teams, and guiding the evolution of information systems. These activities raise a common question: how can we make decisions that remain explainable, verifiable, and under our control over time? Simplicity matters to me because it helps keep complexity manageable, especially when automation changes how people work and make decisions. I write here in a personal capacity, not on behalf of my employer.
+I work where computing and organizations meet, from writing code to guiding the evolution of information systems alongside the teams that run them. I like understanding why choices are made, being able to explain them, and checking what they actually change. Keeping things simple helps us stay in control, including when we automate. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-I like finding out how systems work and imagining how they could work differently. That curiosity leads me to explore both technical choices and their human and organizational consequences, from code to management and governance. But the longer I work through an idea, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me structure my thinking and keep track of how I got there; publishing brings my reasoning before other people, who can build on it or challenge it.
+I share reflections, explorations, and things I've built about the systems we create and how we make them work together. The longer I explore an idea, the more obvious its assumptions can start to feel. Yet a line of reasoning can be coherent without having faced the objections that matter. Writing helps me see things more clearly and keep track of how I got there; publishing lets others discuss that reasoning, build on it, or challenge it.
 
-The work I share here is at different stages. A question may open up an inquiry, lead to an experiment, or take shape in something I build. I want to share that process, not just the results: you can trace the questions, follow the choices and their limits, then draw on them in your own context, adapt them, or challenge them. The blog is itself part of that experimentation, particularly through writing and finding ways to give my ideas shape.
+I don't want to share only finished results. The questions I start with, the things I try, and what resists along the way matter too. You can follow a line of reasoning, take what is useful to you, compare it with your experience, or choose another path. The blog is an experiment in its own right, especially in writing and giving my ideas a concrete form.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
