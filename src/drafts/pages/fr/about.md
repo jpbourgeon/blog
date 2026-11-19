@@ -14,13 +14,11 @@
 
 > Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
-Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
-
-J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité m’accompagne quand je développe du code ou que je travaille en équipe. Je tiens à pouvoir expliquer un choix et vérifier qu’il répond au besoin. Faire simple aide à garder la main quand il faut maintenir ou faire évoluer ce qu’on a construit.
+Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Je tiens à pouvoir expliquer ces choix, vérifier qu'ils répondent au besoin et garder les systèmes assez simples pour les maîtriser dans la durée. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-J'aime creuser une idée, suivre ce qu'elle permet de comprendre et découvrir les questions qu'elle soulève. Mais à force de la travailler, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de le confronter à d'autres regards, de le prolonger ou de le contredire.
+J'aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité me pousse à creuser des idées, à les essayer et à découvrir les questions qu'elles soulèvent. Mais à force d'en travailler une, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de la confronter à d'autres regards, de la prolonger ou de la contredire.
 
 Tous les travaux que je partage ici n'en sont pas au même point. Une question peut nourrir une réflexion, ouvrir une exploration, appeler une expérience ou finir par prendre forme dans une réalisation. Je souhaite garder une place à ces étapes, pas seulement aux résultats : ce qu'on cherche, ce qu'on essaie et ce qui résiste font aussi partie du travail.
 
