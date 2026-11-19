@@ -20,11 +20,9 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 ## Pourquoi ce blog
 
-J’écris pour mettre de l’ordre dans mes réflexions et garder une trace de mes expériences.
+J’écris ici pour mettre en ordre ce que j’apprends au fil de mes projets et en garder une trace. J’en profite pour essayer différentes formes d’écriture.
 
-Je publie pour que mes idées puissent être discutées. Une objection ou un contre-exemple peut me faire revoir un choix qui me paraissait évident.
-
-Le blog accompagne les projets que je mène. C’est aussi un terrain de jeu où j’essaie des façons d’écrire et où je donne forme à des idées encore à l’état d’ébauche.
+Je publie pour confronter mes idées à d’autres expériences. Un contre-exemple peut rouvrir une question que je croyais réglée.
 
 Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
 

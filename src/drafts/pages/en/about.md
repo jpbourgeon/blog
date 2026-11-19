@@ -20,11 +20,9 @@ I like finding out how systems work and imagining how they could work differentl
 
 ## Why this blog
 
-I write to put my thoughts in order and keep a record of my experiments.
+I write here to make sense of what I learn from my projects and keep a record of it. It also gives me a chance to try different forms of writing.
 
-I publish so other people can question my ideas. An objection or a counterexample can make me rethink a choice that seemed obvious at the time.
-
-The blog goes alongside the other projects I work on. It’s also a place to try different ways of writing and give shape to ideas I’m still working out.
+I publish to see how my ideas hold up against other people’s experience. A counterexample can reopen a question I thought was settled.
 
 I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
 
