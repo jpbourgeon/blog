@@ -1,6 +1,6 @@
 ---
 content: page/about
-mode: new
+mode: revision
 candidates:
   fr:
     path: src/drafts/pages/fr/about.md
@@ -17,62 +17,99 @@ targets:
     content_sha256: 3182b780993369fb4b1512cbf3b8dcbb244b788bc94775638944960aeaebfa81
 references:
   - path: standards/editorial.md
-    git_blob_sha: 716485bd766edfe112bfe9d09d2bd903d2445fcb
+    git_blob_sha: 848650f4a16d218198b9228efe8fa74f0cc31774
   - path: standards/voice.md
     git_blob_sha: 9de8dd5bff300acca547514bb6ae78eecc6185ff
   - path: .42p/rationale-units/page_about/capture.md
     git_blob_sha: 4deee6d1fc3e8bf0570bc1b9eed98984f9872473
-result: PASS
+baseline:
+  fr:
+    path: src/pages/about.md
+    git_blob_sha: 8b43466ce94176d3449942f44ae95d973384e416
+  en:
+    path: i18n/en/docusaurus-plugin-content-pages/about.md
+    git_blob_sha: 7536308af6155c987959de095728b47dbb9ef98a
+result: FAIL
 ---
 
-# Vérification éditoriale — À propos / About
+# Vérification éditoriale — copies À propos / About
 
-**PASS.** Les deux versions passent la revue éditoriale. Le contrôle complémentaire de la navigation au clavier passe sur le [commit 4135679](https://github.com/jpbourgeon/blog/commit/4135679c036be0683003416461a6aab3de8ae84c). Revue indépendante du 16 novembre 2026 sur le [commit b78d5ef](https://github.com/jpbourgeon/blog/commit/b78d5efdaa4f351bc99e47e4a9c28f7343c129a7) de la [PR 16](https://github.com/jpbourgeon/blog/pull/16).
+**FAIL — voix FR et EN : progression insuffisante dans la présentation personnelle.**
+Revue indépendante du 19 novembre 2026, sans réécriture des candidats, sur le [commit 389c0d3](https://github.com/jpbourgeon/blog/commit/389c0d3fc5e05c9dab9a7812bc900693b5b314de) de la [PR 24](https://github.com/jpbourgeon/blog/pull/24).
 
-## Verdicts
+La méthode appliquée est la version ajustée d’[editorial-verify au commit 2b4f04a](https://github.com/jpbourgeon/blog/blob/2b4f04aeb353459aa1a2e1dc6655763b68e4bcdd/.42p/.agents/skills/editorial-verify/SKILL.md), blob `51707b3cece413d50c538a13eb7c168da9112968`, validée par l’auteur dans la PR 23. Elle n’est pas encore présente dans la branche examinée. Les références normatives ci-dessus sont celles des candidats, non celles du rapport historique.
+
+Les copies sont identiques, octet pour octet, aux pages canoniques. Ce rapport porte sur leur réexamen comme candidates à une révision ; il ne retire pas rétroactivement la vérification historique de la version publique, conservée dans Git. Il n’autorise aucune publication.
+
+## Verdicts et éléments probants
 
 | Axe | Verdict | Éléments probants |
 | --- | --- | --- |
-| Intention et standard éditorial | PASS | Page pérenne, à la première personne. Le rôle public est annoncé dans la signature et la prise de parole personnelle est précisée dans l’introduction. Les productions sont distinguées des sujets de réflexion. |
-| Couverture de la Capture | PASS | Les deux versions couvrent les décisions de fond et de présentation. La correspondance est détaillée ci-dessous. |
-| Voix FR | PASS | « expliquer les raisons de son choix, la maintenir, vérifier qu’elle répond au besoin et savoir qui en garde la maîtrise » ancre la perspective dans des critères concrets. Le passage sur les contraintes de conception, d’usage et de maintenance relie la réflexion à l’expérience du code. Le rôle, la curiosité et la pratique en équipe sont étayés par les décisions de l’auteur. |
-| Voix EN | PASS | « That curiosity stays with me whether I’m writing code or working with a team » prolonge l’introduction par une pratique identifiable. « explain why it was chosen » et « know who remains in control » conservent un registre direct. Le passage sur le code présente une tournure perfectible sans rupture de ton. |
-| Parité FR/EN | PASS | Les deux versions conservent la signature validée, les mêmes critères de conception, la même répartition des rôles éditoriaux, le même périmètre de publication et les mêmes déclarations de confidentialité. « Incoming referrer » désigne le référent à l’arrivée sur le site. |
-| Faits et liens | PASS | 13 destinations répondent HTTP 200. LinkedIn renvoie 999 en accès automatisé. Le profil public indexé confirme l’identité et le chemin. L’adresse de GitHub correspond à celle de sa documentation et les licences renvoient aux références du dépôt. |
-| Mentions légales | PASS | C-legal consigne la vérification et la décision de l’auteur. Les deux notices approuvées sont identiques à celles de f7162c5. Identité, statut déclaré, hébergeur, adresse et licences concordent dans les deux langues. |
-| Confidentialité et consentement | PASS | C-privacy consigne la vérification et la décision de l’auteur sur les notices et le consentement. Le code, le script chargé et la documentation corroborent les affirmations techniques examinées. Les paramètres du compte sont attestés par l’auteur. |
-| Intégration technique | PASS | Projection locale des sources exactes, build FR/EN et Pagefind avec Node 26.13.1. Vérification des deux routes, URL canoniques, entrées de sitemap, ancres légales et référence au portrait local. Les 33 tests de publication et le contrôle TypeScript passent. Le contrôle complémentaire confirme la suppression du lien d’accueil vide du parcours clavier et de l’arbre d’accessibilité dans les deux langues. |
+| Intention et standard éditorial | PASS | L’identité, la prise de parole personnelle, la perspective professionnelle et les productions sont identifiables. Le niveau de détail convient à une page permanente. La faiblesse de composition est évaluée séparément dans la voix. |
+| Couverture et fidélité à la Capture | FAIL | Les sujets et décisions factuelles sont couverts. En revanche, C-domaines demande de relier les domaines plutôt que répéter un inventaire : la phrase FR « L’architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l’open source et les technologies local-first » et son équivalent EN les juxtaposent sans préciser leur contribution. La couverture thématique ne satisfait donc pas complètement la relation demandée. |
+| Voix FR | FAIL | La langue est sobre, claire et étayée. Les paragraphes de « Pourquoi ce blog » passent cependant de la curiosité aux critères de conception, puis à la frugalité, à cinq domaines et à l’usage des agents, sans développer suffisamment les relations entre ces éléments ni leur rapport à la démarche de publication. Voir l’analyse ci-dessous. |
+| Voix EN | FAIL | La même succession dans « Why this blog » reproduit la faiblesse de composition. Les liens locaux sont naturels, mais « inform this thinking, alongside… » n’explicite pas davantage l’apport des domaines. |
+| Parité FR/EN | PASS | Identité, curiosité, critères de choix, simplicité, automatisation, domaines, rôle des agents, code, contacts, notices et paramètres déclarés concordent. L’anglais partage les limites du français sans en modifier le sens. |
+| Faits et liens | PASS | Les fonctions, motivations et paramètres de compte sont rattachés aux décisions de l’auteur, non à une expertise inventée. Les 14 destinations distinctes des deux copies répondent HTTP 200 lors de cette revue. Le portrait local existe ; les licences concordent avec le dépôt. |
+| Application des décisions légales | PASS | C-legal est une décision déclarée et vérifiée par l’auteur. Les notices des copies restent identiques aux notices canoniques approuvées ; aucun nouvel arbitrage juridique n’est formulé ici. L’adresse GitHub est corroborée par sa documentation. |
+| Application des décisions de confidentialité | PASS | C-privacy est conservée et attribuée à l’auteur. Le module envoie chemin, titre et référent d’arrivée ; le script chargé contient la transmission de screen.width. La documentation confirme les traitements temporaires et agrégés décrits. Les options du compte et la conservation restent attestées par l’auteur. |
+| Préparation technique des candidats | FAIL | Les copies exactes ne comportent pas `draft: true`. Le contrôle réel `publication prepare` refuse les candidates avec « Page candidates must be drafts ». Elles sont hors des routes natives, donc ce défaut ne constitue pas une exposition publique. Aucun correctif n’a été appliqué, conformément à la demande de conserver les copies. |
+| Compilation et rendu final | INCONCLUSIVE | TypeScript et les 33 tests de publication passent. Aucun nouveau build FR/EN, contrôle Pagefind ou rendu navigateur n’a été exécuté : les sources publiques sont inchangées et prepare est bloqué. Les contrôles historiques ne sont pas présentés comme nouvellement exécutés. |
 
-Les décisions C-legal et C-privacy sont attribuées à l’auteur, qui confirme avoir mené les vérifications et statué sur les deux notices de f7162c5. Les sections de mentions légales et de confidentialité sont identiques, octet pour octet, aux sections retenues. Le module GoatCounter est inchangé depuis ce commit. La présente revue vérifie l’application de ces décisions et la concordance des affirmations avec les éléments observables. Elle n’a identifié aucune contradiction dans le code ou la documentation qui justifie de rouvrir les points tranchés. La vérification juridique reste celle de l’auteur. [Commit des notices](https://github.com/jpbourgeon/blog/commit/f7162c580961daf6040a455025bb325082d5cb94)
+## Progression : qualités locales et défaut d’ensemble
 
-## Capture vers candidats et candidats vers Capture
+L’ouverture FR/EN relie utilement les systèmes informatiques aux organisations, puis situe la parole personnelle. Le début de « Pourquoi ce blog » / « Why this blog » introduit une curiosité commune au code et au travail en équipe. Le paragraphe suivant établit une relation explicite : les exigences d’explication, de maintenance, de vérification et de maîtrise justifient l’intérêt conjoint pour l’ingénierie et la gouvernance. Ce lien est réel ; le texte n’est donc pas une simple liste du début à la fin.
 
-| Décision | Application dans les deux langues et rattachement des passages |
+La suite ajoute toutefois plusieurs dimensions sans développer ce qui les relie. « Je recherche la simplicité et la frugalité » explique le refus de complexité inutile, mais rattache peu cette recherche aux exigences précédentes. La phrase suivante rend la compréhension et la maîtrise plus importantes avec l’IA, sans préciser pourquoi. Le paragraphe des domaines fournit alors des noms, sans montrer l’éclairage qu’ils apportent. Enfin, l’usage éditorial des agents est déclaré sans que la section ait expliqué ce qui conduit l’auteur à écrire et partager ces réflexions. La proximité des thèmes assure la cohérence du sujet, pas une progression suffisamment exprimée.
+
+En anglais, « That is why… » assure le même lien local ; « I seek… », « inform this thinking, alongside… » et « I work with AI agents… » reprennent ensuite la même juxtaposition. La traduction n’est pas la cause du défaut.
+
+Le passage des productions explique bien une relation entre code et idées : les contraintes obligent à préciser la pensée. Il apporte une substance propre, mais arrive comme une nouvelle composante plutôt que comme un prolongement suffisamment construit du développement précédent. Les bons passages isolés ne suffisent pas à justifier une appréciation globale favorable.
+
+Le défaut concerne ainsi l’organisation du principal développement personnel, pas une seule transition. Il relève des principes 3 et 7 de voix et de la nouvelle consigne d’appréciation globale. Les sections contact, mentions légales et confidentialité ont une fonction autonome et n’exigent pas un enchaînement argumentatif. Le FAIL ne demande ni anecdote personnelle, ni intimité, ni jugement mesurable sur une « âme » : les raisons et expériences ne doivent pas être inventées.
+
+## Capture vers contenu et contenu vers Capture
+
+| Décisions | Application et limites FR/EN |
 | --- | --- |
-| C-identite, signature et portrait | L’en-tête utilise le portrait WebP local de 104 × 104 px, au-dessus du nom civil, suivi de la signature validée en retrait. Le texte alternatif identifie le portrait dans les deux langues. L’introduction présente le travail sur les systèmes et les organisations sans répéter le titre, puis précise l’indépendance vis-à-vis de l’employeur. |
-| C-perspective et C-domaines | « Pourquoi ce blog » et « Why this blog » relient curiosité, pratique en équipe, critères de conception, frugalité et maîtrise face à l’automatisation. Les domaines apparaissent dans le fil du texte, sans annoncer de collections. |
-| C-redaction | Le dernier paragraphe de « Pourquoi ce blog » et « Why this blog » attribue aux agents d’IA l’exploration, la rédaction, la traduction et la vérification. L’auteur décide du propos et valide chaque publication dans les deux versions. |
-| C-productions | La section des productions explique en quoi le code met les idées à l’épreuve et renvoie à at-rama. Elle n’ajoute aucun projet particulier. |
-| C-contact et Q-profiles | La section de contact renvoie à GitHub, dev.to et LinkedIn. Le renvoi à at-rama reste dans les productions. |
-| C-statut et C-legal | Les notices identifient Jean-Philippe Bourgeon, le statut déclaré, GitHub Pages et les licences. Leurs choix de contenu sont ceux arbitrés par l’auteur. |
-| C-privacy | Les deux notices reprennent l’hébergement, les données transmises, les traitements temporaires et les réglages déclarés. |
-| Cadre technique | Les candidats sont hors des routes publiques. Les routes, les ancres et le portrait fonctionnent dans la projection. |
+| C-identite, signature, portrait | Nom, signature validée, portrait local circulaire de 104 px, rôle et indépendance sont présents. |
+| C-perspective | Curiosité, responsabilité, critères de conception, simplicité et automatisation sont présents ; leur développement commun reste partiellement explicite, comme analysé ci-dessus. |
+| C-domaines | Domaines présents sans collections futures, mais leur simple juxtaposition ne respecte pas l’exigence de les relier dans le texte. |
+| C-redaction | La fin de Pourquoi/Why attribue exploration, rédaction, traduction et vérification aux agents, décision et approbation à l’auteur. |
+| C-productions | Le code est présenté comme mise à l’épreuve ; le lien at-rama est conservé, sans inventaire de projets. |
+| C-contact, Q-profiles | Les quatre URL validées sont présentes, avec at-rama dans les productions et les trois profils dans les contacts. |
+| C-statut, C-legal, C-privacy | Identité, statut, hébergeur, licences, traitements et paramètres déclarés sont conservés dans les deux langues. |
+| Cadre technique | Copies hors routes publiques, mêmes routes de destination et portrait ; absence du marqueur draft requis par les outils, sans modification à cette étape. |
 
-Les descriptions de page condensent la signature. Chaque section substantielle des candidats se rattache aux décisions ci-dessus.
+En sens inverse, les descriptions condensent la signature ; les assertions substantielles des deux copies se rattachent aux décisions ci-dessus. Aucune nouvelle conviction, expérience, réalisation nommée ou fonctionnalité future n’a été ajoutée. Aucune figure n’est demandée par les décisions applicables : leur absence n’est pas un défaut.
 
-## Sources techniques
+La Capture autorise explicitement à rapprocher, déplacer ou condenser les éléments. Elle ne contraint donc pas à conserver la succession actuelle des paragraphes.
 
-- Le [module GoatCounter du blog](https://github.com/jpbourgeon/blog/blob/b78d5efdaa4f351bc99e47e4a9c28f7343c129a7/src/client/goatcounter.ts) envoie le chemin avec la chaîne de requête et le titre. Le référent est renseigné pour l’arrivée seulement, s’il est disponible. Le [script chargé](https://gc.zgo.at/count.js) transmet la largeur de l’écran. La notice distingue la transmission de la largeur de l’usage statistique, déclaré désactivé par l’auteur.
-- La [documentation GoatCounter](https://www.goatcounter.com/help/privacy) décrit la mesure sans cookie de suivi, l’usage temporaire de l’IP et du User-Agent et l’absence de stockage des IP brutes dans la base. Les sessions, référents, pays, 365 jours de conservation et la désactivation de la statistique de largeur relèvent de la déclaration de l’auteur.
-- [Adresse postale GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice), [licences et exceptions du dépôt](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md) et [profil LinkedIn indexé](https://fr.linkedin.com/in/jpbourgeon).
+## Amélioration éditoriale non bloquante
 
-## Améliorations éditoriales non bloquantes
+En anglais, « force me to make precise what looked straightforward on paper » est compréhensible mais peu naturel. Employer le vocabulaire usuel de clarification d’une idée préserverait le sens. Cette réserve locale est indépendante du défaut global de progression.
 
-- En français, « L’architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion » gagnerait à préciser ce que l’un de ces domaines aide à comprendre ou à maîtriser, pour prolonger le raisonnement du paragraphe précédent.
-- En anglais, « Design, usage, and maintenance constraints force me to make precise what looked straightforward on paper » préserve le sens, mais la tournure « make precise what » est moins naturelle que le reste du texte. Privilégier le vocabulaire usuel de la pratique logicielle.
+## Contrôles exécutés et limites de préparation
 
-Le contrôle local sous Chromium couvre les deux langues à 320, 393 et 1 440 px. L’avatar circulaire affiche 104 × 104 px au-dessus du nom et de la signature. Aucun débordement horizontal ni erreur JavaScript relevés. Sur les deux accueils, le titre d’onglet est `jpbourgeon/blog`. Les deux pages À propos conservent leur titre propre suivi de ce nom. Le nom du site est absent de la barre de navigation.
+Sur un checkout propre de 389c0d3 :
 
-Le contrôle complémentaire du 18 novembre 2026 sur 4135679 a réutilisé la projection locale des deux candidates. Les empreintes normalisées et les références correspondent au rapport. Le build Docusaurus FR/EN avec Pagefind, le contrôle TypeScript et les 33 tests de publication passent. Dans Chromium headless à 320, 393 et 1 440 px, une tabulation réelle sur chacune des routes `/blog/about/` et `/blog/en/about/` confirme que le lien de marque vide est masqué, absent de l’arbre d’accessibilité et inaccessible au clavier. Sur mobile, le menu s’ouvre à la touche Entrée. Les entrées Articles, Rechercher ou Search et le sélecteur de langue restent accessibles au clavier. La validation visuelle finale du portrait revient à l’auteur. Les liens de navigation vers la page et de pied de page vers `#legal` seront à contrôler après leur ajout lors de la promotion.
+- Identité des blobs Git de chaque copie et de sa page canonique confirmée.
+- Empreintes ci-dessus calculées avec les fonctions réelles `readMarkdown`, `normalize` et `sha256` du dépôt. Elles sont calculées séparément car prepare ne peut pas générer son frontmatter sur ces fichiers.
+- `npm ci --ignore-scripts --no-audit --no-fund` exécuté.
+- `npm run typecheck` : PASS.
+- `npm run test:publication` : 33/33 PASS.
+- `npm run publication -- prepare src/drafts/pages/fr/about.md src/drafts/pages/en/about.md src/pages/about.md i18n/en/docusaurus-plugin-content-pages/about.md` : échec, `Page candidates must be drafts: src/drafts/pages/fr/about.md`.
+- Contrôle des liens par requêtes HTTP et relecture des sources officielles ci-dessous.
+
+Environnement : Node 24.22.3 et npm 11.9.0. Le projet demande Node >=26 ; les contrôles exécutés ne constituent donc pas une validation dans l’environnement cible. Le refus de draft est une exigence explicite du code, pas un échec dû à cette différence de version.
+
+Le frontmatter consigne les identités calculables, le mode revision et la baseline réelle. Il n’a pas été généré avec succès par prepare et ne doit pas être présenté comme un sceau techniquement validé. Le résultat de `publication check` après enregistrement est consigné dans la restitution de cette revue. Les candidats, les pages publiques et la Capture restent inchangés.
+
+## Sources vérifiées
+
+- [Module GoatCounter au commit examiné](https://github.com/jpbourgeon/blog/blob/389c0d3fc5e05c9dab9a7812bc900693b5b314de/src/client/goatcounter.ts) et [script chargé](https://gc.zgo.at/count.js).
+- [Documentation de confidentialité GoatCounter](https://www.goatcounter.com/help/privacy) : agrégation, options de collecte et traitement temporaire de l’IP et du navigateur ; paramètres du compte attribués à l’auteur.
+- [Confidentialité GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) et [adresse GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice).
+- [Licences et exceptions](https://github.com/jpbourgeon/blog/blob/389c0d3fc5e05c9dab9a7812bc900693b5b314de/LICENSE-ADDITIONAL.md), standards et Capture identifiés dans le frontmatter.
 
 Human editorial approval: not granted by this report
