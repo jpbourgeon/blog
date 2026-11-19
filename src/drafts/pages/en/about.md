@@ -18,19 +18,17 @@ My work spans IT systems and organizations: understanding how they work, designi
 
 ## Why this blog
 
-Understanding how systems work and imagining how they could work differently. That curiosity stays with me whether I'm writing code or working with a team.
+I like figuring out how things work. Once I have a clearer picture, I usually find myself wondering whether there might be another way to go about it.
 
-Imagining a solution opens up possibilities; designing it means making choices. What interests me then is being able to explain those choices, verify that the solution meets the need, and understand what maintaining it will involve. These questions take me from software to the organization: technical decisions also affect the people who will use the system and develop it further. My thinking sits at this meeting point of engineering, management, and governance.
+When I’m writing code, I can try it and see. When I’m working with a team, I also need to explain why I think something is worth changing. What would it make easier? If someone else took over the software tomorrow, what would they need to understand to change it themselves? That question often brings me back to a simpler design. Whoever takes it on will already have their hands full with the parts of the problem that really are complicated.
 
-To keep those choices understandable and under human control, I seek simplicity and frugality. Each complication needs to contribute enough to justify keeping it. Automation and artificial intelligence make this question more pressing: delegating a task does not remove the need to understand what we expect of a system or to check what it produces.
+That’s the thinking I want to share here. A piece of code shows the solution I chose. An article gives me room for the original question, the alternatives and the reasons for the choice. That holds whether I’m writing about software architecture or how people work together.
 
-Here I share these reflections on designing and managing systems, including the reasons behind choices and the constraints that put them to the test. AI agents help me explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
+Writing this blog also gives me a chance to think through what I want to delegate. I work with AI agents to explore ideas, draft articles, translate them and check them. I decide what I want to say and approve what you read here.
 
 ## Projects and contributions
 
-Code lets me test what these reflections mean in practice. Designing, using, and maintaining a solution means clarifying what seemed obvious on paper.
-
-I publish open-source work, notably through the GitHub organization [at-rama](https://github.com/at-rama).
+Sometimes the code makes me rethink the original idea. On paper I can leave a detail open. To get the software working, I have to settle it. You can find some of that work in the [at-rama](https://github.com/at-rama) open-source repositories.
 
 ## Find me
 
