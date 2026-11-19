@@ -14,13 +14,11 @@
 
 > Papa Bear · Public-sector IT Technical Director &amp; Deputy Director · Systems Enthusiast
 
-My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I write here in a personal capacity, not on behalf of my employer.
-
-I like finding out how systems work and imagining how they could work differently. That curiosity stays with me whether I’m writing code or working with a team. I want to be able to explain a choice and check that it meets the need. Keeping things simple helps us stay in control when we have to maintain or change what we’ve built.
+My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I want to be able to explain those choices, check that they meet the need, and keep systems simple enough to remain manageable over time. I write here in a personal capacity, not on behalf of my employer.
 
 ## Why this blog
 
-I enjoy following an idea, seeing what it helps me understand and discovering the questions it raises. But the longer I work on it, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me give it shape and keep track of how I got there; publishing opens it to other perspectives, where it can be taken further or challenged.
+I like finding out how systems work and imagining how they could work differently. That curiosity leads me to explore ideas, try them out, and discover the questions they raise. But the longer I work on an idea, the more obvious its assumptions can start to feel: a line of reasoning can be coherent without having faced the objections that matter. Writing helps me give it shape and keep track of how I got there; publishing opens it to other perspectives, where it can be taken further or challenged.
 
 The work I share here is at different stages. A question may lead to reflection, open up a line of inquiry, call for an experiment, or eventually take shape as something I build. I want to make room for those stages, not just the results: what I’m trying to understand, what I test, and what proves difficult are part of the work too.
 
