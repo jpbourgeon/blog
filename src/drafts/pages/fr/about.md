@@ -14,11 +14,11 @@
 
 > Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
-Mon travail va du développement logiciel au pilotage des systèmes d'information, avec les équipes qui les conçoivent et les font vivre. J'aime comprendre pourquoi nous faisons certains choix, pouvoir les expliquer et voir ce qu'ils changent concrètement. Je préfère les solutions simples, plus faciles à comprendre et à maîtriser, même lorsque l'on automatise. Ici, je m'exprime à titre personnel, pas au nom de mon employeur.
+Mon travail va du développement logiciel au pilotage des systèmes d'information, avec les équipes qui les conçoivent et les font vivre. J'aime comprendre ce qui guide les décisions, en expliquer les raisons et voir leurs effets dans la pratique. Je préfère les solutions simples, plus faciles à comprendre et à maîtriser, y compris face à l'automatisation. Je m'exprime à titre personnel, pas au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-Je partage ici mes réflexions, mes essais et mes réalisations sur les systèmes que nous construisons et sur notre façon de travailler ensemble. Écrire m'aide à mettre mes idées au clair et à garder une trace de leur évolution. Mais une réflexion, aussi cohérente soit-elle, gagne à rencontrer d'autres expériences et d'autres objections. C'est pour cela que je la publie, plutôt que de la garder pour moi.
+Je partage mes réflexions, mes essais et mes réalisations sur les systèmes, leurs usages et les façons de les faire évoluer. Écrire m'aide à mettre mes idées au clair et à garder une trace de leur évolution. Mais une réflexion, aussi cohérente soit-elle, gagne à rencontrer d'autres expériences et d'autres objections. C'est pour cela que je la publie, plutôt que de la garder pour moi.
 
 Je souhaite partager aussi bien les questions de départ et les essais que les résultats. Ils permettent de comprendre comment une idée prend forme, quels choix ont été faits et quelles difficultés demeurent. Vous pouvez ainsi suivre le raisonnement, en retenir ce qui vous intéresse, l'adapter à votre contexte ou le contester. Ce blog est aussi pour moi un terrain d'essai, notamment dans l'écriture.
 
