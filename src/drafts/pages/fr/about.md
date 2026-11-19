@@ -20,7 +20,7 @@ J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils p
 
 ## Pourquoi ce blog
 
-Je me méfie des idées qui finissent par paraître évidentes à celui qui les travaille. Elles peuvent être cohérentes sans avoir rencontré les objections qui comptent. Écrire m'aide à leur donner une forme et à en garder la trace ; les publier, c'est les sortir de ce tête-à-tête. Un raisonnement exposé peut être repris, déplacé ou contredit.
+J'aime creuser une idée, suivre ce qu'elle permet de comprendre et découvrir les questions qu'elle soulève. Mais à force de la travailler, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de le confronter à d'autres regards, de le prolonger ou de le contredire.
 
 J'y rassemble des réalisations, des essais et des questions encore ouvertes. Le logiciel y côtoie le travail des équipes, le pilotage des systèmes d'information et la place que nous laissons à l'automatisation : ces sujets se croisent davantage qu'ils ne se séparent. Je préfère montrer comment j'aborde un problème et ce qui reste en suspens plutôt que livrer seulement des conclusions. Vous pouvez suivre le raisonnement, vous en saisir ou prendre le problème par un autre bout.
 
