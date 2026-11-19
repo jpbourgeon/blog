@@ -4,17 +4,17 @@ mode: revision
 candidates:
   fr:
     path: src/drafts/pages/fr/about.md
-    content_sha256: d00d5a0272e8a36e1ef0f0d32dc6a0fd308f7c1f09d82137ef955378fe7e6caa
+    content_sha256: 7b605e19636c748a8e95ae0226eeb71e3c9bd35d7016a5a6d3d172b78f6d5ef8
   en:
     path: src/drafts/pages/en/about.md
-    content_sha256: 9457c20b9b2ecf246f595d3c94e7196e877c61f5fba8a2efbb42b27e26b6b3df
+    content_sha256: ed63f003fb8c0e732af6d2bfdbb45cb4fe4679539cf6d9e5be19fbb3a2173a3d
 targets:
   fr:
     path: src/pages/about.md
-    content_sha256: d00d5a0272e8a36e1ef0f0d32dc6a0fd308f7c1f09d82137ef955378fe7e6caa
+    content_sha256: 7b605e19636c748a8e95ae0226eeb71e3c9bd35d7016a5a6d3d172b78f6d5ef8
   en:
     path: i18n/en/docusaurus-plugin-content-pages/about.md
-    content_sha256: 9457c20b9b2ecf246f595d3c94e7196e877c61f5fba8a2efbb42b27e26b6b3df
+    content_sha256: ed63f003fb8c0e732af6d2bfdbb45cb4fe4679539cf6d9e5be19fbb3a2173a3d
 references:
   - path: standards/editorial.md
     git_blob_sha: 848650f4a16d218198b9228efe8fa74f0cc31774
@@ -29,63 +29,60 @@ baseline:
   en:
     path: i18n/en/docusaurus-plugin-content-pages/about.md
     git_blob_sha: 7536308af6155c987959de095728b47dbb9ef98a
-result: FAIL
+result: PASS
 ---
 
 # Vérification éditoriale — À propos / About
 
-**FAIL** pour les candidates FR et EN de la [PR #23](https://github.com/jpbourgeon/blog/pull/23) au [commit 75ea196](https://github.com/jpbourgeon/blog/commit/75ea19649f77d827cac25d55ed48567da66ce8a9). Revue indépendante du 2026-11-19. La progression de la page fonctionne dans les deux langues. L’ouverture au lecteur et une partie du champ éditorial restent insuffisamment développées pour satisfaire la Capture.
+**PASS** pour les candidates FR et EN de la [PR #23](https://github.com/jpbourgeon/blog/pull/23) au [commit c45f6bc](https://github.com/jpbourgeon/blog/commit/c45f6bcbe054467599e672ca7337c8694b0939fb). Revue indépendante du 2026-11-19.
 
 | Axe | Verdict | Éléments probants |
 | --- | --- | --- |
-| Intention et standard éditorial | FAIL | La page explique pourquoi exposer le travail à la contradiction. Elle laisse implicite l’usage que le lecteur peut faire des questions et des raisonnements ainsi exposés. |
-| Couverture de la Capture | FAIL | C-lecteur, C-perspective et C-domaines sont partiels en FR et EN. C-publication conserve son noyau, avec des dimensions secondaires absentes. |
-| Voix et progression FR | PASS | Le risque de tenir des hypothèses pour évidentes donne un motif concret à la publication. Le paragraphe suivant applique ce motif aux travaux à différents stades. |
-| Voix et progression EN | PASS | La même relation entre hypothèses, confrontation et travaux en cours structure la section. Le registre est personnel et la profondeur adaptée au format. |
-| Parité FR/EN | PASS | Les signatures, les intentions exprimées, la progression et les omissions de fond concordent. |
-| Faits et liens | PASS | Les destinations répondent en HTTP 200, sauf LinkedIn qui renvoie 999 à l’accès automatisé. Le profil public indexé confirme l’identité et le chemin. |
-| Mentions légales et confidentialité | PASS | Les notices bilingues correspondent aux textes retenus par l’auteur. Le dépôt et les sources des services corroborent les éléments observables. Les réglages de compte restent attribués à l’auteur. |
-| Intégration technique | PASS | Les identités de la révision sont calculées, la projection locale des sources exactes compile en FR et EN et le contrôle de la version publique passe. |
+| Intention et standard éditorial | PASS | Le premier paragraphe de « Pourquoi ce blog » relie l’écriture à la clarification des idées et la publication à leur confrontation avec d’autres expériences. Le second part des éléments mis à disposition pour expliquer ce que le lecteur peut comprendre, adapter ou contester. |
+| Couverture de la Capture | PASS | Le travail avec les équipes, le pilotage, les décisions et la maîtrise face à l’automatisation sont visibles. L’utilité des travaux en cours pour le lecteur est exprimée dans les deux versions. |
+| Voix et progression FR | PASS | Des décisions et de leurs effets dans le travail, le texte passe à la raison d’exposer son raisonnement, puis à la manière dont le lecteur peut s’en saisir. La perspective personnelle est étayée par les décisions de l’auteur. |
+| Voix et progression EN | PASS | La même progression relie la pratique professionnelle, la mise en discussion des idées et l’usage des raisonnements par le lecteur. Le registre reste personnel et direct. |
+| Parité FR/EN | PASS | Les deux versions préservent les mêmes raisons de publier, la même place du lecteur, le même champ et les mêmes informations pratiques. Les signatures reprennent les choix propres à chaque langue. |
+| Faits et liens | PASS | Les 14 destinations ont été revérifiées. LinkedIn répond 999 à l’accès automatisé et le profil public indexé corrobore l’identité et le chemin. Les autres destinations répondent 200. |
+| Mentions légales et confidentialité | PASS | Les textes retenus par l’auteur sont conservés. Les différences dans les notices anglaises se limitent aux lignes vides. Le dépôt et les sources des services concordent avec les éléments observables. |
+| Intégration technique | PASS | Identités recalculées, build des deux pages projetées, Pagefind, TypeScript et 35 tests de publication. |
 
 ## Correspondance entre la Capture et les candidates
 
-Les décisions sont celles de la [Capture au commit vérifié](https://github.com/jpbourgeon/blog/blob/75ea19649f77d827cac25d55ed48567da66ce8a9/.42p/rationale-units/page_about/capture.md). Les déclarations de l’auteur sur la pérennisation, la mise au monde de ses travaux et la recherche d’une contradiction utile éclairent l’équilibre visé. La mention « reste à reprendre » dans la Capture décrit l’état de travail. Le verdict de composition repose sur les candidates.
+La [Capture au commit vérifié](https://github.com/jpbourgeon/blog/blob/c45f6bcbe054467599e672ca7337c8694b0939fb/.42p/rationale-units/page_about/capture.md) et les décisions de l’auteur du 19 novembre fixent le sens applicable. La dernière demande éditoriale, partir de l’auteur pour aboutir au lecteur, est vérifiée sur les deux paragraphes de fond.
 
-| Décision | Correspondance FR et EN |
+| Décision | Application dans les deux langues |
 | --- | --- |
-| C-identite, signature et O-avatar-local | Portrait WebP local de 104 × 104 px avec texte alternatif, nom et signature validée en retrait. L’introduction situe l’activité entre informatique et organisations, puis précise la prise de parole personnelle. Les descriptions condensent la signature. |
-| C-perspective | L’introduction relie la simplicité à la maîtrise dans la durée et fixe deux critères concrets, expliquer les choix et vérifier la réponse au besoin. La curiosité ouvre la section sur le blog et la pratique du code apparaît dans les productions. Le travail en équipe comme lieu où s’exerce cette responsabilité manque. |
-| C-publication | Écrire donne forme au raisonnement et conserve son cheminement. Publier l’expose à d’autres regards. Le deuxième paragraphe inclut les questions non résolues. La diversité des travaux laisse deviner la démarche plus large. L’expérimentation de l’écriture et de l’initiative créatrice demeure absente, avec un poids secondaire dans la Capture. La sobriété respecte l’arbitrage sur la notoriété. |
-| C-lecteur | Les textes disent que les idées peuvent être prolongées ou contestées et que les travaux intermédiaires auront leur place. Le deuxième paragraphe explique ce que l’auteur veut montrer, puis laisse au lecteur le soin de déduire comment les questions, essais et raisonnements peuvent nourrir ses propres choix ou être adaptés à son contexte. Cette ouverture est centrale dans la Capture. |
-| C-progression | Deux paragraphes de fond suivis d’une note brève sur les agents. L’introduction situe la pratique, puis la section sur le blog pose une question nouvelle, celle de l’exposition du raisonnement à la contradiction. Le rappel de la curiosité à l’ouverture sert ce passage, avec un léger recouvrement local. |
-| C-domaines | La conception, le code et le pilotage de l’évolution des SI sont identifiables. Le management et la gouvernance restent implicites. La maîtrise humaine des systèmes face à l’automatisation manque. La note sur l’IA traite de l’autorité éditoriale dans la fabrication du blog. |
-| C-redaction | La dernière note de la section attribue aux agents l’exploration, la rédaction, la traduction et la vérification. L’auteur décide du propos et valide chaque publication dans les deux langues. |
-| C-productions et C-contact | Le code met les idées à l’épreuve des contraintes de conception, d’usage et de maintenance. Les contributions renvoient à at-rama. Les trois profils personnels occupent leur section propre. |
-| C-statut, C-legal et C-privacy | Les notices reprennent les deux textes retenus par l’auteur. Identité du responsable, statut déclaré, hébergeur, adresse, licences, traitement des données et réglages déclarés concordent. |
-| Cadre de réalisation | L’ordre de la page correspond aux fonctions fixées dans la Capture. Les brouillons sont hors des routes publiques et leurs cibles conservent les chemins canoniques. La Capture ne demande aucune figure supplémentaire. |
+| C-identite et O-avatar-local | Portrait versionné de 104 × 104 px avec texte alternatif, nom, signature validée et en-têtes adaptés. L’introduction présente le travail sans répéter le titre et indique que l’auteur parle en son nom. Les descriptions reprennent les éléments de la signature. |
+| C-perspective | « J’aime comprendre ce qui guide les décisions » et « I like understanding what drives decisions » ancrent la curiosité dans le travail. L’explication des choix, l’observation de leurs effets en pratique et le rôle des équipes rendent concrètes la responsabilité et la mise à l’épreuve. La préférence pour des solutions simples est liée à leur compréhension et à leur maîtrise. L’évolution possible des systèmes revient au début de la section sur le blog. |
+| C-publication | Les réflexions, essais et réalisations rendent perceptible un travail plus large que le blog. Écrire clarifie et conserve le cheminement. Publier confronte les idées à d’autres expériences et objections, y compris quand des questions demeurent ouvertes. Le blog est aussi présenté comme un terrain d’essai, avec l’écriture comme exemple. L’initiative créatrice est perceptible à travers la démarche et les réalisations. Elle reste une dimension secondaire. |
+| C-lecteur | Le texte explique pourquoi exposer les questions, essais et résultats ensemble. Cette matière permet de suivre la formation d’une idée, de comprendre les choix et d’identifier les difficultés qui persistent. Le lecteur peut alors s’emparer du raisonnement, l’adapter ou le contester. Les systèmes, leurs usages et leur évolution, reliés au travail des équipes dans l’introduction, donnent le terrain de cette réflexion. |
+| C-progression | Deux paragraphes de fond et une note distincte sur les agents. La présentation personnelle situe la pratique. La section suivante explique ce que publier change pour le travail et ce que cette mise à disposition permet au lecteur. |
+| C-domaines | Développement logiciel, conception, équipes qui font vivre les SI et pilotage sont dans l’ouverture. Management et gouvernance apparaissent par le rôle de direction, le travail avec les équipes et l’attention portée aux raisons et effets des décisions. La maîtrise face à l’automatisation est explicite. |
+| C-redaction | Les agents aident à explorer, rédiger, traduire et vérifier. L’auteur choisit le propos et valide chaque publication. |
+| C-productions et C-contact | La mise en œuvre soumet l’idée aux contraintes de conception, d’usage et de maintenance. At-rama est présenté comme organisation de production open source. Les trois profils personnels ont leur propre section. |
+| C-statut, C-legal et C-privacy | Statut, responsable de publication, hébergeur, coordonnées, licences, mesure d’audience et réglages déclarés reprennent les choix approuvés pour les deux langues. |
+| Cadre de réalisation | Ordre des fonctions de la page respecté. Portrait local et routes natives. Les candidates sont hors routage. Aucune figure supplémentaire n’est demandée. |
 
-La lecture des candidates vers la Capture rattache l’identité et l’introduction à C-identite et C-perspective. L’expérience des hypothèses devenues évidentes et les formes de travaux partagés développent C-publication et C-lecteur. Le code et ses contraintes concrétisent C-productions. La transparence sur les agents, les contacts et les notices reprennent leurs décisions dédiées. Aucun ajout substantiel dépourvu d’appui n’a été relevé.
+La lecture des candidates vers la Capture rattache l’introduction à l’identité et au regard sur le métier, les deux paragraphes sur le blog à la mise à l’épreuve des idées et à l’ouverture au lecteur, puis la transparence, les productions, les contacts et les notices à leurs décisions respectives. Aucun ajout substantiel hors de ces décisions n’a été relevé.
 
-## Voix, composition et parité
+## Voix et composition
 
-En français, « un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent » transforme la curiosité initiale en motif de publication. Écrire permet de fixer la démarche. Publier permet de soumettre ses hypothèses à d’autres regards. Le paragraphe suivant donne une conséquence éditoriale à ce choix en incluant les questions et essais en cours. La section des productions prolonge la mise à l’épreuve sur un autre terrain, celui des contraintes du code.
+En français, « Je préfère les solutions simples, plus faciles à comprendre et à maîtriser » donne une raison à un choix de conception. La section suivante montre une autre façon de mettre les choix à l’épreuve. Les exposer avec « les questions de départ et les essais » donne au lecteur la matière grâce à laquelle il peut « suivre le raisonnement […] l’adapter à [son] contexte ou le contester ». Le passage aux contributions reprend cette idée de mise à l’épreuve par les contraintes effectives du code.
 
-En anglais, « a line of reasoning can be coherent without having faced the objections that matter » porte le même pivot. « The work I share here is at different stages » étend le propos à la diversité des travaux, puis le passage sur le code explique ce que l’implémentation oblige à préciser. Les deux langues gardent une voix personnelle, soutenue par les motivations exprimées par l’auteur. La transparence, les profils et les notices remplissent des fonctions de référence et trouvent leur place en fin de page.
-
-La relation la moins développée se situe entre l’ouverture à la contradiction et la place des travaux en cours. Le texte établit pourquoi l’auteur les partage. L’usage qu’un lecteur peut en faire reste à inférer. Cet écart pèse sur la fidélité à C-lecteur. Le fil général de la page demeure lisible.
+En anglais, « which choices were made, and what difficulties remain » précise ce que le lecteur pourra tirer du cheminement avant de prendre position. La phrase sur le terrain d’essai prolonge la motivation personnelle avec une précision secondaire. Placée juste après l’adresse au lecteur, elle atténue légèrement la fin du mouvement dans les deux langues. Cet effet local ne défait pas la progression.
 
 ## Sources et contrôles techniques
 
-- Les mentions et la confidentialité sont identiques, octet pour octet en FR et EN, aux notices approuvées au [commit f7162c5](https://github.com/jpbourgeon/blog/commit/f7162c580961daf6040a455025bb325082d5cb94). L’adresse et la licence concordent avec les références. [Coordonnées GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice) · [Licence des textes](https://creativecommons.org/licenses/by-nc-nd/4.0/) · [Licences et exceptions du dépôt](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md)
-- Le module, identique depuis f7162c5, fournit le chemin, le titre et le référent à l’arrivée. Le script chargé transmet la largeur d’écran. La documentation confirme l’usage temporaire d’informations de connexion pour distinguer les visites et l’absence de conservation des IP brutes en base. Les sessions, référents, pays, durée de 365 jours et largeur exclue des statistiques sont des réglages déclarés par l’auteur. [Module de mesure](https://github.com/jpbourgeon/blog/blob/75ea19649f77d827cac25d55ed48567da66ce8a9/src/client/goatcounter.ts) · [Script de mesure](https://gc.zgo.at/count.js) · [Confidentialité GoatCounter](https://www.goatcounter.com/help/privacy) · [Confidentialité GitHub](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement)
-- Contrôle HTTP des 14 destinations distinctes et du script. LinkedIn renvoie 999 pour l’URL utilisée dans les candidates. L’identité et le chemin sont corroborés par le [profil public indexé](https://fr.linkedin.com/in/jpbourgeon).
-- `publication prepare` réussit sur le commit exact et fournit le chemin de ce rapport de révision. `publication gate none` reconnaît la page publique et son PASS existant. Le [correctif #25](https://github.com/jpbourgeon/blog/pull/25) lève le blocage de 1d95bac. Les empreintes des candidates, des références et de la version de référence sont identiques à celles de la revue de 1d95bac.
-- Sous Node 26.13.1, TypeScript et les 35 tests de publication passent. Le build local de la projection calculée par le dépôt réussit dans les deux langues, avec Pagefind. Le HTML contient le texte candidat, les routes et URL canoniques attendues, le portrait local et les ancres légales. Les deux routes figurent au sitemap et les brouillons restent hors routage. La revue visuelle mobile relève de l’auteur. La [CI Pages du commit examiné](https://github.com/jpbourgeon/blog/actions/runs/44526714815) passe également.
-- `git diff --check origin/main...HEAD` relève un espace final sur le nom et une ligne vide en fin de fichier EN, sans effet sur le rendu.
+- Les notices reprennent les textes retenus au [commit f7162c5](https://github.com/jpbourgeon/blog/commit/f7162c580961daf6040a455025bb325082d5cb94). La comparaison confirme l’identité octet pour octet en FR et l’identité des lignes non vides en EN. [Coordonnées GitHub](https://docs.github.com/en/site-policy/content-removal-policies/guide-to-submitting-a-dmca-takedown-notice) · [Licence des textes](https://creativecommons.org/licenses/by-nc-nd/4.0/) · [Licences et exceptions du dépôt](https://github.com/jpbourgeon/blog/blob/main/LICENSE-ADDITIONAL.md)
+- Le module de mesure est inchangé par rapport à la revue précédente. Il donne le chemin, le titre et le référent à l’arrivée. Le script de mesure transmet la largeur d’écran. L’usage temporaire des données de connexion et l’absence de conservation des IP brutes en base sont corroborés par la documentation. Les sessions, les référents, les pays, la durée de 365 jours et l’exclusion de la largeur des statistiques reposent sur la déclaration de l’auteur. [Module de mesure](https://github.com/jpbourgeon/blog/blob/c45f6bcbe054467599e672ca7337c8694b0939fb/src/client/goatcounter.ts) · [Script de mesure](https://gc.zgo.at/count.js) · [Confidentialité GoatCounter](https://www.goatcounter.com/help/privacy) · [Confidentialité GitHub](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement)
+- Le contrôle HTTP couvre les 14 destinations distinctes et le script GoatCounter. Le code 999 observé sur LinkedIn limite le contrôle automatisé, et le [profil public indexé](https://fr.linkedin.com/in/jpbourgeon) confirme l’identité et le chemin.
+- Sous Node 26.13.1, `publication prepare`, TypeScript, les 35 tests et `publication gate none` passent. Le build local de la projection FR/EN et Pagefind passent. Les sorties contiennent les passages candidats, les URL canoniques, les entrées de sitemap, les liens d’en-tête et de pied de page, l’ancre légale et le portrait local. La revue visuelle mobile relève de l’auteur. La [CI Pages du commit examiné](https://github.com/jpbourgeon/blog/actions/runs/44586300693) passe également.
+- Le diff de la PR signale une ligne vide surnuméraire en fin de candidate EN, sans effet sur le rendu ni sur le verdict.
 
 ## Améliorations de formulation non bloquantes
 
-- **FR.** Dans « Écrire m’aide à lui donner forme […] publier permet de la confronter », les pronoms peuvent reprendre plusieurs éléments. Nommer ce qui est exposé à la contradiction rendrait le pivot plus net.
-- **EN.** Dans « publishing opens it to other perspectives, where it can be taken further or challenged », « where » rattache l’action à une abstraction. Rendre les personnes qui prolongent ou contestent l’idée plus visibles renforcerait le passage vers le deuxième paragraphe.
+- **FR.** Dans « Ils permettent de comprendre […] », le pronom peut sembler reprendre les seuls « résultats ». Faire porter explicitement la phrase sur le cheminement renforcerait la relation entre ce que l’auteur rend visible et ce que le lecteur peut en faire.
+- **EN.** « Things I’ve built around systems » et les deux emplois proches de « evolve » rendent l’ouverture moins nette que la suite. Une formulation plus directe gagnerait à distinguer les systèmes que l’auteur étudie des réalisations qu’il partage.
 
 Human editorial approval: not granted by this report
