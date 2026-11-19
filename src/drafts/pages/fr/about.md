@@ -14,19 +14,19 @@
 
 > Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
-Je travaille à la rencontre de l'informatique et des organisations, du code au pilotage des systèmes d'information, avec les équipes qui les font vivre. J'aime comprendre ce qui motive les choix, pouvoir les expliquer et vérifier ce qu'ils changent vraiment. La simplicité aide à garder la main, y compris lorsque l'on automatise. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
+Mon travail va du développement logiciel au pilotage des systèmes d'information, avec les équipes qui les conçoivent et les font vivre. J'aime comprendre pourquoi nous faisons certains choix, pouvoir les expliquer et voir ce qu'ils changent concrètement. Je préfère les solutions simples, plus faciles à comprendre et à maîtriser, même lorsque l'on automatise. Ici, je m'exprime à titre personnel, pas au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-Je partage ici des réflexions, des explorations et des réalisations sur les systèmes que nous construisons et sur la façon dont nous les faisons fonctionner ensemble. À force de creuser une idée, je peux finir par trouver ses hypothèses évidentes. Pourtant, un raisonnement cohérent n'a pas nécessairement rencontré les objections qui comptent. Écrire m'aide à y voir plus clair et à garder une trace du chemin parcouru ; publier permet à d'autres de discuter ce raisonnement, de le prolonger ou de le contredire.
+Je partage ici mes réflexions, mes essais et mes réalisations sur les systèmes que nous construisons et sur notre façon de travailler ensemble. À force de creuser une idée, je risque de ne plus voir les hypothèses sur lesquelles elle repose. Un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à clarifier mes idées et à garder une trace du chemin parcouru. Les publier permet à d'autres de les discuter, de les prolonger ou de les contester.
 
-Je ne veux pas montrer seulement des résultats finis. Les questions de départ, les essais et ce qui résiste en chemin comptent aussi. Vous pourrez suivre un raisonnement, y prendre ce qui vous intéresse, le confronter à votre expérience ou choisir une autre voie. Ce blog est lui-même un terrain d'essai, notamment pour l'écriture et pour donner corps à mes idées.
+Je ne souhaite pas montrer seulement des résultats aboutis. Les questions de départ, les essais et les difficultés rencontrées comptent aussi : ils éclairent les choix qui suivent. Vous pouvez ainsi suivre un raisonnement, en retenir ce qui vous semble utile, l'adapter à votre contexte ou prendre une autre voie. Ce blog est également un terrain d'essai pour moi, notamment dans l'écriture.
 
 Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
 ## Productions et contributions
 
-Passer de l'idée au code est aussi une mise à l'épreuve : les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
+Passer d'une idée au code oblige à la confronter aux contraintes de conception, d'usage et de maintenance. Ce qui semblait évident sur le papier ne l'est pas toujours dans la pratique.
 
 Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
 
