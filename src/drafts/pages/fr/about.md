@@ -14,13 +14,13 @@
 
 > Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
-Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Je tiens à pouvoir expliquer ces choix, vérifier qu'ils répondent au besoin et garder les systèmes assez simples pour les maîtriser dans la durée. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
+Mon travail porte autant sur les systèmes informatiques que sur les organisations : concevoir des logiciels, travailler en équipe, piloter l'évolution des systèmes d'information. Ces activités posent une même question : comment prendre des décisions que l'on peut expliquer, vérifier et garder sous contrôle dans la durée ? La simplicité m'importe parce qu'elle aide à maîtriser la complexité, notamment lorsque l'automatisation transforme les façons de travailler et de décider. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-J'aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité me pousse à creuser des idées, à les essayer et à découvrir les questions qu'elles soulèvent. Mais à force de travailler sur une idée, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à lui donner forme et à garder une trace du chemin parcouru ; publier permet de la confronter à d'autres regards, de la prolonger ou de la contredire.
+J'aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'amène à explorer aussi bien les choix techniques que leurs conséquences humaines et organisationnelles, du code au management et à la gouvernance. Mais à force de travailler une idée, ses hypothèses peuvent finir par me sembler évidentes : un raisonnement peut être cohérent sans avoir rencontré les objections qui comptent. Écrire m'aide à structurer mes réflexions et à garder trace du chemin parcouru ; publier expose mes raisonnements à d'autres regards, qui peuvent les prolonger ou les contester.
 
-Tous les travaux que je partage ici n'en sont pas au même point. Une question peut nourrir une réflexion, ouvrir une exploration, appeler une expérience ou finir par prendre forme dans une réalisation. Je souhaite garder une place à ces étapes, pas seulement aux résultats : ce qu'on cherche, ce qu'on essaie et ce qui résiste font aussi partie du travail.
+Les travaux que je partage ici n'en sont pas tous au même point. Une question peut ouvrir une exploration, conduire à un essai ou prendre forme dans une réalisation. Je veux montrer aussi ce cheminement, pas seulement les résultats : vous pourrez retrouver les questions, suivre les choix et leurs limites, puis vous en saisir dans votre contexte, les adapter ou les contester. Le blog fait lui-même partie de ces expérimentations, notamment par l'écriture et la manière de donner forme à mes idées.
 
 Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
