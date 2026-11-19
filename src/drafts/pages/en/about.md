@@ -18,9 +18,9 @@ My work ranges from software development to guiding the evolution of information
 
 ## Why this blog
 
-I share my thoughts, experiments, and things I've built about the systems we create and how we work together. The longer I explore an idea, the easier it is to lose sight of the assumptions behind it. A line of reasoning can be coherent without having faced the objections that matter. Writing helps me clarify my ideas and keep track of how I got there. Publishing them lets others discuss, build on, or challenge them.
+I share my thoughts, experiments, and things I've built about the systems we create and how we work together. Writing helps me clarify my ideas and keep track of how they evolve. But even a coherent line of reasoning benefits from other people's experiences and objections. That's why I publish it rather than keep it to myself.
 
-I don't want to share only finished results. The starting questions, the experiments, and the difficulties along the way matter too: they help explain the choices that follow. You can trace the reasoning, take what seems useful, adapt it to your own context, or choose a different path. This blog is also a place for me to experiment, particularly with writing.
+I want to share the starting questions and the experiments as well as the results. They show how an idea takes shape, which choices were made, and what difficulties remain. You can follow the reasoning, take what interests you, adapt it to your own context, or challenge it. This blog is also a place for me to experiment, particularly with writing.
 
 I use AI agents to explore ideas, draft, translate, and review the text. I decide what to say and approve each publication.
 
