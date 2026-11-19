@@ -16,15 +16,15 @@
 
 My work spans IT systems and organizations: understanding how they work, designing them, and making decisions about how they evolve. I write here in a personal capacity, not on behalf of my employer.
 
+I like finding out how systems work and imagining how they could work differently. That curiosity stays with me whether I’m writing code or working with a team. I want to be able to explain a choice and check that it meets the need. Keeping things simple helps us stay in control when we have to maintain or change what we’ve built.
+
 ## Why this blog
 
-I write here to keep a record of my thinking and my experiments. Putting them into words I can return to makes me spell out what I’ve understood and why I made the choices I did.
+I write to put my thoughts in order and keep a record of my experiments.
 
-I like understanding how systems work and imagining how they could work differently. That curiosity stays with me whether I’m writing code or working with a team. When I choose a solution, I need to be able to explain what problem it addresses, how we can maintain it and check that it does its job, and who will remain in control. That same standard guides my choices in software architecture and how I approach IT governance. I try to keep only the complexity the problem calls for. Automation and artificial intelligence make that care all the more important.
+I publish so other people can question my ideas. An objection or a counterexample can make me rethink a choice that seemed obvious at the time.
 
-I hold my own ideas to the same standard. An idea can seem sound as long as we examine it using the assumptions that shaped it. Publishing it gives people with different experiences a chance to examine it for themselves. An objection or a counterexample can then show me what I missed and help me rework the idea.
-
-The blog is part of the same effort as the projects where I try to put these ideas into practice. It’s also a place to play. I can try different ways of writing and follow ideas to see what they might become.
+The blog goes alongside the other projects I work on. It’s also a place to try different ways of writing and give shape to ideas I’m still working out.
 
 I work with AI agents to explore ideas, draft, translate, and review texts. I decide what I want to say and approve everything I publish.
 

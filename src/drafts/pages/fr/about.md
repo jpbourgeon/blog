@@ -16,15 +16,15 @@
 
 Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
 
+J’aime comprendre comment les systèmes fonctionnent et imaginer comment ils pourraient fonctionner autrement. Cette curiosité m’accompagne quand je développe du code ou que je travaille en équipe. Je tiens à pouvoir expliquer un choix et vérifier qu’il répond au besoin. Faire simple aide à garder la main quand il faut maintenir ou faire évoluer ce qu’on a construit.
+
 ## Pourquoi ce blog
 
-J’écris ici pour garder une trace de mes réflexions et de mes expériences. Leur donner une forme que je peux relire m’oblige à préciser ce que j’ai compris et les raisons de mes choix.
+J’écris pour mettre de l’ordre dans mes réflexions et garder une trace de mes expériences.
 
-Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m’accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe. Pour choisir une solution, j’ai besoin de pouvoir expliquer à quoi elle répond, comment on pourra la maintenir et vérifier qu’elle remplit son rôle, et qui en gardera la maîtrise. C’est la même exigence qui guide mes choix d’architecture logicielle et ma façon d’aborder la gouvernance des systèmes d’information. Je cherche à ne garder que la complexité qui sert le besoin. L’automatisation et l’intelligence artificielle donnent encore plus de poids à cette exigence.
+Je publie pour que mes idées puissent être discutées. Une objection ou un contre-exemple peut me faire revoir un choix qui me paraissait évident.
 
-J’applique la même exigence à mes propres idées. Une idée peut paraître solide tant qu’on l’examine avec les hypothèses qui lui ont donné naissance. La publier permet à des personnes qui ont d’autres expériences de l’examiner à leur tour. Une objection ou un contre-exemple peut alors me montrer ce qui m’a échappé et m’aider à reprendre le travail.
-
-Le blog fait partie de cette démarche, au même titre que les projets où j’essaie de concrétiser ces idées. C’est aussi un terrain de jeu. J’y essaie des manières d’écrire et j’y donne suite à des idées pour voir ce qu’elles peuvent devenir.
+Le blog accompagne les projets que je mène. C’est aussi un terrain de jeu où j’essaie des façons d’écrire et où je donne forme à des idées encore à l’état d’ébauche.
 
 Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
 
