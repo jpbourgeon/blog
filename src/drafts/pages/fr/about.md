@@ -1,4 +1,5 @@
 ---
+draft: true
 "description": "Papa Poule, directeur technique et directeur adjoint d'une DSI publique, amateur de systèmes."
 "rationale": ".42p/rationale-units/page_about/capture.md"
 "title": "À propos"
@@ -19,17 +20,15 @@ Mon travail porte autant sur les systèmes informatiques que sur les organisatio
 
 Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe.
 
-Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer les raisons de son choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
+Imaginer une solution ouvre des possibilités ; la concevoir oblige à faire des choix. Ce qui m'intéresse alors, c'est de pouvoir en expliquer les raisons, vérifier qu'elle répond au besoin et comprendre ce qu'il faudra pour la maintenir. Ces questions me font passer du logiciel à l'organisation : les décisions techniques engagent aussi les personnes qui utiliseront le système et le feront évoluer. C'est à cette rencontre entre ingénierie, management et gouvernance que se situent mes réflexions.
 
-Je recherche la simplicité et la frugalité, non pour faire moins par principe, mais pour ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
+Pour garder ces choix compréhensibles et maîtrisables, je recherche la simplicité et la frugalité. Chaque complication doit apporter quelque chose qui justifie de la conserver. L'automatisation et l'intelligence artificielle rendent cette question plus aiguë : déléguer une tâche ne dispense pas de comprendre ce que l'on attend du système ni de vérifier ce qu'il produit.
 
-L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
-
-Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
+Je partage ici ces réflexions sur la conception et le pilotage des systèmes, avec les raisons des choix et les contraintes qui les mettent à l'épreuve. Des agents d'IA m'aident à explorer les idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
 
 ## Productions et contributions
 
-J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
+Le code me permet de confronter ces réflexions à ce qu'elles impliquent en pratique. Concevoir une solution, l'utiliser et la maintenir oblige à préciser ce qui semblait évident sur le papier.
 
 Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
 
