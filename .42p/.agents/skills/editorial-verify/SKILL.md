@@ -54,6 +54,15 @@ Read the text as a whole and inspect representative passages for:
 - **Adaptation:** Is the depth, length and level of abstraction justified by
   the page, technical article or essay and its intended readers?
 
+For the progression assessment, explain how the relationships between passages
+develop the central idea and serve the text's stated purpose. Topic coverage
+and strong individual passages do not by themselves establish overall progression.
+When identifying a weakness, assess whether it is isolated or reflects the
+composition as a whole. Treat a composition-wide failure to develop connected
+ideas as a voice-standard failure, not merely a non-blocking stylistic opportunity;
+do not require an argumentative sequence where the format calls for a reference
+list or independent sections.
+
 For the voice verdict, cite concrete passages and explain their effect on the
 reader. A pervasive generic, pompous or institutional register is a `FAIL`,
 even when all factual claims and formal requirements are satisfied. If the

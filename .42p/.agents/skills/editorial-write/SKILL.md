@@ -9,11 +9,22 @@ Never invent experiences or decide publication merit.
 ## Editorial composition
 
 Before drafting, identify the intended reader, central idea, author's distinctive
-perspective and concrete supporting material. Organize the prose around the idea,
-not mechanically around Capture headings, topic inventories or indicative lengths.
-Source structure defines coverage, not necessarily paragraph order. Preserve
-validated wording when appropriate; develop other captured ideas naturally without
-inventing experiences, positions or evidence.
+perspective and concrete supporting material. Determine what the reader should
+understand and how the developments lead there. Treat source material as content
+to compose, not a sequence to reproduce: covering the topics does not by itself
+develop the intended meaning.
+
+Respect the author's established structural decisions. When a plan is indicative,
+choose the order and relationships that best serve the text's purpose. When the
+structure is prescribed, build the progression within it; if that structure
+prevents satisfactory composition, propose an adjustment to the author before
+departing from it. Preserve validated wording when appropriate, without
+mechanically following Capture headings, topic inventories or indicative lengths.
+
+Draft from this progression, adapting it to the format rather than imposing a
+universal argumentative plan or artificial transitions. Ground the author's
+personal perspective in documented reasons, questions, choices and tensions;
+do not invent experiences, positions or evidence.
 
 Produce diagrams and charts when requested by established editorial decisions or
 the applicable Capture. A Capture records decisions but is not itself an authority,
@@ -28,14 +39,19 @@ without a demonstrated need.
 After drafting, revise substantively before handoff:
 
 - Replace interchangeable or generic statements with precise, supported meaning.
-- Connect ideas through reasoning rather than lists of concepts or values.
+- Check that the relationships guiding the composition are expressed in the text
+  and develop its purpose, rather than merely joining lists of concepts or values.
 - Prefer a relevant, verified concrete example to multiple abstract declarations.
 - Remove repetitions and paragraphs without a distinct contribution.
 - Check that the text expresses this author's perspective rather than merely
   describing a professional profile.
 
-When source material cannot support a distinctive claim or example, do not invent
-one. Keep the text concise and flag any material limitation in the handoff.
+When the available material only supports listing the author's positions or
+interests, and cannot support the intended personal perspective, identify the
+missing substance and ask the author for the necessary clarification. Do not
+manufacture motivation or fill the gap with generic statements. Likewise, do not
+invent unsupported claims or examples; keep the text concise and report any
+remaining material limitation in the handoff.
 
 ## Source-dependent publication claims
 
