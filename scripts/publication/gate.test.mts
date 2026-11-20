@@ -9,7 +9,11 @@ import {stringify} from 'yaml';
 import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
 import {identities, matchReview, readReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
-import {plan} from './gate.mts';
+import {plan as publicationPlan} from './gate.mts';
+
+async function plan(...args: Parameters<typeof publicationPlan>) {
+  return (await publicationPlan(...args)).editorial;
+}
 
 const approvalNotice = 'Human editorial approval: not granted by this report';
 function fixture(t: TestContext) {

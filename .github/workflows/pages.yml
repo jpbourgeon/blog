@@ -64,6 +64,7 @@ jobs:
           test "$GITHUB_RUN_ATTEMPT" = 1
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/setup-node@v4
@@ -78,10 +79,15 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/publication/baseline.mts
       - name: Check editorial transitions
+        id: review
         env:
           BASELINE: ${{ steps.baseline.outputs.baseline }}
         run: npm run publication -- gate "$BASELINE"
       - run: npm run build
+      - name: Audit the built site locally with Lighthouse
+        env:
+          PREFLIGHT_ROUTES: ${{ steps.review.outputs.routes }}
+        run: npm run preflight
       - name: Upload verified site
         if: inputs.mode == 'publish'
         uses: actions/upload-pages-artifact@v4

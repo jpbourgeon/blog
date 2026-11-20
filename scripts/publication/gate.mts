@@ -1,5 +1,6 @@
+import {createMatcher, encodePath, fileToPath, GlobExcludeDefault} from '@docusaurus/utils';
 import {
-  type Document, articlePair, locales, normalize, pagePair, readDocument,
+  type Document, articlePair, documentPath, locales, normalize, pagePair, readDocument,
   requireThat, sha256, provenance, legacyCapturePath, legacyCapturePattern,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
@@ -44,11 +45,21 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
   return location;
 }
 
+const excludedPage = createMatcher(GlobExcludeDefault);
+const nativePages = pagePair('');
+const localeRoots = {fr: '/blog/', en: '/blog/en/'};
+const siteInput = /^(?:src\/|static\/|i18n\/|blog\/|scripts\/pagefind|docusaurus\.config\.|package(?:-lock)?\.json$|tsconfig\.json$)/;
+
 export async function plan(target: Snapshot, deployed?: Snapshot) {
   const current = await inventory(target);
   const baseline = deployed ? await inventory(deployed, undefined, true) : undefined;
 
+  const changes = target.repo.changes(target, deployed);
   const classification: string[] = [];
+  const routes = new Set(Object.values(localeRoots));
+  const addPair = (pair: {fr: Document; en: Document}) => {
+    for (const locale of locales) routes.add(pair[locale].route);
+  };
   const exposed = new Set<string>();
   for (const [identity, pair] of current) {
     const document = pair.fr;
@@ -71,6 +82,7 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     }
 
     if (!deployed || locales.some(locale => deployed.blob(paths[locale]) !== target.blob(paths[locale]))) {
+      addPair(pair);
       classification.push(document.visibility === 'unlisted'
         ? 'Unlisted preview: ' + document.key
         : 'Public ' + document.kind + '/' + canonicalSlug(document));
@@ -95,5 +107,34 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
       classification.push('Withdrawn ' + previous.kind + '/' + canonicalSlug(previous));
     }
   }
-  return classification.length ? classification : ['No public content changes'];
+  const technical = changes.filter(({path}) =>
+    siteInput.test(path) && !documentPath(path) && !path.startsWith('src/drafts/'));
+  if (technical.length) {
+    const publicPairs = [...current.values()].filter(({fr}) =>
+      fr.source === 'canonical' && fr.visibility === 'public');
+    for (const kind of ['page', 'article']) {
+      const representative = publicPairs.find(({fr}) => fr.kind === kind);
+      if (representative) addPair(representative);
+    }
+    if (target.blob('src/pages/search.tsx')) {
+      for (const locale of locales) routes.add(localeRoots[locale] + 'search/');
+    }
+    for (const {path} of technical) {
+      const root = Object.values(nativePages).find(prefix => path.startsWith(prefix));
+      if (!root) continue;
+      const relative = path.slice(root.length);
+      if (!/\.[jt]sx?$/.test(relative) || excludedPage(relative) ||
+          !target.blob(nativePages.fr + relative)) continue;
+      const slug = encodePath(fileToPath(relative)).replace(/^\/|\/$/g, '');
+      for (const locale of locales) {
+        if (slug) routes.add(localeRoots[locale] + slug + '/');
+      }
+    }
+  }
+
+  return {
+    editorial: classification.length ? classification : ['No public content changes'],
+    changes,
+    routes: [...routes],
+  };
 }

@@ -54,11 +54,15 @@ sur `main` avec son SHA complet. Le mode `inspect` vérifie le commit sans
 déployer. Pour préparer l'autorisation, consulte le relevé du gate dans le
 run `inspect` du SHA cible. Il indique le dernier déploiement, les transitions
 éditoriales et le différentiel complet des fichiers suivis, y compris le
-code, la configuration et les ressources statiques. `publish` applique le contrôle indépendant puis déploie exactement
-l'artefact construit. Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
+code, la configuration et les ressources statiques.
+
+Les deux modes exécutent le gate, le build bilingue avec Pagefind et le
+préflight Lighthouse local. Celui-ci audite les nouvelles pages, les contenus
+modifiés et les routes représentatives FR/EN. L'échec de l'audit ou un statut
+HTTP invalide bloque le workflow. Les scores restent diagnostiques.
+Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
 changements publics depuis le dernier déploiement**, qu'ils proviennent d'une
-ou de plusieurs PR. Ni un PASS éditorial ni un build réussi n'accordent
-cette approbation.
+ou de plusieurs PR. Ce mode déploie l'artefact audité.
 
 `npm run publication -- prepare <fr> <en> [<baseline-fr> <baseline-en>]`
 calcule les identités du contenu candidat et de sa cible. Le compte rendu

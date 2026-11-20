@@ -45,9 +45,10 @@ Publication is a distinct manual `workflow_dispatch` on `main`, targeting
 the exact commit SHA. Run `inspect` without exposure and review the gate
 record before seeking permission. It identifies the deployed baseline and the
 target SHA, the editorial transitions and all tracked file changes, including
-site code, configuration and static assets. `publish`
-runs the independent gate, builds and deploys through GitHub Pages. A PR
-may contain several contents, and one dispatch may deploy changes from
+site code, configuration and static assets. Both modes run the gate, the
+bilingual build with Pagefind and the local Lighthouse preflight. After
+approval, `publish` deploys the audited artifact through GitHub Pages.
+A PR may contain several contents, and one dispatch may deploy changes from
 several PRs. Each content keeps its own PASS; explicit human authorization
 must cover the exact set of public changes since the last deployment.
 Merging a PR does not itself grant editorial publication approval. No push

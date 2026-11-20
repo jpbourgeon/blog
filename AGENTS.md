@@ -84,6 +84,7 @@ déploiement sert aux retraits et au relevé présenté dans le run `inspect`
 du SHA cible avant autorisation. Le relevé inclut le code, la configuration
 et les ressources statiques. Tout déploiement exige un PASS pour les
 contenus publics, sans exception. Le déploiement
-public reste manuel, après gate indépendant sur le commit exact ;
+public reste manuel, après gate indépendant sur le commit exact, build
+bilingue avec Pagefind et préflight Lighthouse sur cet artefact ;
 un push ou une PR ne déploie jamais. Préserver les URL canoniques, les
 traductions et l'exclusion des brouillons/aperçus de Pagefind.
