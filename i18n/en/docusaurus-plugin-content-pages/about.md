@@ -1,6 +1,6 @@
 ---
 "description": "Papa Bear, public-sector IT technical director and deputy director, systems enthusiast."
-"rationale": ".42p/rationale-units/page_about/capture.md"
+"rationale": ".42p/design/page_about/rationale.md"
 "title": "About"
 ---
 

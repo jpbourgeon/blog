@@ -1,12 +1,24 @@
 import {
   type Document, articlePair, locales, normalize, pagePair, readDocument,
-  requireThat, sha256,
+  requireThat, sha256, provenance, legacyCapturePath, legacyCapturePattern,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
-import {canonicalSlug, inventory, readReview, reviewPath} from './review.mts';
+import {canonicalSlug, inventory, readReview, reviewPath, type Review} from './review.mts';
 
 function sourcePair(document: {kind: string; key: string}) {
   return document.kind === 'article' ? articlePair(document.key) : pagePair(document.key);
+}
+
+// A migrated historical PASS was sealed over the old Capture locators.
+function publishedHash(document: Document, report: Review) {
+  const {main, context} = provenance(document);
+  const historical = report.references.find(ref => legacyCapturePattern.test(ref.path));
+  if (main && historical?.path === legacyCapturePath(main)) {
+    const fields = {...document.fields, rationale: historical.path,
+      ...(context && {rationaleContext: context.map(legacyCapturePath)})};
+    return sha256(normalize({...document, fields}));
+  }
+  return sha256(normalize(document));
 }
 
 // Publication validity belongs to the target commit, never to intermediate
@@ -20,7 +32,7 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
     const path = paths[locale];
     const actual = pair[locale];
     requireThat(actual.visibility === 'public' && report.targets[locale].path === path &&
-      sha256(normalize(actual)) === report.targets[locale].content_sha256,
+      publishedHash(actual, report) === report.targets[locale].content_sha256,
       'Published content differs from verified target: ' + path);
     const candidate = report.candidates[locale].path;
     if (candidate !== path && target.blob(candidate)) {
@@ -34,7 +46,7 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
 
 export async function plan(target: Snapshot, deployed?: Snapshot) {
   const current = await inventory(target);
-  const baseline = deployed ? await inventory(deployed) : undefined;
+  const baseline = deployed ? await inventory(deployed, undefined, true) : undefined;
 
   const classification: string[] = [];
   const exposed = new Set<string>();

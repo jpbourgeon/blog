@@ -33,6 +33,27 @@ and scales; for conceptual diagrams, verify the represented relationships and
 distinctions. Check that figures do not misrepresent material information.
 Do not require figures in the absence of an established editorial request.
 
+## Composition and optional plan
+
+Assess the composition of both candidates against the established author
+decisions and the intended reader. Read the plan applicable to the candidate
+when one exists. For a revision, look for `plan.revision.md` and distinguish
+it from the reference `plan.md`. Establish which composition the author
+adopted for this candidate. Treat proposals and the reference plan for an older
+version according to their role.
+
+Where a plan was adopted, trace the contribution and progression of the
+sections, supporting arguments, examples, sources and figures to both texts.
+Allow wording changes that preserve substance. Identify departures that lack
+author approval and gaps in the evidence of adoption or realization where
+material. Record plan use, findings and concrete evidence in the report body.
+Where there is no applicable plan, assess composition from the decisions and
+sources. The absence of a plan does not prevent a PASS.
+
+Keep the plan out of the report's normative frontmatter and the technical PASS
+identity. Distinguish conformity from improvement opportunities and leave
+editorial merit and publication approval to the author.
+
 ## Authorial voice review
 
 Assess `standards/voice.md` as a distinct editorial axis, in both languages.
@@ -108,10 +129,10 @@ The resulting report frontmatter has `content` (`article/<slug>` or
 `targets` (path and normalized content SHA-256), `references` (Git blob
 IDs for both standards and optional main Capture), optional `baseline`
 (published FR/EN blob IDs), and overall `result`.
-Use the `report` path returned by `prepare`. A first review uses
-`.42p/editorial-reviews/<type>/<slug>.md`. A revision uses
-`.42p/editorial-reviews/revisions/<type>/<slug>.md` for any verdict, while
-the first path retains the PASS for the currently public version.
+Use the `report` path returned by `prepare` in the content's design directory.
+A first review uses `verification.md`. A revision uses
+`verification.revision.md` for any verdict while `verification.md` retains
+the PASS for the currently public version.
 Always supply both canonical paths when preparing a revision. Record the
 review date in the report body as YYYY-MM-DD. Git retains earlier reviews.
 
