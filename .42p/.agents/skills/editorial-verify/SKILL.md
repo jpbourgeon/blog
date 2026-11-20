@@ -33,6 +33,27 @@ and scales; for conceptual diagrams, verify the represented relationships and
 distinctions. Check that figures do not misrepresent material information.
 Do not require figures in the absence of an established editorial request.
 
+## Composition and optional plan
+
+Assess the composition of both candidates against the established author
+decisions and the intended reader. Read the plan applicable to the candidate
+when one exists. For a revision, look for `plan.revision.md` and distinguish
+it from the reference `plan.md`. Establish which composition the author
+adopted for this candidate. Treat proposals and the reference plan for an older
+version according to their role.
+
+Where a plan was adopted, trace the contribution and progression of the
+sections, supporting arguments, examples, sources and figures to both texts.
+Allow wording changes that preserve substance. Identify departures that lack
+author approval and gaps in the evidence of adoption or realization where
+material. Record plan use, findings and concrete evidence in the report body.
+Where there is no applicable plan, assess composition from the decisions and
+sources. The absence of a plan does not prevent a PASS.
+
+Keep the plan out of the report's normative frontmatter and the technical PASS
+identity. Distinguish conformity from improvement opportunities and leave
+editorial merit and publication approval to the author.
+
 ## Authorial voice review
 
 Assess `standards/voice.md` as a distinct editorial axis, in both languages.
