@@ -117,7 +117,7 @@ export function project(candidate: Article | Document, baseline?: Article | Docu
 
 const blogRoots: Pair<string> = {fr: 'blog/', en: 'i18n/en/docusaurus-plugin-content-blog/'};
 export const designRoot = '.42p/design';
-export const capturePattern = /^\.42p\/design\/(?:(?:page_|article_)[A-Za-z0-9][A-Za-z0-9._-]*(?:%2F[A-Za-z0-9][A-Za-z0-9._-]*)*|[a-z0-9]+(?:-[a-z0-9]+)*)\/rationale\.md$/;
+export const capturePattern = /^\.42p\/design\/(?:(?:page_|article_)[A-Za-z0-9][A-Za-z0-9._-]*(?:%2F[A-Za-z0-9][A-Za-z0-9._-]*)*|(?:system_)?[a-z0-9]+(?:-[a-z0-9]+)*)\/rationale\.md$/;
 export const legacyCapturePattern = /^\.42p\/rationale-units\/(?:page_|article_)?[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
 
 export function legacyCapturePath(path: string): string {

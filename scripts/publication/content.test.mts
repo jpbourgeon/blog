@@ -91,6 +91,14 @@ test('provenance requires a valid sole main Capture and distinct context paths',
   }
 });
 
+test('provenance accepts a system Capture as the main or contextual reference', async () => {
+  const systemCapture = '.42p/design/system_editorial-workflow/rationale.md';
+  const main = await article(fields.replace('.42p/design/topic/rationale.md', systemCapture));
+  assert.equal(provenance(main).main, systemCapture);
+  const contextual = await article(fields.replace('.42p/design/context/rationale.md', systemCapture));
+  assert.deepEqual(provenance(contextual).context, [systemCapture]);
+});
+
 test('page draft projects to the native FR/EN page routes without exposure', async () => {
   const {readDocument, pageDraftPair, pagePair, documentPath} = await import('./content.mts');
   const draftPaths = pageDraftPair('topics/intro.md');

@@ -2,7 +2,7 @@
 
 ## Identité et intention
 
-**Changement :** `system-editorial-workflow`. Faire évoluer le workflow du blog pour distinguer la maturation des idées, leur structuration éditoriale, leur composition et leur expression, tout en conservant la souveraineté de l'auteur, la vérification indépendante et la maîtrise de la publication.
+**Changement :** `system_editorial-workflow`. Faire évoluer le workflow du blog pour distinguer la maturation des idées, leur structuration éditoriale, leur composition et leur expression, tout en conservant la souveraineté de l'auteur, la vérification indépendante et la maîtrise de la publication.
 
 **R-fondation — Rationale :** avant cette révision, le skill `editorial-write` concentrait la construction du raisonnement, l'organisation du texte et sa rédaction. Découvrir après rédaction un défaut de thèse, de sources ou de progression entraîne une reprise coûteuse et peut masquer un problème de fond sous des corrections de style. Des responsabilités distinctes permettent de stabiliser progressivement la matière, puis la composition, sans figer prématurément l'exploration. Le processus doit rester réversible et frugal, sans nouveaux contrôles mécaniques dépourvus de garantie utile.
 
@@ -40,11 +40,11 @@
     verification.revision.md
   page_<slug>/
     ...
-  system-editorial-workflow/
+  system_editorial-workflow/
     rationale.md
 ```
 
-Seuls les fichiers nécessaires sont présents. Préserver les identifiants stables : préfixes `article_` et `page_` pour éviter les collisions, identifiant propre pour une unité système. `rationale.md` est la Capture courante ; `plan.md` le plan de référence ; `plan.revision.md` le plan de révision d'un contenu déjà publié ; `verification.md` le rapport initial puis l'attestation de la version publique ; `verification.revision.md` le rapport d'une révision candidate.
+Seuls les fichiers nécessaires sont présents. Préserver les identifiants stables avec les préfixes `article_`, `page_` et `system_` pour éviter les collisions. `rationale.md` est la Capture courante ; `plan.md` le plan de référence ; `plan.revision.md` le plan de révision d'un contenu déjà publié ; `verification.md` le rapport initial puis l'attestation de la version publique ; `verification.revision.md` le rapport d'une révision candidate.
 
 ## Alignement du canon
 
