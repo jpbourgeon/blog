@@ -28,7 +28,8 @@ Reconcile substantive changes with the author and update affected artifacts
 before drafting from them. Drafting and verification can proceed without a plan.
 
 Keep a reference plan at `.42p/design/<identity>/plan.md`. Use
-`plan.revision.md` alongside it for work on a published version and keep the
-reference plan until authorized promotion of the revision. Use Git for
-ordinary iterations before publication. The same planning workflow serves
-pages, articles and revisions. Create a plan file only where useful.
+`plan.revision.md` alongside it for work on a published version. Follow
+the [promotion procedure](../editorial-publish/SKILL.md#canonical-publication-or-revision)
+for the reference plan transition. Use Git for ordinary iterations before
+publication. The same planning workflow serves pages, articles and
+revisions. Create a plan file only where useful.

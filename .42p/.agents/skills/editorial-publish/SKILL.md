@@ -16,12 +16,21 @@ npm run publication -- project <report>
 
 For a revision, use `verification.revision.md` in the content's design
 directory. After authorization, apply every `write` and `delete` from
-`project` **in one commit**. This
-installs the projected FR/EN canonical bytes and removes temporary candidates.
+`project` **in one commit**. This installs the projected FR/EN canonical
+bytes and removes temporary candidates.
 For a revision it also moves the exact PASS to the public report path,
-replacing the previous PASS. Never repair or compose editorial prose during
-promotion. Any necessary correction returns to writing and independent
-verification.
+replacing the previous PASS.
+
+Until promotion, `plan.md` remains the reference plan for the public
+version, if present. If the author explicitly adopted `plan.revision.md`
+for the revision being promoted, install that file as `plan.md` and remove
+`plan.revision.md` in the same commit as the projected FR/EN texts and
+revision PASS. File presence alone does not establish adoption. A revision
+can be promoted without an adopted revision plan. In that case, leave
+`plan.md` as it is and keep any proposed plan as a working file.
+
+Never repair or compose editorial prose during promotion. Any necessary
+correction returns to writing and independent verification.
 
 ## Previews
 
