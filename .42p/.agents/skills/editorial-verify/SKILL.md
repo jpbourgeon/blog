@@ -129,10 +129,10 @@ The resulting report frontmatter has `content` (`article/<slug>` or
 `targets` (path and normalized content SHA-256), `references` (Git blob
 IDs for both standards and optional main Capture), optional `baseline`
 (published FR/EN blob IDs), and overall `result`.
-Use the `report` path returned by `prepare`. A first review uses
-`.42p/editorial-reviews/<type>/<slug>.md`. A revision uses
-`.42p/editorial-reviews/revisions/<type>/<slug>.md` for any verdict, while
-the first path retains the PASS for the currently public version.
+Use the `report` path returned by `prepare` in the content's design directory.
+A first review uses `verification.md`. A revision uses
+`verification.revision.md` for any verdict while `verification.md` retains
+the PASS for the currently public version.
 Always supply both canonical paths when preparing a revision. Record the
 review date in the report body as YYYY-MM-DD. Git retains earlier reviews.
 

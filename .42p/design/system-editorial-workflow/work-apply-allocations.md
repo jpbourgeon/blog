@@ -4,12 +4,7 @@
 
 ## Références et autorité
 
-Avant toute modification, lire l'état réel de la PR, son commit de tête, le diff, `AGENTS.md`, les skills, standards, scripts et tests concernés, puis intégralement :
-
-- `.42p/rationale-units/system-editorial-workflow/capture.md`
-- `.42p/rationale-units/system-editorial-workflow/allocation.md`
-
-Ces deux chemins sont **les chemins actuels**, avant la migration prévue vers `.42p/design/system-editorial-workflow/`. Après migration, retrouver les sources par leur identité et leurs relations de provenance, sans continuer à utiliser des chemins obsolètes. Vérifier la cohérence des références et des unités avec l'état de la branche avant de commencer.
+Avant toute modification, lire l'état réel de la PR, son commit de tête, le diff, `AGENTS.md`, les skills, standards, scripts et tests concernés, puis intégralement la Capture et l'Allocation de `system-editorial-workflow`. Dans l'état migré, ouvrir [rationale.md](rationale.md) et [allocation.md](allocation.md) dans ce dossier. Pour reprendre un état antérieur, retrouver ces sources dans `.42p/rationale-units/system-editorial-workflow/{capture,allocation}.md`. Vérifier la cohérence de leur provenance, des références et des unités avec l'état de la branche avant de commencer.
 
 La Capture projette les arbitrages de l'auteur ; l'Allocation répartit les responsabilités sans créer de nouvelles exigences. Les règles d'autorité, de vérification, d'intégrité et de publication du dépôt s'appliquent. Ne pas résoudre par préférence d'agent une contradiction matérielle que les décisions de l'auteur ne permettent pas de trancher.
 

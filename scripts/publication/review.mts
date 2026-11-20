@@ -3,7 +3,7 @@ import {
   type Document, type Fields, type Pair,
   articlePair, documentPath, locales, normalize, pageDraftPair, pagePair,
   project, readDocument, readMarkdown, record, requireThat, sameProvenance,
-  sha256, capturePattern, standards,
+  sha256, capturePattern, legacyCapturePattern, designRoot, standards,
 } from './content.mts';
 import {type Snapshot, gitSha} from './git.mts';
 
@@ -18,9 +18,19 @@ export type Identities = {
   baseline?: Pair<BlobRef>;
 };
 export type Review = Identities & {result: 'PASS' | 'FAIL' | 'INCONCLUSIVE'};
-export const reviewsDir = '.42p/editorial-reviews/';
-export const reviewPath = (content: string) => reviewsDir + content + '.md';
-export const revisionReviewPath = (content: string) => reviewsDir + 'revisions/' + content + '.md';
+const legacyReviews = '.42p/editorial-reviews';
+const contentPattern = /^(article|page)\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+function reviewDirectory(content: string) {
+  requireThat(contentPattern.test(content), 'Invalid review content identity: ' + content);
+  const split = content.indexOf('/');
+  return designRoot + '/' + content.slice(0, split) + '_' + encodeURIComponent(content.slice(split + 1));
+}
+
+export const reviewPath = (content: string) => reviewDirectory(content) + '/verification.md';
+export const revisionReviewPath = (content: string) => reviewDirectory(content) + '/verification.revision.md';
+const legacyReviewPath = (content: string, revision = false) =>
+  legacyReviews + (revision ? '/revisions/' : '/') + content + '.md';
 const authorityNotice = 'Human editorial approval: not granted by this report';
 
 export function pairKey(pair: Pair<string>) {
@@ -56,15 +66,16 @@ function checkPair<K extends 'content_sha256' | 'git_blob_sha'>(value: unknown, 
   return true;
 }
 
-export async function readReview(tree: Snapshot, path: string): Promise<Review> {
-  requireThat(/^\.42p\/editorial-reviews\/(?:revisions\/)?(article|page)\/(?:[A-Za-z0-9][A-Za-z0-9._-]*\/)*[A-Za-z0-9][A-Za-z0-9._-]*\.md$/.test(path),
-    'Invalid review location: ' + path);
+export async function readReview(tree: Snapshot, path: string, historical = false): Promise<Review> {
   const {fields, body} = await readMarkdown(tree.read(path), path);
   const revision = fields.mode === 'revision';
   requireThat(exactKeys(fields, ['content', 'mode', 'candidates', 'targets', 'references', 'result',
     ...(revision ? ['baseline'] : [])]) &&
     (revision || fields.mode === 'new') && typeof fields.content === 'string' &&
-    (reviewPath(fields.content) === path || (revision && revisionReviewPath(fields.content) === path)) &&
+    contentPattern.test(fields.content) &&
+    (reviewPath(fields.content) === path || (revision && revisionReviewPath(fields.content) === path) ||
+      (historical && (legacyReviewPath(fields.content) === path ||
+        (revision && legacyReviewPath(fields.content, true) === path)))) &&
     ['PASS', 'FAIL', 'INCONCLUSIVE'].includes(fields.result as string) &&
     checkPair(fields.candidates, 'content_sha256') &&
     checkPair(fields.targets, 'content_sha256') &&
@@ -76,7 +87,7 @@ export async function readReview(tree: Snapshot, path: string): Promise<Review> 
   const refPaths = report.references.map(ref => ref.path);
   requireThat(standards.every(path => refPaths.includes(path)) &&
     refPaths.length <= 3 && new Set(refPaths).size === refPaths.length &&
-    refPaths.every(path => standards.includes(path) || capturePattern.test(path)),
+    refPaths.every(path => standards.includes(path) || capturePattern.test(path) || legacyCapturePattern.test(path)),
     'Invalid normative references: ' + path);
   const targetKind = documentPath(report.targets.fr.path)?.kind;
   requireThat(targetKind && report.content.startsWith(targetKind + '/'),
@@ -97,8 +108,8 @@ export function canonicalSlug(doc: Document) {
   return doc.route.slice(doc.locale === 'en' ? '/blog/en/'.length : '/blog/'.length, -1);
 }
 
-export async function checkProvenance(tree: Snapshot, pair: Pair<Document>) {
-  const provenance = sameProvenance(pair);
+export async function checkProvenance(tree: Snapshot, pair: Pair<Document>, historical = false) {
+  const provenance = sameProvenance(pair, historical);
   for (const path of [provenance.main, ...(provenance.context ?? [])]) {
     if (path) tree.requireBlob(path);
   }
@@ -157,7 +168,7 @@ export function matchReview(review: Review, data: Identities): void {
     'Stale or inapplicable editorial report: ' + data.content);
 }
 
-export async function inventory(tree: Snapshot, pending?: Identities) {
+export async function inventory(tree: Snapshot, pending?: Identities, historical = false) {
   const pairs = new Map<string, Pair<Document>>();
   const roots = ['blog', 'i18n/en/docusaurus-plugin-content-blog', 'src/pages',
     'i18n/en/docusaurus-plugin-content-pages', 'src/drafts/pages'];
@@ -169,7 +180,7 @@ export async function inventory(tree: Snapshot, pending?: Identities) {
     const key = pairKey(paths);
     requireThat(!pairs.has(key), 'Duplicate content pair: ' + key);
     const pair = await readPair(tree, paths);
-    await checkProvenance(tree, pair);
+    await checkProvenance(tree, pair, historical);
     pairs.set(key, pair);
   }
   // Also reject orphan English translations.
@@ -202,14 +213,17 @@ export async function inventory(tree: Snapshot, pending?: Identities) {
       'Conflicting revision baselines: ' + draft.path);
     revisions.set(candidate, target);
   }
-  for (const path of tree.paths(reviewsDir.slice(0, -1))) {
-    const review = await readReview(tree, path);
-    if (path === revisionReviewPath(review.content)) bindRevision(review);
+  const reports = tree.paths(designRoot).filter(path => /\/verification(?:\.revision)?\.md$/.test(path));
+  if (historical) reports.push(...tree.paths(legacyReviews));
+  for (const path of reports) {
+    const review = await readReview(tree, path, historical);
+    if (path === revisionReviewPath(review.content) ||
+        (historical && path === legacyReviewPath(review.content, true))) bindRevision(review);
   }
   if (pending) bindRevision(pending);
   const owners = new Map<string, string>();
   for (const [key, pair] of pairs) {
-    const {main} = await checkProvenance(tree, pair);
+    const {main} = await checkProvenance(tree, pair, historical);
     if (!main) continue;
     const pageBaseline = pair.fr.source === 'candidate' ? pairKey(pagePair(pair.fr.key)) : undefined;
     const owner = revisions.get(key) ??

@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {stringify} from 'yaml';
 import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, normalize, sha256} from './content.mts';
 import {Repository} from './git.mts';
-import {identities, matchReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
+import {identities, matchReview, readReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
 import {plan} from './gate.mts';
 
 const approvalNotice = 'Human editorial approval: not granted by this report';
@@ -83,7 +83,7 @@ test('a page and an article each require a matching PASS for the published state
   }
   const published = f.commit();
   assert.match((await plan(published, f.initial)).join('\n'), /Public page\/note/);
-  assert.match(location, /editorial-reviews\/page\/note.md/);
+  assert.match(location, /design\/page_note\/verification\.md/);
 
   const article = articlePair('example.md');
   f.writePair(article, 'New article');
@@ -151,7 +151,7 @@ test('a page revision with a shared Capture preserves the public PASS until prom
   const f = fixture(t);
   const draft = pageDraftPair('profile.md');
   const canonical = pagePair('profile.md');
-  const capture = '.42p/rationale-units/page_profile/capture.md';
+  const capture = '.42p/design/page_profile/rationale.md';
   const frontmatter = 'draft: true\nrationale: ' + capture + '\n';
   f.write(capture, '# Profile\n');
   f.writePair(draft, 'Public version', frontmatter);
@@ -194,7 +194,7 @@ test('an article revision can prepare before its report without sharing a Captur
   const f = fixture(t);
   const canonical = articlePair('article.md');
   const draft = articlePair('article-v2.md');
-  const capture = '.42p/rationale-units/article_example/capture.md';
+  const capture = '.42p/design/article_example/rationale.md';
   const frontmatter = 'draft: true\nrationale: ' + capture + '\n';
   f.write(capture, '# Article\n');
   f.writePair(canonical, 'Original', frontmatter);
@@ -429,8 +429,8 @@ test('an article revision preserving its FR/EN route remains publishable', async
 
 test('first deployment refuses an unsealed public placeholder', async t => {
   const f = fixture(t);
-  f.remove('.42p/editorial-reviews/page/about.md');
-  await assert.rejects(plan(f.commit()), /Missing .*editorial-reviews\/page\/about\.md/);
+  f.remove('.42p/design/page_about/verification.md');
+  await assert.rejects(plan(f.commit()), /Missing .*design\/page_about\/verification\.md/);
 });
 
 test('first deployment accepts a public page verified through the normal workflow', async t => {
@@ -507,7 +507,7 @@ test('unlisted is still public and cannot serve as withdrawal', async t => {
 test('a never-deployed draft and its rationale may be deleted directly', async t => {
   const f = fixture(t);
   const paths = articlePair('temporary.md');
-  const capture = '.42p/rationale-units/temporary/capture.md';
+  const capture = '.42p/design/temporary/rationale.md';
   f.write(capture, '# Temporary idea\n');
   for (const locale of locales) {
     f.write(paths[locale], '---\ntitle: Temporary\ndraft: true\nrationale: ' + capture + '\n---\n# Working copy\n');
@@ -520,7 +520,7 @@ test('a never-deployed draft and its rationale may be deleted directly', async t
 
 test('a shared rationale cannot be deleted while another document still references it', async t => {
   const f = fixture(t);
-  const capture = '.42p/rationale-units/shared/capture.md';
+  const capture = '.42p/design/shared/rationale.md';
   const paths = articlePair('retained.md');
   f.write(capture, '# Shared knowledge\n');
   for (const locale of locales) {
@@ -558,6 +558,74 @@ test('a deployed unlisted article cannot silently change route', async t => {
 
 test('unchanged unsealed public pages are no longer exempt from PASS', async t => {
   const f = fixture(t);
-  f.remove('.42p/editorial-reviews/page/about.md');
-  await assert.rejects(plan(f.commit(), f.initial), /Missing .*page\/about\.md/);
+  f.remove('.42p/design/page_about/verification.md');
+  await assert.rejects(plan(f.commit(), f.initial), /Missing .*design\/page_about\/verification\.md/);
+});
+
+test('a migrated historical PASS still binds the exact FR/EN content and Capture locators', async t => {
+  const f = fixture(t);
+  const content = 'page/about';
+  const paths = pagePair('about.md');
+  const captures = {
+    main: {old: '.42p/rationale-units/page_about/capture.md', current: '.42p/design/page_about/rationale.md'},
+    context: {old: '.42p/rationale-units/context/capture.md', current: '.42p/design/context/rationale.md'},
+  };
+  const fields = (layout: 'old' | 'current') => ({
+    title: 'About',
+    rationale: captures.main[layout],
+    rationaleContext: [captures.context[layout]],
+  });
+  const body = '# About\n';
+  const historicalPath = '.42p/editorial-reviews/page/about.md';
+  const currentPath = reviewPath(content);
+  const report = await readReview(f.initial, currentPath);
+  function writePair(layout: 'old' | 'current') {
+    for (const locale of locales) f.write(paths[locale], '---\n' + stringify(fields(layout)) + '---\n' + body);
+  }
+  for (const capture of Object.values(captures)) f.write(capture.old, '# Capture\n');
+  writePair('old');
+  const prepared = f.commit();
+  const hash = sha256(normalize({fields: fields('old'), body}));
+  for (const locale of locales) {
+    report.candidates[locale].content_sha256 = hash;
+    report.targets[locale].content_sha256 = hash;
+  }
+  report.references.push({path: captures.main.old, git_blob_sha: prepared.requireBlob(captures.main.old)});
+  f.remove(currentPath);
+  f.report(report, historicalPath);
+  const deployed = f.commit();
+
+  for (const capture of Object.values(captures)) {
+    f.write(capture.current, deployed.read(capture.old));
+    f.remove(capture.old);
+  }
+  writePair('current');
+  f.write(currentPath, deployed.read(historicalPath));
+  f.remove(historicalPath);
+  const migrated = f.commit();
+  assert.equal(migrated.requireBlob(currentPath), deployed.requireBlob(historicalPath));
+  assert.match((await plan(migrated, deployed)).join('\n'), /Public page\/about/);
+
+  f.write(paths.en, '---\n' + stringify(fields('current')) + '---\n' + body + 'Changed\n');
+  await assert.rejects(plan(f.commit(), deployed), /Published content differs from verified target/);
+
+  f.write('.42p/design/other/rationale.md', '# Other\n');
+  for (const locale of locales) f.write(paths[locale], '---\n' +
+    stringify({...fields('current'), rationaleContext: ['.42p/design/other/rationale.md']}) + '---\n' + body);
+  await assert.rejects(plan(f.commit(), deployed), /Published content differs from verified target/);
+});
+
+test('a nested article route keeps its identity and uses one design directory', async t => {
+  const f = fixture(t);
+  const article = articlePair('example.md');
+  const capture = '.42p/design/article_series%2Fexample/rationale.md';
+  f.write(capture, '# Capture\n');
+  f.writePair(article, 'Nested article', 'draft: true\nslug: series/example\nrationale: ' + capture + '\n');
+  const {data, projected} = await identities(f.commit(), article);
+  assert.equal(data.content, 'article/series/example');
+  const location = f.report({...data, result: 'PASS'});
+  assert.equal(location, '.42p/design/article_series%2Fexample/verification.md');
+  assert.equal(revisionReviewPath(data.content), '.42p/design/article_series%2Fexample/verification.revision.md');
+  for (const locale of locales) f.write(article[locale], projected[locale].bytes);
+  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public article\/series\/example/);
 });

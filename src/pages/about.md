@@ -1,6 +1,6 @@
 ---
 "description": "Papa Poule, directeur technique et directeur adjoint d'une DSI publique, amateur de systèmes."
-"rationale": ".42p/rationale-units/page_about/capture.md"
+"rationale": ".42p/design/page_about/rationale.md"
 "title": "À propos"
 ---
 

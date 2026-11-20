@@ -7,9 +7,9 @@ const body = '\n# Café\n\nDeux espaces  \n\n<Example value={1} />\n';
 const fields = `title: "Un café"
 slug: /test
 date: 2026-11-06
-rationale: .42p/rationale-units/topic/capture.md
+rationale: .42p/design/topic/rationale.md
 rationaleContext:
-  - .42p/rationale-units/context/capture.md
+  - .42p/design/context/rationale.md
 unknown:
   draft: true
   nested: [1, false, "2026-11-06", {other: value}]
@@ -76,15 +76,15 @@ test('ambiguous YAML, lossy values and malformed delimiters fail closed', async 
 
 test('provenance requires a valid sole main Capture and distinct context paths', async () => {
   assert.deepEqual(provenance(await article('')), {main: undefined, context: undefined});
-  assert.equal(provenance(await article(fields)).main, '.42p/rationale-units/topic/capture.md');
-  assert.equal(provenance(await article(fields)).context?.[0], '.42p/rationale-units/context/capture.md');
+  assert.equal(provenance(await article(fields)).main, '.42p/design/topic/rationale.md');
+  assert.equal(provenance(await article(fields)).context?.[0], '.42p/design/context/rationale.md');
   for (const value of [
-    'rationale: [.42p/rationale-units/topic/capture.md]\n',
-    'rationale: .42p/rationale-units/../capture.md\n',
-    'rationaleContext: [.42p/rationale-units/topic/capture.md]\n',
-    fields.replace('units/context', 'units/topic'),
-    fields.replace('  - .42p/rationale-units/context/capture.md',
-      '  - .42p/rationale-units/context/capture.md\n  - .42p/rationale-units/context/capture.md'),
+    'rationale: [.42p/design/topic/rationale.md]\n',
+    'rationale: .42p/design/../rationale.md\n',
+    'rationaleContext: [.42p/design/topic/rationale.md]\n',
+    fields.replace('design/context', 'design/topic'),
+    fields.replace('  - .42p/design/context/rationale.md',
+      '  - .42p/design/context/rationale.md\n  - .42p/design/context/rationale.md'),
   ]) {
     const markdown = await article(value);
     assert.throws(() => provenance(markdown));

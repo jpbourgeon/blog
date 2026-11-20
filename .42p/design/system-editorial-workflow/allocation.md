@@ -2,9 +2,10 @@
 
 ## Source et portée
 
-- **Capture allouée :** `.42p/rationale-units/system-editorial-workflow/capture.md`, Git blob `2a4ffcd737b178a3f9fd87bea3e82041c797c7e2`, commit `c3b4409090e4af426d344be5bcba463c9dc39350` (branche `docs/capture-system-editorial-workflow`).
+- **Capture courante :** [rationale.md](rationale.md).
+- **Source de l’allocation initiale :** `.42p/rationale-units/system-editorial-workflow/capture.md`, Git blob `2a4ffcd737b178a3f9fd87bea3e82041c797c7e2`, commit `c3b4409090e4af426d344be5bcba463c9dc39350` (branche `docs/capture-system-editorial-workflow`).
 - **Portée :** allocation complète du workflow, de l'organisation cible et de l'alignement du canon ; aucun contenu éditorial ni déploiement à réaliser dans cette opération.
-- **Statut :** responsabilités allouées, **non réalisées et non vérifiées**. La Capture reste la source des exigences et de leurs modalités ; cette Allocation n'en est pas une seconde spécification.
+- **Statut :** la présente Allocation répartit les responsabilités. La Capture reste la source des exigences et de leurs modalités. Les commits de la PR portent la réalisation.
 
 ## Unités de responsabilité
 
@@ -38,9 +39,9 @@ Les contraintes transversales de **R-fondation**, **R-frontières**, **C-autorit
 | **C-frugalité** | A1–A5 (pas d'obligation ou de gate), A7 (pas de liaison technique du plan au PASS). |
 | **C-révision** | A3 (plan initial/révision), A4–A5 (candidats/révues), A6 (fichiers et Git), A7 (transitions garanties). |
 | **C-publication** | A1 (autorité et cycle), A5 (pas d'approbation), A7 (gates et déploiement inchangés). |
-| **R-colocalisation** ; « Organisation du canon cible » (arborescence, identifiants, présence et rôle des fichiers) | A6 (organisation, migration), A3 (plans), A5 (rapports), A7 (contrats techniques). Le dossier d'unité système est couvert par A6 ; l'Allocation présente reste au chemin demandé avant migration. |
+| **R-colocalisation** ; « Organisation du canon cible » (arborescence, identifiants, présence et rôle des fichiers) | A6 (organisation, migration), A3 (plans), A5 (rapports), A7 (contrats techniques). Le dossier d'unité système est couvert par A6. |
 | « Alignement du canon à réaliser » — skills, instructions, migration, tests | A2–A5 (skills), A1 (AGENTS/README), A6 (artefacts/liens), A7 (scripts, tests, maintien des garanties). |
-| « Sources et statut » | Provenance et état de travail ; aucun chantier distinct. Les sources restent accessibles via la Capture, les décisions validées sont allouées, l'implémentation reste à faire. |
+| « Sources et statut » | Provenance et état de travail ; aucun chantier distinct. Les sources restent accessibles via la Capture, les décisions validées sont allouées. |
 
 ## Contrôle de couverture
 

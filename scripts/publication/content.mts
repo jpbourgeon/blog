@@ -116,7 +116,15 @@ export function project(candidate: Article | Document, baseline?: Article | Docu
 }
 
 const blogRoots: Pair<string> = {fr: 'blog/', en: 'i18n/en/docusaurus-plugin-content-blog/'};
-export const capturePattern = /^\.42p\/rationale-units\/(?:page_|article_)?[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
+export const designRoot = '.42p/design';
+export const capturePattern = /^\.42p\/design\/(?:(?:page_|article_)[A-Za-z0-9][A-Za-z0-9._-]*(?:%2F[A-Za-z0-9][A-Za-z0-9._-]*)*|[a-z0-9]+(?:-[a-z0-9]+)*)\/rationale\.md$/;
+export const legacyCapturePattern = /^\.42p\/rationale-units\/(?:page_|article_)?[a-z0-9]+(?:-[a-z0-9]+)*\/capture\.md$/;
+
+export function legacyCapturePath(path: string): string {
+  const previous = path.replace(/^\.42p\/design\/(.+)\/rationale\.md$/, '.42p/rationale-units/$1/capture.md');
+  return legacyCapturePattern.test(previous) ? previous : path;
+}
+
 export const standards = ['standards/editorial.md', 'standards/voice.md'];
 
 export function articlePath(path: string): {locale: Locale; key: string} | undefined {
@@ -215,19 +223,20 @@ export async function readDocument(bytes: Buffer, path: string): Promise<Documen
   };
 }
 
-export function provenance(article: Article): {main?: string; context?: string[]} {
+export function provenance(article: Article, historical = false): {main?: string; context?: string[]} {
   const {rationale, rationaleContext} = article.fields;
-  requireThat(rationale === undefined || (typeof rationale === 'string' && capturePattern.test(rationale)),
+  const isCapture = (path: unknown) => typeof path === 'string' &&
+    (capturePattern.test(path) || (historical && legacyCapturePattern.test(path)));
+  requireThat(rationale === undefined || isCapture(rationale),
     `Invalid rationale in ${article.path}`);
   requireThat(rationaleContext === undefined || (rationale !== undefined && Array.isArray(rationaleContext) &&
-    rationaleContext.length > 0 && rationaleContext.every(path => typeof path === 'string' &&
-      capturePattern.test(path) && path !== rationale) && new Set(rationaleContext).size === rationaleContext.length),
+    rationaleContext.length > 0 && rationaleContext.every(path => isCapture(path) && path !== rationale) && new Set(rationaleContext).size === rationaleContext.length),
     `Invalid rationaleContext in ${article.path}`);
   return {main: rationale as string | undefined, context: rationaleContext as string[] | undefined};
 }
 
-export function sameProvenance(pair: Pair<Article>) {
-  const french = provenance(pair.fr);
-  requireThat(isDeepStrictEqual(french, provenance(pair.en)), `FR/EN provenance differs for ${pair.fr.path}`);
+export function sameProvenance(pair: Pair<Article>, historical = false) {
+  const french = provenance(pair.fr, historical);
+  requireThat(isDeepStrictEqual(french, provenance(pair.en, historical)), `FR/EN provenance differs for ${pair.fr.path}`);
   return french;
 }

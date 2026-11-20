@@ -53,9 +53,10 @@ cette approbation.
 
 `npm run publication -- prepare <fr> <en> [<baseline-fr> <baseline-en>]`
 calcule les identités du contenu candidat et de sa cible. Le compte rendu
-éditorial est enregistré dans `.42p/editorial-reviews/`, commité avant la
-promotion. `check <rapport>` revalide son identité ; `project <rapport>`
-produit les octets à promouvoir pour un rapport PASS autorisé.
+éditorial utilise le chemin fourni par `prepare` dans
+`.42p/design/<identité>/`, puis il est commité avant la promotion.
+`check <rapport>` revalide son identité. `project <rapport>` produit les
+octets à promouvoir pour un rapport PASS autorisé.
 
 Le gate valide les contenus publics présents dans le commit cible à partir de
 leurs sceaux PASS exacts, sans imposer la validité des révisions intermédiaires.
@@ -83,8 +84,8 @@ Après décision explicite de l'auteur, il est d'abord retiré de l'exposition :
 vers `src/drafts/pages/`, hors des routes publiques.
 L'état retiré doit être **déployé** avant de pouvoir supprimer les fichiers.
 
-La suppression ultérieure retire les versions FR/EN et, si elle n'est pas
-partagée, la rationale-unit associée. Les contenus jamais déployés ou déjà
+La suppression ultérieure retire les versions FR/EN et, si elle est propre
+au contenu, la Capture associée. Les contenus jamais déployés ou déjà
 retirés peuvent être effacés directement. Les références des objets conservés
 doivent rester valides. Les aperçus `unlisted` restent accessibles par URL et
 sont signalés dans le relevé dès le premier déploiement. Aucun rapport de suppression ni sceau PASS supplémentaire

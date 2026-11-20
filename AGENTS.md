@@ -41,12 +41,19 @@ sans rapport spécifique. Conserver les ressources et Captures encore référenc
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
 
-Captures : `.42p/rationale-units/<slug>/capture.md` ; pour une page ou un article, nommer le dossier `page_<slug>` ou `article_<slug>` (identifiant stable, sans date).
-Rapports : `.42p/editorial-reviews/<type>/<slug>.md` pour une première
-revue puis pour l'attestation de la version publique. Pour une révision,
-consigner le verdict dans `.42p/editorial-reviews/revisions/<type>/<slug>.md`.
-À la promotion autorisée, installer le PASS de révision au chemin public
-avec les textes FR/EN et retirer le rapport de travail dans le même commit.
+Le canon d'un contenu est regroupé sous `.42p/design/<identité>/`.
+Pour une page ou un article, l'identité stable est `page_<slug>` ou
+`article_<slug>`, avec `%2F` pour les séparateurs d'un slug imbriqué.
+Une unité système garde son identifiant propre. Créer uniquement les fichiers utiles.
+
+- `rationale.md` contient la Capture courante.
+- `plan.md` contient le plan de référence et `plan.revision.md` celui d'une
+  révision du texte publié.
+- `verification.md` contient le premier rapport puis l'attestation publique.
+  Le rapport de révision est établi dans `verification.revision.md`.
+  À la promotion autorisée, installer le PASS de révision au chemin public
+  avec les textes FR/EN et retirer le rapport de travail dans le même commit.
+
 Le frontmatter `rationale` peut référencer une seule Capture principale ;
 `rationaleContext` peut ajouter des références contextuelles FR/EN identiques.
 Une Capture n'est ni une preuve autonome ni une obligation pour chaque contenu.

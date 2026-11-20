@@ -53,12 +53,10 @@ Seuls les fichiers nécessaires sont présents. Préserver les identifiants stab
 - Actualiser `AGENTS.md` et `README.md` : étapes, caractère facultatif et réversible, chemins du canon.
 - Migrer les Captures et rapports existants vers `.42p/design/<slug>/` ; adapter les chemins et références dans les skills, les frontmatters, `scripts/publication/content.mts`, `review.mts`, `gate.mts` et les tests. Préserver les PASS existants, les versions vérifiées et les garanties de publication ; laisser `editorial-publish` et la mécanique de déploiement inchangés dans leur principe.
 
-Le schéma de rangement est une **cible à implémenter**, non le chemin actuel de la Capture.
-
 ## Sources et statut
 
 - **S-auteur (primaire)** — Workflow en six étapes proposé le 19 novembre 2026 ; le 20 novembre 2026, décisions explicites sur le plan comme échafaudage contraignant mais non autoritatif, l'organisation unifiée `.42p/design/`, le plan facultatif et l'absence d'obligation de le lier au PASS ; adoption expresse de la dernière proposition d'organisation et de migration.
 - **S-exploration (dérivé, adopté pour les points ci-dessus)** — Exploration du canon à partir du skill officiel `openspec-explore` sans CLI, puis proposition de colocalisation et d'adaptation des skills et scripts, acceptée par l'auteur. La comparaison porte sur le canon courant, non sur une implémentation déjà réalisée.
-- **S-dépôt (état de référence)** — [AGENTS.md](../../../AGENTS.md), [`42p-capture`](../../.agents/skills/42p-capture/SKILL.md), [`editorial-write`](../../.agents/skills/editorial-write/SKILL.md), [`editorial-verify`](../../.agents/skills/editorial-verify/SKILL.md), [standard éditorial](../../../standards/editorial.md) et [voix](../../../standards/voice.md). Les skills `editorial-explore` et `editorial-plan` restent à créer.
+- **S-dépôt —** [AGENTS.md](../../../AGENTS.md), [`42p-capture`](../../.agents/skills/42p-capture/SKILL.md), [`editorial-write`](../../.agents/skills/editorial-write/SKILL.md), [`editorial-verify`](../../.agents/skills/editorial-verify/SKILL.md), [standard éditorial](../../../standards/editorial.md) et [voix](../../../standards/voice.md).
 
-**État :** workflow, responsabilités et rangement cible décidés ; migration et nouveaux skills **non implémentés**. Aucun changement de règle de publication ni d'autorité.
+**État :** workflow et rangement décidés. L’[Allocation](allocation.md) répartit la réalisation et Git en conserve les étapes. L’autorité éditoriale et les règles de publication continuent de s’appliquer.

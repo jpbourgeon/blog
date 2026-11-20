@@ -14,9 +14,9 @@ npm run publication -- check <report>
 npm run publication -- project <report>
 ```
 
-For a revision, use the report under
-`.42p/editorial-reviews/revisions/<type>/<slug>.md`. After authorization,
-apply every `write` and `delete` from `project` **in one commit**. This
+For a revision, use `verification.revision.md` in the content's design
+directory. After authorization, apply every `write` and `delete` from
+`project` **in one commit**. This
 installs the projected FR/EN canonical bytes and removes temporary candidates.
 For a revision it also moves the exact PASS to the public report path,
 replacing the previous PASS. Never repair or compose editorial prose during
@@ -48,6 +48,6 @@ for the visibility change and include it in the manual deployment decision.
 Articles become `draft: true` in both locales; move page files to `src/drafts/pages/{fr,en}/` outside the published
 routes, with `draft: true`. Do not delete a publicly deployed item in
 the same deployment. After the withdrawn state has been deployed, the document
-pair and any unshared rationale-unit or resources may be deleted without a
+pair and any unshared Capture or resources may be deleted without a
 separate editorial PASS or deletion report. Never delete shared references.
 `unlisted` remains publicly accessible and is not a withdrawal.
