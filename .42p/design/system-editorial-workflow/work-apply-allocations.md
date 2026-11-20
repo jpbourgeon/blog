@@ -19,7 +19,7 @@ Pour chaque unité encore à réaliser :
 3. **Vérifier.** Examiner le diff réel et effectuer les contrôles ciblés et les régressions pertinentes. Contrôler **sémantiquement dans les deux sens** :
    - **Capture → réalisation :** toutes les obligations et frontières attribuées à l'unité sont couvertes, avec leurs conditions, exceptions, dépendances et caractères facultatifs ; aucune omission ni dégradation.
    - **Réalisation → Capture :** chaque changement matériel est fondé sur une attribution identifiée ; aucun ajout non autorisé, contradiction résiduelle, duplication normative ou altération hors périmètre.
-   
+
    Vérifier également les interactions avec les unités déjà réalisées et les garanties préexistantes. Appuyer le verdict sur les fichiers, passages et résultats de tests réellement observés ; des tests verts ne suffisent pas, à eux seuls, à démontrer la fidélité du fond.
 4. **Corriger ou interrompre.** En cas d'anomalie, de test en échec, de couverture incomplète ou de preuve insuffisante, rechercher la cause, corriger dans le périmètre autorisé, puis revérifier. Si la résolution exige un arbitrage de l'auteur, une extension substantielle non autorisée ou demeure impossible, déclarer **BLOCKED**, interrompre immédiatement la boucle et poser la question minimale nécessaire, avec les alternatives pertinentes. Ne jamais poursuivre avec un FAIL, un INCONCLUSIVE ou un PASS supposé.
 5. **Consolider et continuer.** Uniquement après **PASS**, enregistrer un commit cohérent sur la branche de la PR, sans écraser les modifications concurrentes. Associer au bilan de l'unité ses attributions et preuves de vérification. Passer directement à la suivante.
