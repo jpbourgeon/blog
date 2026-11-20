@@ -4,42 +4,47 @@
 
 **Changement :** `system-publication-assurance`.
 
-Ramener le dispositif de vérification du blog au nécessaire et suffisant pour une qualité professionnelle, selon un compromis 80/20. Tester les transitions à risque plutôt que toutes les étapes. Une garantie doit être compréhensible, vérifiée au bon endroit et ne pas être répétée sans apport distinct.
+Garantir une qualité de publication professionnelle par le minimum de contrôles nécessaires et suffisants (compromis 80/20). Vérifier les transitions à risque, une fois et au bon endroit, sans confondre qualité éditoriale, intégrité de la promotion et qualité technique du site.
 
-## Modèle retenu
+## Modèle adopté
 
-Quatre garanties complémentaires :
+1. **Verify — qualité éditoriale.** Revue indépendante du fond, des sources, de la fidélité à l'auteur, de la composition, de la voix et de la cohérence FR/EN ; PASS pour les contenus conformes. L'auteur conserve le jugement et l'autorisation de publication.
+2. **Promote — identité du contenu.** PASS applicable, empreintes exactes des versions FR/EN et projection sans perte du contenu vérifié vers le contenu canonique.
+3. **Publish — intégrité et autorisation.** Accord humain explicite sur les changements publics depuis le dernier déploiement, SHA exact, gate, build Docusaurus FR/EN et Pagefind ; déploiement manuel.
+4. **Preflight — qualité technique avant exposition.** Après le build, servir localement l'artefact et exécuter Lighthouse sur les nouvelles pages FR/EN et les pages représentatives affectées. Audit de performance, accessibilité, SEO et bonnes pratiques. Échec bloquant si l'audit ne peut pas s'exécuter correctement ou si un contrôle essentiel explicitement retenu échoue ; scores diagnostiques sans seuil global arbitraire.
 
-1. **Verify — qualité éditoriale.** Revue indépendante du fond, des sources, de la fidélité à l'auteur, de la composition, de la voix et de la cohérence FR/EN ; PASS pour les contenus conformes. Le jugement et l'autorisation de publier restent à l'auteur.
-2. **Promote — identité du contenu.** Les versions FR/EN promues correspondent exactement aux versions vérifiées : PASS applicable, empreintes et projection sans perte.
-3. **Publish — intégrité et autorisation.** Gate sur le commit exact, build valide et absence d'exposition de changements publics non autorisés ; déploiement manuel après accord explicite de l'auteur.
-4. **Post-publish — qualité réellement servie.** Smoke test des ressources publiées ou affectées et Lighthouse ciblé sur les nouvelles pages FR/EN. Le smoke test contrôle le fonctionnement effectif ; Lighthouse évalue performance, accessibilité, bonnes pratiques et SEO. Ne pas fixer de seuil global arbitraire bloquant sur des scores fluctuants ; traiter les défauts significatifs.
+**Chaîne cible :** Verify → Promote → autorisation humaine et gate du SHA exact → build Docusaurus + Pagefind → Lighthouse local → déploiement GitHub Pages de l'artefact vérifié.
 
-Exploration, Capture, plan et rédaction n'ont **aucun gate déterministe obligatoire**. Les vérifications pertinentes sont réalisées aux frontières suivantes, non à chaque étape.
+Pas de gate déterministe obligatoire pendant Explore, Capture, Plan ou Write. Pas de smoke test post-déploiement. Le résultat d'`actions/deploy-pages` est le retour technique retenu, sans prétendre contrôler le service HTTP de bout en bout.
 
 ## Noyau de régression déterministe
 
-Conserver le minimum de tests comportementaux qui démontrent la prévention des échecs suivants :
+Garder uniquement les scénarios nécessaires pour démontrer la prévention de :
 
 1. Publication sans PASS applicable ou avec contenu différent de la version vérifiée.
 2. Promotion FR/EN incomplète ou incorrecte.
 3. Altération de la version publique pendant la préparation d'une révision.
 4. Exposition involontaire de brouillons ou d'aperçus.
-5. Suppression de contenu exposé sans retrait préalable.
-6. Indexation par Pagefind de contenus qui doivent en être exclus.
-7. Déploiement automatique ou ciblage d'une référence Git incorrecte.
+5. Suppression d'un contenu exposé sans retrait préalable.
+6. Indexation Pagefind de contenus exclus.
+7. Déploiement automatique ou sur une mauvaise référence Git.
 
-Conserver également la preuve de transformation sans perte du Markdown/MDX, nécessaire à la fiabilité des empreintes. Un scénario peut contenir plusieurs assertions ; le nombre de tests n'est pas une cible. Supprimer les vérifications d'implémentation, variantes redondantes et compatibilités historiques seulement lorsqu'elles ne protègent plus de garantie distincte. Ne pas affaiblir les invariants pour réduire artificiellement la suite.
+Conserver aussi la preuve de transformation sans perte du Markdown/MDX qui fonde les empreintes. Réévaluer les 37 tests actuels selon ces garanties : fusionner les redondances et retirer les scénarios sans protection distincte, sans viser un nombre arbitraire ni affaiblir les invariants.
 
-**Frontière des preuves :** les tests de régression démontrent le comportement des mécanismes ; les gates valident une publication particulière ; la revue indépendante et l'accord humain ne se prouvent pas par un test déterministe. Le smoke test après déploiement constate un résultat exposé : son échec appelle correction, pas prévention rétroactive de l'exposition.
+Les tests de régression prouvent les mécanismes ; les gates valident un état de publication particulier ; ni l'indépendance de la revue ni l'accord humain ne sont démontrables par un test déterministe.
 
 ## Périmètre de réalisation
 
-Réévaluer les tests et contrôles existants en partant de ce noyau, puis réaliser les adaptations minimales. Le relevé des changements publics soumis à autorisation doit couvrir aussi les modifications techniques et ressources statiques qui affectent le site, sans leur imposer de PASS éditorial. Ne pas créer d'outillage ni de gates supplémentaires sans garantie distincte.
+- Compléter le relevé des changements publics soumis à autorisation, y compris code et ressources statiques, sans leur imposer de PASS éditorial.
+- Rationaliser les tests autour du noyau essentiel.
+- Ajouter le préflight Lighthouse local entre build et déploiement, sans infrastructure de monitoring.
+- Aligner `AGENTS.md`, `README.md` et `editorial-publish` sur le modèle.
 
-## Sources
+Préserver les skills éditoriaux, les contrats `prepare`/`check`/`project`, les empreintes et PASS, les routes et traductions, Pagefind, la décision humaine et le déploiement manuel. Ne pas refondre le moteur de publication.
 
-- **Décision de l'auteur, 20 novembre 2026 :** adoption explicite du dernier modèle réduit à quatre garanties et à un noyau de scénarios essentiels ; demande de ne pas conserver les pistes antérieures dans cette Capture.
-- **État technique initial :** [AGENTS.md](../../../AGENTS.md), [workflow Pages](../../../.github/workflows/pages.yml), [scripts de publication](../../../scripts/publication/) et [skills éditoriaux](../../.agents/skills/), branche `main` au commit `ff59bf3d390db618c7ce1bc9e9547a87e4585c02`.
+## Sources et état
 
-**État :** modèle adopté ; aucune adaptation technique encore appliquée dans ce changement.
+- **S-auteur — décisions explicites du 20 novembre 2026 :** adoption du modèle de garanties minimal, puis validation de sa consolidation avec Lighthouse en préflight et sans smoke test post-publication.
+- **S-dépôt — état technique avant réalisation :** [AGENTS.md](../../../AGENTS.md), [workflow Pages](../../../.github/workflows/pages.yml), [scripts de publication](../../../scripts/publication/), [skills éditoriaux](../../.agents/skills/) ; `main` au commit `ff59bf3d390db618c7ce1bc9e9547a87e4585c02`.
+
+**État :** modèle validé ; Capture actualisée. Aucune modification technique encore appliquée dans ce changement.
