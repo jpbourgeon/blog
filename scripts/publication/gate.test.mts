@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
-import {mkdirSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
+import {mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import test, {type TestContext} from 'node:test';
@@ -112,6 +112,7 @@ test('a page and an article each require a matching PASS for the published state
   }
   const published = f.commit();
   assert.match((await plan(published, f.initial)).join('\n'), /Public page\/note/);
+  assert.match((await plan(published)).join('\n'), /Public page\/note/);
   assert.match(location, /design\/page_note\/verification\.md/);
 
   const article = articlePair('example.md');
@@ -124,13 +125,6 @@ test('a page and an article each require a matching PASS for the published state
   const result = f.commit();
   assert.match((await plan(result, published)).join('\n'), /Public article\/example/);
 });
-
-test('a public page edit without a matching PASS is rejected', async t => {
-  const f = fixture(t);
-  f.write('src/pages/about.md', '---\ntitle: About\n---\n# Changed without approval\n');
-  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
-});
-
 
 test('squash merge retains a PASS and exact target without retaining the candidate', async t => {
   const f = fixture(t);
@@ -154,26 +148,6 @@ test('unlisted article previews are reported even on the first deployment', asyn
   const preview = f.commit();
   assert.match((await plan(preview)).join('\n'), /Unlisted preview: preview.md/);
   assert.match((await plan(preview, f.initial)).join('\n'), /Unlisted preview/);
-});
-
-
-
-
-test('a reviewed permanent-page revision preserves its public route', async t => {
-  const f = fixture(t);
-  const draftPaths = pageDraftPair('about.md');
-  const currentPaths = pagePair('about.md');
-  f.writePair(draftPaths, 'Revised page');
-  const draft = f.commit();
-  const {data, projected} = await identities(draft, draftPaths, currentPaths);
-  assert.equal(data.mode, 'revision');
-  f.report({...data, result: 'PASS'});
-  f.commit();
-  for (const locale of locales) {
-    f.write(currentPaths[locale], projected[locale].bytes);
-    f.remove(draftPaths[locale]);
-  }
-  assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
 });
 
 test('a page revision with a shared Capture preserves the public PASS until promotion', async t => {
@@ -244,7 +218,6 @@ test('an article revision can prepare before its report without sharing a Captur
   await assert.rejects(plan(unrelated, deployed), /Main Capture belongs to multiple contents/);
 });
 
-
 test('public promotion cannot publish only one language', async t => {
   const f = fixture(t);
   const paths = articlePair('partial.md');
@@ -273,33 +246,20 @@ test('a page with JSX requires a PASS for the exact reviewed source', async t =>
   const published = f.commit();
   assert.match((await plan(published, f.initial)).join('\n'), /Public page\/profile/);
 
-  f.write(projected.fr.path, projected.fr.bytes.toString().replace('Portrait', 'Photo'));
-  await assert.rejects(plan(f.commit(), published), /Published content differs from verified target/);
-});
-
-test('several revisions of the same page use only the final PASS even if V2 was never deployed', async t => {
-  const f = fixture(t);
-  const temporary = pageDraftPair('about.md');
-  const canonical = pagePair('about.md');
-  let previous = f.initial;
-  for (const revision of ['V2', 'V3']) {
-    f.writePair(temporary, revision);
-    const candidate = f.commit();
-    const {data, projected} = await identities(candidate, temporary, canonical);
-    f.report({...data, result: 'PASS'});
-    for (const locale of locales) {
-      f.write(canonical[locale], projected[locale].bytes);
-      f.remove(temporary[locale]);
-    }
-    previous = f.commit();
+  for (const locale of locales) {
+    f.write(projected[locale].path, projected[locale].bytes.toString().replace('Portrait', 'Photo'));
+    await assert.rejects(plan(f.commit(), published), /Published content differs from verified target/);
+    f.write(projected[locale].path, projected[locale].bytes);
   }
-  assert.match((await plan(previous, f.initial)).join('\n'), /Public page\/about/);
 });
 
-test('multiple public documents can share a single publication commit', async t => {
+test('the manual gate supplies FR/EN routes for all new pages and representative affected pages', async t => {
   const f = fixture(t);
+  f.write('src/pages/retired.tsx', 'export default function Page() {}');
+  const deployed = f.commit();
   const pages = [pageDraftPair('one.md'), pageDraftPair('two.md')];
   for (const paths of pages) f.writePair(paths, 'Independent');
+  f.writePair(pageDraftPair('private.md'), 'Private candidate');
   const draft = f.commit();
   for (const paths of pages) {
     const {data, projected} = await identities(draft, paths);
@@ -309,10 +269,25 @@ test('multiple public documents can share a single publication commit', async t 
       f.remove(paths[locale]);
     }
   }
-  const published = f.commit();
-  const messages = (await plan(published, f.initial)).join('\n');
-  assert.match(messages, /Public page\/one/);
-  assert.match(messages, /Public page\/two/);
+  f.write('src/pages/tools/index.tsx', 'export default function Page() {}');
+  f.write('src/pages/_partial.tsx', 'export default function Page() {}');
+  f.write('src/css/custom.css', 'main { margin: auto; }');
+  f.remove('src/pages/retired.tsx');
+  f.commit();
+
+  const output = join(f.repo.root, '.git', 'gate-output');
+  const report = execFileSync(process.execPath, [publicationCli, 'gate', deployed.commit], {
+    cwd: f.repo.root,
+    encoding: 'utf8',
+    env: {...process.env, GITHUB_OUTPUT: output},
+  });
+  assert.match(report, /Public page\/one/);
+  assert.match(report, /Public page\/two/);
+  const routes = JSON.parse(readFileSync(output, 'utf8').trim().replace(/^routes=/, ''));
+  assert.deepEqual(new Set(routes), new Set([
+    '/blog/', '/blog/about/', '/blog/one/', '/blog/two/', '/blog/tools/',
+    '/blog/en/', '/blog/en/about/', '/blog/en/one/', '/blog/en/two/', '/blog/en/tools/',
+  ]));
 });
 
 test('invalid intermediate revision does not block a final valid seal', async t => {
@@ -331,22 +306,6 @@ test('invalid intermediate revision does not block a final valid seal', async t 
     f.remove(temporary[locale]);
   }
   assert.match((await plan(f.commit(), f.initial)).join('\n'), /Public page\/about/);
-});
-
-
-test('final public FR/EN bytes must match the exact PASS fingerprint', async t => {
-  const f = fixture(t);
-  const paths = pageDraftPair('sealed.md');
-  f.writePair(paths, 'Original');
-  const draft = f.commit();
-  const {data, projected} = await identities(draft, paths);
-  f.report({...data, result: 'PASS'});
-  for (const locale of locales) {
-    f.write(projected[locale].path, projected[locale].bytes);
-    f.remove(paths[locale]);
-  }
-  f.write(projected.fr.path, projected.fr.bytes.toString('utf8').replace('Original', 'Tampered'));
-  await assert.rejects(plan(f.commit(), f.initial), /Published content differs from verified target/);
 });
 
 test('FAIL and INCONCLUSIVE seals never authorize public content', async t => {
@@ -417,7 +376,6 @@ test('a public page cannot be replaced by a new route without withdrawal', async
   await assert.rejects(plan(f.commit(), f.initial), /Exposed content must be withdrawn before deletion/);
 });
 
-
 test('a published article keeps its FR/EN route across revisions', async t => {
   const f = fixture(t);
   const paths = articlePair('stable.md');
@@ -454,30 +412,6 @@ test('an article revision preserving its FR/EN route remains publishable', async
   for (const locale of locales) f.write(paths[locale], replacement.projected[locale].bytes);
   assert.match((await plan(f.commit(), deployed)).join('\n'), /Public article\/permanent-route/);
 });
-
-
-test('first deployment refuses an unsealed public placeholder', async t => {
-  const f = fixture(t);
-  f.remove('.42p/design/page_about/verification.md');
-  await assert.rejects(plan(f.commit()), /Missing .*design\/page_about\/verification\.md/);
-});
-
-test('first deployment accepts a public page verified through the normal workflow', async t => {
-  const f = fixture(t);
-  const candidate = pageDraftPair('about.md');
-  const canonical = pagePair('about.md');
-  f.writePair(candidate, 'Reviewed introduction');
-  const draft = f.commit();
-  const {data, projected} = await identities(draft, candidate, canonical);
-  f.report({...data, result: 'PASS'});
-  for (const locale of locales) {
-    f.write(canonical[locale], projected[locale].bytes);
-    f.remove(candidate[locale]);
-  }
-  assert.match((await plan(f.commit())).join('\n'), /Public page\/about/);
-});
-
-
 
 test('a deployed article must be withdrawn as draft before deletion', async t => {
   const f = fixture(t);
@@ -560,7 +494,6 @@ test('a shared rationale cannot be deleted while another document still referenc
   await assert.rejects(plan(f.commit(), f.initial), /Missing/);
 });
 
-
 test('a deployed unlisted article cannot be deleted without a deployed draft withdrawal', async t => {
   const f = fixture(t);
   const paths = articlePair('unlisted.md');
@@ -585,10 +518,13 @@ test('a deployed unlisted article cannot silently change route', async t => {
   await assert.rejects(plan(f.commit(), exposed), /Exposed article route changed/);
 });
 
-test('unchanged unsealed public pages are no longer exempt from PASS', async t => {
+test('an unsealed public page is refused both initially and after deployment', async t => {
   const f = fixture(t);
   f.remove('.42p/design/page_about/verification.md');
-  await assert.rejects(plan(f.commit(), f.initial), /Missing .*design\/page_about\/verification\.md/);
+  const target = f.commit();
+  for (const baseline of [undefined, f.initial]) {
+    await assert.rejects(plan(target, baseline), /Missing .*design\/page_about\/verification\.md/);
+  }
 });
 
 test('a migrated historical PASS still binds the exact FR/EN content and Capture locators', async t => {
