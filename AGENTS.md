@@ -57,7 +57,9 @@ Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 Le canon d'un contenu est regroupé sous `.42p/design/<identité>/`.
 Pour une page ou un article, l'identité stable est `page_<slug>` ou
 `article_<slug>`, avec `%2F` pour les séparateurs d'un slug imbriqué.
-Une unité système garde son identifiant propre. Créer uniquement les fichiers utiles.
+Une unité système utilise `system_<slug>`, avec un slug en minuscules composé
+de lettres et de chiffres, dont les segments peuvent être séparés par `-`.
+Créer uniquement les fichiers utiles.
 
 - `rationale.md` contient la Capture courante.
 - `plan.md` contient le plan de référence et `plan.revision.md` celui d'une
