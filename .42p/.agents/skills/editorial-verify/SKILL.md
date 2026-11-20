@@ -33,6 +33,27 @@ and scales; for conceptual diagrams, verify the represented relationships and
 distinctions. Check that figures do not misrepresent material information.
 Do not require figures in the absence of an established editorial request.
 
+## Composition and optional plan
+
+Assess the composition of both candidates against the established author
+decisions and the intended reader. Read the plan applicable to the candidate
+when one exists. For a revision, look for `plan.revision.md` and distinguish
+it from the reference `plan.md`. Establish which composition the author
+adopted for this candidate. Treat proposals and the reference plan for an older
+version according to their role.
+
+Where a plan was adopted, trace the contribution and progression of the
+sections, supporting arguments, examples, sources and figures to both texts.
+Allow wording changes that preserve substance. Identify departures that lack
+author approval and gaps in the evidence of adoption or realization where
+material. Record plan use, findings and concrete evidence in the report body.
+Where there is no applicable plan, assess composition from the decisions and
+sources. The absence of a plan does not prevent a PASS.
+
+Keep the plan out of the report's normative frontmatter and the technical PASS
+identity. Distinguish conformity from improvement opportunities and leave
+editorial merit and publication approval to the author.
+
 ## Authorial voice review
 
 Assess `standards/voice.md` as a distinct editorial axis, in both languages.
@@ -53,6 +74,15 @@ Read the text as a whole and inspect representative passages for:
   or invented by the writer?
 - **Adaptation:** Is the depth, length and level of abstraction justified by
   the page, technical article or essay and its intended readers?
+
+For the progression assessment, explain how the relationships between passages
+develop the central idea and serve the text's stated purpose. Topic coverage
+and strong individual passages do not by themselves establish overall progression.
+When identifying a weakness, assess whether it is isolated or reflects the
+composition as a whole. Treat a composition-wide failure to develop connected
+ideas as a voice-standard failure, not merely a non-blocking stylistic opportunity;
+do not require an argumentative sequence where the format calls for a reference
+list or independent sections.
 
 For the voice verdict, cite concrete passages and explain their effect on the
 reader. A pervasive generic, pompous or institutional register is a `FAIL`,
@@ -99,7 +129,12 @@ The resulting report frontmatter has `content` (`article/<slug>` or
 `targets` (path and normalized content SHA-256), `references` (Git blob
 IDs for both standards and optional main Capture), optional `baseline`
 (published FR/EN blob IDs), and overall `result`.
-Write the report to `.42p/editorial-reviews/<type>/<slug>.md`.
+Use the `report` path returned by `prepare` in the content's design directory.
+A first review uses `verification.md`. A revision uses
+`verification.revision.md` for any verdict while `verification.md` retains
+the PASS for the currently public version.
+Always supply both canonical paths when preparing a revision. Record the
+review date in the report body as YYYY-MM-DD. Git retains earlier reviews.
 
 Its body provides sources, mapped evidence, categorical verdicts, limitations,
 and this exact notice:

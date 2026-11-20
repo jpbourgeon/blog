@@ -14,10 +14,23 @@ npm run publication -- check <report>
 npm run publication -- project <report>
 ```
 
-After authorization, write the projected FR/EN canonical bytes and remove
-temporary candidates **in one commit**. Never repair or compose editorial
-prose during promotion. Any necessary correction returns to writing and
-independent verification.
+For a revision, use `verification.revision.md` in the content's design
+directory. After authorization, apply every `write` and `delete` from
+`project` **in one commit**. This installs the projected FR/EN canonical
+bytes and removes temporary candidates.
+For a revision it also moves the exact PASS to the public report path,
+replacing the previous PASS.
+
+Until promotion, `plan.md` remains the reference plan for the public
+version, if present. If the author explicitly adopted `plan.revision.md`
+for the revision being promoted, install that file as `plan.md` and remove
+`plan.revision.md` in the same commit as the projected FR/EN texts and
+revision PASS. File presence alone does not establish adoption. A revision
+can be promoted without an adopted revision plan. In that case, leave
+`plan.md` as it is and keep any proposed plan as a working file.
+
+Never repair or compose editorial prose during promotion. Any necessary
+correction returns to writing and independent verification.
 
 ## Previews
 
@@ -44,6 +57,6 @@ for the visibility change and include it in the manual deployment decision.
 Articles become `draft: true` in both locales; move page files to `src/drafts/pages/{fr,en}/` outside the published
 routes, with `draft: true`. Do not delete a publicly deployed item in
 the same deployment. After the withdrawn state has been deployed, the document
-pair and any unshared rationale-unit or resources may be deleted without a
+pair and any unshared Capture or resources may be deleted without a
 separate editorial PASS or deletion report. Never delete shared references.
 `unlisted` remains publicly accessible and is not a withdrawal.

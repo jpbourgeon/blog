@@ -6,14 +6,25 @@ Captures are references, not extensions of its scope. Preserve the author's
 intent, evidence, uncertainty, temporal context and distinctive voice.
 Never invent experiences or decide publication merit.
 
-## Editorial composition
+## Drafting from established decisions
 
 Before drafting, identify the intended reader, central idea, author's distinctive
-perspective and concrete supporting material. Organize the prose around the idea,
-not mechanically around Capture headings, topic inventories or indicative lengths.
-Source structure defines coverage, not necessarily paragraph order. Preserve
-validated wording when appropriate; develop other captured ideas naturally without
-inventing experiences, positions or evidence.
+perspective and concrete supporting material from the established decisions.
+Look for the applicable plan in the content's design directory. Use
+`plan.revision.md` for a revision when the author has adopted it. Use the
+reference `plan.md` as context for a revision and follow any composition the
+author has established for the revised text.
+
+If the author has adopted a plan for the candidate, follow its composition:
+the contribution and progression of the sections, the supporting arguments
+and the material choices it records. Wording and other nonsubstantive
+adjustments remain free. With no adopted plan, compose directly from the
+established decisions and sources. Choose how the developments serve the
+reader and connect to each other. Preserve validated wording when appropriate.
+
+Draft from this progression, adapting it to the format. Ground the author's
+personal perspective in documented reasons, questions, choices and tensions;
+do not invent experiences, positions or evidence.
 
 Produce diagrams and charts when requested by established editorial decisions or
 the applicable Capture. A Capture records decisions but is not itself an authority,
@@ -28,14 +39,19 @@ without a demonstrated need.
 After drafting, revise substantively before handoff:
 
 - Replace interchangeable or generic statements with precise, supported meaning.
-- Connect ideas through reasoning rather than lists of concepts or values.
+- Check that the relationships guiding the composition are expressed in the text
+  and develop its purpose, rather than merely joining lists of concepts or values.
 - Prefer a relevant, verified concrete example to multiple abstract declarations.
 - Remove repetitions and paragraphs without a distinct contribution.
 - Check that the text expresses this author's perspective rather than merely
   describing a professional profile.
 
-When source material cannot support a distinctive claim or example, do not invent
-one. Keep the text concise and flag any material limitation in the handoff.
+When the available material only supports listing the author's positions or
+interests, and cannot support the intended personal perspective, identify the
+missing substance and ask the author for the necessary clarification. Do not
+manufacture motivation or fill the gap with generic statements. Likewise, do not
+invent unsupported claims or examples; keep the text concise and report any
+remaining material limitation in the handoff.
 
 ## Source-dependent publication claims
 
@@ -62,12 +78,14 @@ Do not place an unapproved page in `src/pages/`. Native pages have no
 `unlisted` preview; use a review branch/site for visual approval.
 Published pages live under `src/pages/` and
 `i18n/en/docusaurus-plugin-content-pages/` after promotion.
+Keep the same relative path for a page revision and provide both canonical
+paths in the verification handoff for every revision.
 
-Do not change visibility or public canonical files. Any new substantive
-argument arising during drafting must be flagged separately in the drafting
-handoff. Include it in the FR/EN candidates only after the author validates it.
-When a main Capture exists, reconcile the validated argument in that Capture
-before verification.
+Keep visibility and public canonical files intact. If drafting exposes a need
+for a substantive departure from the adopted composition, a new argument or
+another change of substance, raise it for the author's decision. Incorporate
+the change into the FR/EN candidates only after explicit adoption. Reconcile
+the affected plan and Capture where applicable before the independent review.
 
 Check meaning, links, assets, FR/EN parity and route intent. Report the
 candidate paths, proposed public targets, unresolved points and readiness for

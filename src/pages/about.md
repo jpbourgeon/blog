@@ -1,6 +1,6 @@
 ---
 "description": "Papa Poule, directeur technique et directeur adjoint d'une DSI publique, amateur de systèmes."
-"rationale": ".42p/rationale-units/page_about/capture.md"
+"rationale": ".42p/design/page_about/rationale.md"
 "title": "À propos"
 ---
 
@@ -13,23 +13,19 @@
 
 > Papa Poule · Directeur technique et directeur adjoint d'une DSI publique · Amateur de systèmes
 
-Mon travail porte autant sur les systèmes informatiques que sur les organisations : comprendre leur fonctionnement, les concevoir et prendre les décisions qui permettent de les faire évoluer. Ici, je m'exprime à titre personnel, et non au nom de mon employeur.
+Mon travail va du développement logiciel au pilotage des systèmes d'information, avec les équipes qui les conçoivent et les font vivre. J'aime comprendre ce qui guide les décisions, en expliquer les raisons et voir leurs effets dans la pratique. Je préfère les solutions simples, plus faciles à comprendre et à maîtriser, y compris face à l'automatisation. Je m'exprime à titre personnel, pas au nom de mon employeur.
 
 ## Pourquoi ce blog
 
-Comprendre comment les systèmes fonctionnent, imaginer comment ils pourraient fonctionner autrement. Cette curiosité m'accompagne aussi bien lorsque je développe du code que lorsque je travaille en équipe.
+Je partage mes réflexions, mes essais et mes réalisations sur les systèmes, leurs usages et les façons de les faire évoluer. Écrire m'aide à mettre mes idées au clair et à garder une trace de leur évolution. Mais une réflexion, aussi cohérente soit-elle, gagne à rencontrer d'autres expériences et d'autres objections. C'est pour cela que je la publie, plutôt que de la garder pour moi.
 
-Dans mon travail, une solution ne se juge pas seulement à ce qu'elle permet de faire. Il faut aussi pouvoir expliquer les raisons de son choix, la maintenir, vérifier qu'elle répond au besoin et savoir qui en garde la maîtrise. C'est pourquoi je m'intéresse autant à l'ingénierie logicielle qu'au management et à la gouvernance des systèmes d'information.
+Je souhaite partager aussi bien les questions de départ et les essais que les résultats. Ils permettent de comprendre comment une idée prend forme, quels choix ont été faits et quelles difficultés demeurent. Vous pouvez ainsi suivre le raisonnement, en retenir ce qui vous intéresse, l'adapter à votre contexte ou le contester. Ce blog est aussi pour moi un terrain d'essai, notamment dans l'écriture.
 
-Je recherche la simplicité et la frugalité, non pour faire moins par principe, mais pour ne retenir que la complexité utile. Avec l'automatisation et l'intelligence artificielle, cette exigence de compréhension et de maîtrise devient particulièrement importante.
-
-L'architecture logicielle, la cybernétique et les systèmes sociotechniques nourrissent cette réflexion, tout comme l'open source et les technologies local-first.
-
-Je travaille avec des agents d’IA pour explorer des idées, préparer les textes, les traduire et les vérifier. Je décide de ce que je veux dire et je valide chaque publication.
+Je m'appuie sur des agents d'IA pour explorer les idées, rédiger, traduire et vérifier les textes. Je décide du propos et valide chaque publication.
 
 ## Productions et contributions
 
-J'aime aussi mettre les idées à l'épreuve du code. Les contraintes de conception, d'usage et de maintenance obligent à préciser ce qui semblait évident sur le papier.
+Passer d'une idée au code oblige à la confronter aux contraintes de conception, d'usage et de maintenance. Ce qui semblait évident sur le papier ne l'est pas toujours dans la pratique.
 
 Je publie des travaux open source, notamment dans l'organisation GitHub [at-rama](https://github.com/at-rama).
 
