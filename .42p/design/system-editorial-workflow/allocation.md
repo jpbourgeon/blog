@@ -40,7 +40,7 @@ Les contraintes transversales de **R-fondation**, **R-frontières**, **C-autorit
 | **C-révision** | A3 (plan initial/révision), A4–A5 (candidats/révues), A6 (fichiers et Git), A7 (transitions garanties). |
 | **C-publication** | A1 (autorité et cycle), A5 (pas d'approbation), A7 (gates et déploiement inchangés). |
 | **R-colocalisation** ; « Organisation du canon cible » (arborescence, identifiants, présence et rôle des fichiers) | A6 (organisation, migration), A3 (plans), A5 (rapports), A7 (contrats techniques). Le dossier d'unité système est couvert par A6. |
-| « Alignement du canon à réaliser » — skills, instructions, migration, tests | A2–A5 (skills), A1 (AGENTS/README), A6 (artefacts/liens), A7 (scripts, tests, maintien des garanties). |
+| « Alignement du canon » — skills, instructions, migration, tests | A2–A5 (skills), A1 (AGENTS/README), A6 (artefacts/liens), A7 (scripts, tests, maintien des garanties). |
 | « Sources et statut » | Provenance et état de travail ; aucun chantier distinct. Les sources restent accessibles via la Capture, les décisions validées sont allouées. |
 
 ## Contrôle de couverture

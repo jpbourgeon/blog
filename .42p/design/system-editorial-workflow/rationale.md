@@ -4,7 +4,7 @@
 
 **Changement :** `system-editorial-workflow`. Faire évoluer le workflow du blog pour distinguer la maturation des idées, leur structuration éditoriale, leur composition et leur expression, tout en conservant la souveraineté de l'auteur, la vérification indépendante et la maîtrise de la publication.
 
-**R-fondation — Rationale :** le skill actuel `editorial-write` concentre la construction du raisonnement, l'organisation du texte et sa rédaction. Découvrir après rédaction un défaut de thèse, de sources ou de progression entraîne une reprise coûteuse et peut masquer un problème de fond sous des corrections de style. Des responsabilités distinctes permettent de stabiliser progressivement la matière, puis la composition, sans figer prématurément l'exploration. Le processus doit rester réversible et frugal, sans nouveaux contrôles mécaniques dépourvus de garantie utile.
+**R-fondation — Rationale :** avant cette révision, le skill `editorial-write` concentrait la construction du raisonnement, l'organisation du texte et sa rédaction. Découvrir après rédaction un défaut de thèse, de sources ou de progression entraîne une reprise coûteuse et peut masquer un problème de fond sous des corrections de style. Des responsabilités distinctes permettent de stabiliser progressivement la matière, puis la composition, sans figer prématurément l'exploration. Le processus doit rester réversible et frugal, sans nouveaux contrôles mécaniques dépourvus de garantie utile.
 
 ## Workflow cible
 
@@ -46,7 +46,7 @@
 
 Seuls les fichiers nécessaires sont présents. Préserver les identifiants stables : préfixes `article_` et `page_` pour éviter les collisions, identifiant propre pour une unité système. `rationale.md` est la Capture courante ; `plan.md` le plan de référence ; `plan.revision.md` le plan de révision d'un contenu déjà publié ; `verification.md` le rapport initial puis l'attestation de la version publique ; `verification.revision.md` le rapport d'une révision candidate.
 
-## Alignement du canon à réaliser
+## Alignement du canon
 
 - Ajouter `editorial-explore` (investigation libre, sans écriture de contenu) et `editorial-plan` (plan optionnel et contraignant lorsqu'il est retenu).
 - Recentrer `editorial-write` sur la rédaction ; faire examiner le plan éventuel par `editorial-verify` et en rendre compte dans le corps du rapport, **sans** l'ajouter aux références obligatoires du PASS.
@@ -57,6 +57,6 @@ Seuls les fichiers nécessaires sont présents. Préserver les identifiants stab
 
 - **S-auteur (primaire)** — Workflow en six étapes proposé le 19 novembre 2026 ; le 20 novembre 2026, décisions explicites sur le plan comme échafaudage contraignant mais non autoritatif, l'organisation unifiée `.42p/design/`, le plan facultatif et l'absence d'obligation de le lier au PASS ; adoption expresse de la dernière proposition d'organisation et de migration.
 - **S-exploration (dérivé, adopté pour les points ci-dessus)** — Exploration du canon à partir du skill officiel `openspec-explore` sans CLI, puis proposition de colocalisation et d'adaptation des skills et scripts, acceptée par l'auteur. La comparaison porte sur le canon courant, non sur une implémentation déjà réalisée.
-- **S-dépôt —** [AGENTS.md](../../../AGENTS.md), [`42p-capture`](../../.agents/skills/42p-capture/SKILL.md), [`editorial-write`](../../.agents/skills/editorial-write/SKILL.md), [`editorial-verify`](../../.agents/skills/editorial-verify/SKILL.md), [standard éditorial](../../../standards/editorial.md) et [voix](../../../standards/voice.md).
+- **S-dépôt (état avant application, commit `8b2ae7617b34d9c28c22bc8e61cdcf120582fb3d`) —** [AGENTS.md](../../../AGENTS.md), [`42p-capture`](../../.agents/skills/42p-capture/SKILL.md), [`editorial-write`](../../.agents/skills/editorial-write/SKILL.md), [`editorial-verify`](../../.agents/skills/editorial-verify/SKILL.md), [standard éditorial](../../../standards/editorial.md) et [voix](../../../standards/voice.md).
 
 **État :** workflow et rangement décidés. L’[Allocation](allocation.md) répartit la réalisation et Git en conserve les étapes. L’autorité éditoriale et les règles de publication continuent de s’appliquer.
