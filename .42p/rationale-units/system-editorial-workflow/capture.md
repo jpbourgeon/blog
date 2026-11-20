@@ -44,7 +44,7 @@
     rationale.md
 ```
 
-Seuls les fichiers nécessaires sont présents. Préserver les identifiants stables : préfixes `article_` et `page_` pour éviter les collisions, identifiant propre pour une unité système. `rationale.md` est la Capture courante ; `plan.md` le plan de référence ; `plan.revision.md` celui d'une révision publiée ; `verification.md` le PASS de la version publique ; `verification.revision.md` le rapport d'une révision candidate.
+Seuls les fichiers nécessaires sont présents. Préserver les identifiants stables : préfixes `article_` et `page_` pour éviter les collisions, identifiant propre pour une unité système. `rationale.md` est la Capture courante ; `plan.md` le plan de référence ; `plan.revision.md` le plan de révision d'un contenu déjà publié ; `verification.md` le rapport initial puis l'attestation de la version publique ; `verification.revision.md` le rapport d'une révision candidate.
 
 ## Alignement du canon à réaliser
 
