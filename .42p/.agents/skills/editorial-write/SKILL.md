@@ -6,23 +6,23 @@ Captures are references, not extensions of its scope. Preserve the author's
 intent, evidence, uncertainty, temporal context and distinctive voice.
 Never invent experiences or decide publication merit.
 
-## Editorial composition
+## Drafting from established decisions
 
 Before drafting, identify the intended reader, central idea, author's distinctive
-perspective and concrete supporting material. Determine what the reader should
-understand and how the developments lead there. Treat source material as content
-to compose, not a sequence to reproduce: covering the topics does not by itself
-develop the intended meaning.
+perspective and concrete supporting material from the established decisions.
+Look for the applicable plan in the content's design directory. Use
+`plan.revision.md` for a revision when the author has adopted it. Use the
+reference `plan.md` as context for a revision and follow any composition the
+author has established for the revised text.
 
-Respect the author's established structural decisions. When a plan is indicative,
-choose the order and relationships that best serve the text's purpose. When the
-structure is prescribed, build the progression within it; if that structure
-prevents satisfactory composition, propose an adjustment to the author before
-departing from it. Preserve validated wording when appropriate, without
-mechanically following Capture headings, topic inventories or indicative lengths.
+If the author has adopted a plan for the candidate, follow its composition:
+the contribution and progression of the sections, the supporting arguments
+and the material choices it records. Wording and other nonsubstantive
+adjustments remain free. With no adopted plan, compose directly from the
+established decisions and sources. Choose how the developments serve the
+reader and connect to each other. Preserve validated wording when appropriate.
 
-Draft from this progression, adapting it to the format rather than imposing a
-universal argumentative plan or artificial transitions. Ground the author's
+Draft from this progression, adapting it to the format. Ground the author's
 personal perspective in documented reasons, questions, choices and tensions;
 do not invent experiences, positions or evidence.
 
@@ -81,11 +81,11 @@ Published pages live under `src/pages/` and
 Keep the same relative path for a page revision and provide both canonical
 paths in the verification handoff for every revision.
 
-Do not change visibility or public canonical files. Any new substantive
-argument arising during drafting must be flagged separately in the drafting
-handoff. Include it in the FR/EN candidates only after the author validates it.
-When a main Capture exists, reconcile the validated argument in that Capture
-before verification.
+Keep visibility and public canonical files intact. If drafting exposes a need
+for a substantive departure from the adopted composition, a new argument or
+another change of substance, raise it for the author's decision. Incorporate
+the change into the FR/EN candidates only after explicit adoption. Reconcile
+the affected plan and Capture where applicable before the independent review.
 
 Check meaning, links, assets, FR/EN parity and route intent. Report the
 candidate paths, proposed public targets, unresolved points and readiness for
