@@ -13,12 +13,18 @@ Le dépôt est l'espace de rédaction. Les agents appliquent [AGENTS.md](AGENTS.
 [les standards éditoriaux](standards/editorial.md) et les skills sous
 `.42p/.agents/skills/`. L'auteur conserve la décision éditoriale.
 
-Cycle identique pour articles et pages : exploration (Capture facultative),
-rédaction FR/EN, vérification indépendante, accord explicite, publication.
-Chaque contenu conserve son rapport PASS ; les PR peuvent regrouper plusieurs
-contenus et un déploiement peut regrouper plusieurs PR. La fusion d'une PR
-ne constitue pas, à elle seule, une approbation éditoriale.
-42P conserve les Captures et rapports ; les contenus éditoriaux sont du Code.
+Pages et articles peuvent commencer par une exploration libre. Une Capture
+facultative consigne les décisions et se réconcilie à tout moment.
+`editorial-explore` approfondit le fond et `editorial-plan` prépare la
+composition. Un plan est facultatif. Lorsqu'il est adopté par l'auteur,
+sa composition s'impose à la rédaction FR/EN. Le travail peut
+revenir aux étapes utiles avant la vérification indépendante. L'auteur
+décide ensuite de la publication.
+
+La Capture, le plan et les rapports se regroupent par identité sous
+`.42p/design/`. Chaque contenu public conserve son rapport PASS. Les PR
+peuvent regrouper plusieurs contenus et un déploiement peut regrouper
+plusieurs PR. L'approbation éditoriale reste une décision explicite.
 Les brouillons d'articles utilisent `draft: true` ; ceux des pages restent
 hors des routes publiques dans `src/drafts/pages/`. Les prévisualisations
 d'articles `unlisted` sont publiques par URL ; les pages sont prévisualisées
