@@ -42,7 +42,10 @@ Do not change public page files just to preview them.
 ## Public deployment
 
 Publication is a distinct manual `workflow_dispatch` on `main`, targeting
-the exact commit SHA. `inspect` validates without exposure, `publish`
+the exact commit SHA. Run `inspect` without exposure and review the gate
+record before seeking permission. It identifies the deployed baseline and the
+target SHA, the editorial transitions and all tracked file changes, including
+site code, configuration and static assets. `publish`
 runs the independent gate, builds and deploys through GitHub Pages. A PR
 may contain several contents, and one dispatch may deploy changes from
 several PRs. Each content keeps its own PASS; explicit human authorization

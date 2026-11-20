@@ -51,7 +51,10 @@ Sur PR et push, GitHub Actions vérifie seulement le code et le build.
 
 La publication reste **manuelle**, depuis **Actions → Pages → Run workflow**
 sur `main` avec son SHA complet. Le mode `inspect` vérifie le commit sans
-déployer ; `publish` applique le contrôle indépendant puis déploie exactement
+déployer. Pour préparer l'autorisation, consulte le relevé du gate dans le
+run `inspect` du SHA cible. Il indique le dernier déploiement, les transitions
+éditoriales et le différentiel complet des fichiers suivis, y compris le
+code, la configuration et les ressources statiques. `publish` applique le contrôle indépendant puis déploie exactement
 l'artefact construit. Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
 changements publics depuis le dernier déploiement**, qu'ils proviennent d'une
 ou de plusieurs PR. Ni un PASS éditorial ni un build réussi n'accordent

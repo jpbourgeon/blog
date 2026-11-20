@@ -69,6 +69,31 @@ function publication(repo: Repository, ...args: string[]) {
     stdio: ['ignore', 'pipe', 'pipe']});
 }
 
+test('the approval record lists the exact deployed-to-target delta including technical changes', t => {
+  const f = fixture(t);
+  f.write('static/old image.webp', 'old');
+  f.write('docusaurus.config.ts', 'old');
+  const deployed = f.commit();
+  f.write('static/temporary.webp', 'intermediate');
+  f.commit();
+  f.remove('static/temporary.webp');
+  f.remove('static/old image.webp');
+  f.write('static/new image.webp', 'new');
+  f.write('docusaurus.config.ts', 'new');
+  f.write('src/components/Layout.tsx', 'layout');
+  const target = f.commit();
+
+  const report = publication(f.repo, 'gate', deployed.commit);
+  assert.ok(report.includes(`Publication review: ${deployed.commit} -> ${target.commit}`));
+  assert.match(report, /M "docusaurus.config.ts"/);
+  assert.match(report, /A "src\/components\/Layout.tsx"/);
+  assert.match(report, /A "static\/new image.webp"/);
+  assert.match(report, /D "static\/old image.webp"/);
+  assert.doesNotMatch(report, /temporary\.webp|verification\.md/);
+  assert.match(publication(f.repo, 'gate', 'none'), /A "docusaurus.config.ts"/);
+  assert.match(publication(f.repo, 'gate', target.commit), /No tracked changes/);
+});
+
 test('a page and an article each require a matching PASS for the published state', async t => {
   const f = fixture(t);
   const page = pageDraftPair('note.md');

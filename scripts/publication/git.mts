@@ -22,6 +22,12 @@ export class Repository {
     return this.bytes(...args).toString('utf8').split('\0').filter(Boolean);
   }
 
+  changes(target: Snapshot, deployed?: Snapshot) {
+    if (!deployed) return target.paths().map(path => ({status: 'A', path}));
+    const fields = this.paths('diff', '--name-status', '--no-renames', '-z', deployed.commit, target.commit);
+    return fields.flatMap((status, index) => index % 2 ? [] : [{status, path: fields[index + 1]}]);
+  }
+
   tree(commit: string) {
     requireThat(gitSha.test(commit) && this.text('rev-parse', '--verify', `${commit}^{commit}`) === commit,
       `Expected an exact Git commit: ${commit}`);
