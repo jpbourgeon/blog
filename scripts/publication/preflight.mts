@@ -1,10 +1,9 @@
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
-import {createServer} from 'node:http';
 import {launch} from 'chrome-launcher';
 import lighthouse from 'lighthouse';
-import sirv from 'sirv';
-import {base, routesForPreflight} from './preflight-routes.mts';
+import {base, createArtifactServer, routesForPreflight} from './preflight-routes.mts';
+import {requireSuccessfulAudit} from './preflight-check.mts';
 
 const plan = JSON.parse(process.env.PREFLIGHT_PLAN ?? 'null');
 assert(plan && Array.isArray(plan.routes) && plan.routes.length > 0 &&
@@ -16,16 +15,7 @@ for (const route of routes) {
     new URL(route, 'http://127.0.0.1').pathname === route, 'Invalid preflight route: ' + route);
 }
 
-const serve = sirv('build');
-const server = createServer((request, response) => {
-  if (!request.url?.startsWith(base)) {
-    response.writeHead(404).end();
-    return;
-  }
-  request.url = request.url.slice(base.length - 1);
-  serve(request, response);
-});
-
+const server = createArtifactServer('build');
 server.listen(0, '127.0.0.1');
 await once(server, 'listening');
 try {
@@ -41,12 +31,9 @@ try {
         logLevel: 'error',
         onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
       });
-      assert(result && !result.lhr.runtimeError,
-        'Lighthouse could not audit ' + route + ': ' + result?.lhr.runtimeError?.message);
-      const {audits, categories, finalDisplayedUrl} = result.lhr;
-      assert(audits['http-status-code']?.score === 1 && finalDisplayedUrl === url,
-        'Expected a successful response from the local build at ' + route);
-      const scores = Object.values(categories).map(({id, score}) => id + '=' + score);
+      const audit = result?.lhr;
+      requireSuccessfulAudit(url, audit);
+      const scores = Object.values(audit.categories).map(({id, score}) => id + '=' + score);
       console.log(route + ' ' + scores.join(' '));
     }
   } finally {

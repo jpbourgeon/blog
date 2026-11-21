@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
+import {once} from 'node:events';
 import {mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
@@ -10,7 +11,7 @@ import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, nor
 import {Repository} from './git.mts';
 import {identities, matchReview, readReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
 import {plan as publicationPlan} from './gate.mts';
-import {routesForPreflight} from './preflight-routes.mts';
+import {createArtifactServer, routesForPreflight} from './preflight-routes.mts';
 
 async function plan(...args: Parameters<typeof publicationPlan>) {
   return (await publicationPlan(...args)).editorial;
@@ -297,19 +298,41 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
   const artifact = [
     'index.html', 'about/index.html', 'one/index.html', 'two/index.html',
     'tools/index.html', 'tags/collection/index.html', 'legal-fr/index.html',
-    'legal-en.html', 'preview/index.html', 'spare/index.html', '404.html',
+    'legal-en.html', 'terms&notices+contact.html', 'appendix.htm', 'preview/index.html', 'spare/index.html', '404.html',
   ];
   for (const locale of ['', 'en/']) {
     for (const file of artifact) f.write('.git/build/' + locale + file, '<main>Built</main>');
   }
   f.write('.git/build/mentions légales/index.html', '<main>Built</main>');
-  const routes = routesForPreflight(join(f.repo.root, '.git', 'build'), plan);
+  const build = join(f.repo.root, '.git', 'build');
+  const routes = routesForPreflight(build, plan);
   assert.deepEqual(new Set(routes), new Set([
     '/blog/', '/blog/about/', '/blog/one/', '/blog/two/', '/blog/tools/', '/blog/preview/',
     '/blog/tags/collection/', '/blog/legal-fr/', '/blog/legal-en.html', '/blog/mentions%20l%C3%A9gales/',
+    '/blog/terms&notices+contact.html', '/blog/appendix.htm',
     '/blog/en/', '/blog/en/about/', '/blog/en/one/', '/blog/en/two/', '/blog/en/tools/',
     '/blog/en/preview/', '/blog/en/tags/collection/', '/blog/en/legal-fr/', '/blog/en/legal-en.html',
+    '/blog/en/terms&notices+contact.html', '/blog/en/appendix.htm',
   ]));
+
+  const server = createArtifactServer(build).listen(0, '127.0.0.1');
+  t.after(() => {
+    server.close();
+    server.closeAllConnections();
+  });
+  await once(server, 'listening');
+  const address = server.address();
+  assert.ok(address && typeof address === 'object');
+  const origin = 'http://127.0.0.1:' + address.port;
+  const paths = ['/blog/terms&notices+contact.html', '/blog/mentions%20l%C3%A9gales/', '/blog/en/appendix.htm'];
+  for (const route of paths) {
+    const response = await fetch(origin + route);
+    assert.equal(response.status, 200, route);
+    assert.equal(await response.text(), '<main>Built</main>');
+  }
+  const missing = await fetch(origin + '/blog/en/missing/');
+  assert.equal(missing.status, 404);
+
 });
 
 test('invalid intermediate revision does not block a final valid seal', async t => {

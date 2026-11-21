@@ -3,6 +3,7 @@ import {spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {parse} from 'yaml';
+import {requireSuccessfulAudit} from './preflight-check.mts';
 
 type Step = {
   uses?: string;
@@ -73,4 +74,17 @@ test('manual deployment uses the selected SHA and stops if main has advanced', (
       env: {...env, EXPECTED: target, CURRENT_MAIN: current},
     }).status, current === target ? 0 : 1);
   }
+});
+
+test('the preflight requires a completed Lighthouse audit of the exact local route', () => {
+  const url = 'http://127.0.0.1:8123/blog/en/';
+  const success = {finalDisplayedUrl: url, audits: {'http-status-code': {score: 1}}};
+  assert.doesNotThrow(() => requireSuccessfulAudit(url, success));
+  assert.throws(() => requireSuccessfulAudit(url), /Lighthouse could not audit/);
+  assert.throws(() => requireSuccessfulAudit(url, {...success, runtimeError: {message: 'Browser error'}}),
+    /Browser error/);
+  assert.throws(() => requireSuccessfulAudit(url, {...success, audits: {'http-status-code': {score: 0}}}),
+    /Expected a successful response/);
+  assert.throws(() => requireSuccessfulAudit(url, {...success, finalDisplayedUrl: url + 'other/'}),
+    /Expected a successful response/);
 });
