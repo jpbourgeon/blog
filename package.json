@@ -29,7 +29,6 @@
     "chrome-launcher": "1.2.2",
     "lighthouse": "13.6.0",
     "pagefind": "1.5.2",
-    "sirv": "3.0.2",
     "typescript": "5.9.3",
     "yaml": "2.8.3"
   },

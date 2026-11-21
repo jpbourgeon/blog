@@ -1,3 +1,4 @@
+import {createMatcher, encodePath, fileToPath, GlobExcludeDefault} from '@docusaurus/utils';
 import {
   type Document, articlePair, documentPath, locales, normalize, pagePair, readDocument,
   requireThat, sha256, provenance, legacyCapturePath, legacyCapturePattern,
@@ -44,7 +45,9 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
   return location;
 }
 
-const localeRoots = {fr: '/blog/', en: '/blog/en/'};
+const localeRoots = ['/blog/', '/blog/en/'];
+const nativePage = /^src\/pages\/(.+\.[jt]sx?)$/;
+const excludedPage = createMatcher(GlobExcludeDefault);
 const siteInput = /^(?:src\/|static\/|i18n\/|blog\/|scripts\/pagefind|docusaurus\.config\.|package(?:-lock)?\.json$|tsconfig\.json$)/;
 
 export async function plan(target: Snapshot, deployed?: Snapshot) {
@@ -53,8 +56,7 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
 
   const changes = target.repo.changes(target, deployed);
   const classification: string[] = [];
-  const routes = new Set(Object.values(localeRoots));
-  const unchangedEditorial: string[] = [];
+  const routes = new Set<string>();
   const addPair = (pair: {fr: Document; en: Document}) => {
     for (const locale of locales) routes.add(pair[locale].route);
   };
@@ -84,8 +86,6 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
       classification.push(document.visibility === 'unlisted'
         ? 'Unlisted preview: ' + document.key
         : 'Public ' + document.kind + '/' + canonicalSlug(document));
-    } else {
-      for (const locale of locales) unchangedEditorial.push(pair[locale].route);
     }
   }
 
@@ -104,17 +104,24 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
         withdrawn.en.visibility === 'draft' &&
         (previous.kind !== 'page' || locales.every(locale => target.blob(paths[locale]) === undefined)),
         'Exposed content must be withdrawn before deletion: ' + identity);
+      for (const route of localeRoots) routes.add(route);
       classification.push('Withdrawn ' + previous.kind + '/' + canonicalSlug(previous));
     }
+  }
+  for (const {path, status} of changes) {
+    const relative = nativePage.exec(path)?.[1];
+    if (status !== 'A' || !relative || excludedPage(relative)) continue;
+    const suffix = encodePath(fileToPath(relative)).replace(/^\/|\/$/g, '');
+    for (const root of localeRoots) routes.add(suffix ? root + suffix + '/' : root);
   }
   const technical = changes.some(({path}) =>
     siteInput.test(path) && !documentPath(path) && !path.startsWith('src/drafts/'));
   if (technical) {
+    for (const route of localeRoots) routes.add(route);
     const pairs = [...current.values()].filter(({fr}) =>
       fr.source === 'canonical' && fr.visibility !== 'draft');
     const page = pairs.find(({fr}) => fr.kind === 'page');
-    const articles = pairs.filter(({fr}) => fr.kind === 'article');
-    const article = articles.find(({fr}) => fr.visibility === 'public') ?? articles[0];
+    const article = pairs.find(({fr}) => fr.kind === 'article' && fr.visibility === 'public');
     if (page) addPair(page);
     if (article) addPair(article);
   }
@@ -122,6 +129,6 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
   return {
     editorial: classification.length ? classification : ['No public content changes'],
     changes,
-    preflight: {routes: [...routes], unchangedEditorial, scanArtifact: technical || classification.length > 0},
+    preflight: [...routes],
   };
 }
