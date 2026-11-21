@@ -298,7 +298,7 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
   const artifact = [
     'index.html', 'about/index.html', 'one/index.html', 'two/index.html',
     'tools/index.html', 'tags/collection/index.html', 'legal-fr/index.html',
-    'legal-en.html', 'terms&notices+contact.html', 'appendix.htm', 'preview/index.html', 'spare/index.html', '404.html',
+    'legal-en.html', 'terms&notices+contact.html', 'faq#1?.html', 'appendix.htm', 'preview/index.html', 'spare/index.html', '404.html',
   ];
   for (const locale of ['', 'en/']) {
     for (const file of artifact) f.write('.git/build/' + locale + file, '<main>Built</main>');
@@ -309,10 +309,10 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
   assert.deepEqual(new Set(routes), new Set([
     '/blog/', '/blog/about/', '/blog/one/', '/blog/two/', '/blog/tools/', '/blog/preview/',
     '/blog/tags/collection/', '/blog/legal-fr/', '/blog/legal-en.html', '/blog/mentions%20l%C3%A9gales/',
-    '/blog/terms&notices+contact.html', '/blog/appendix.htm',
+    '/blog/terms&notices+contact.html', '/blog/faq%231%3F.html', '/blog/appendix.htm',
     '/blog/en/', '/blog/en/about/', '/blog/en/one/', '/blog/en/two/', '/blog/en/tools/',
     '/blog/en/preview/', '/blog/en/tags/collection/', '/blog/en/legal-fr/', '/blog/en/legal-en.html',
-    '/blog/en/terms&notices+contact.html', '/blog/en/appendix.htm',
+    '/blog/en/terms&notices+contact.html', '/blog/en/faq%231%3F.html', '/blog/en/appendix.htm',
   ]));
 
   const server = createArtifactServer(build).listen(0, '127.0.0.1');
@@ -324,7 +324,10 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
   const address = server.address();
   assert.ok(address && typeof address === 'object');
   const origin = 'http://127.0.0.1:' + address.port;
-  const paths = ['/blog/terms&notices+contact.html', '/blog/mentions%20l%C3%A9gales/', '/blog/en/appendix.htm'];
+  const paths = [
+    '/blog/terms&notices+contact.html', '/blog/mentions%20l%C3%A9gales/',
+    '/blog/en/appendix.htm', '/blog/en/faq%231%3F.html',
+  ];
   for (const route of paths) {
     const response = await fetch(origin + route);
     assert.equal(response.status, 200, route);
