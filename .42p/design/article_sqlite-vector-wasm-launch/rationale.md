@@ -44,16 +44,6 @@ Le [contrat de release][publication] lie la révision intégrée, l'archive qual
 
 En gzip normalisé, sqlite-vector-wasm dépasse SQLite officiel de 6,9 % et occupe 11,3 % de moins que SQLite.ai. Versions, fonctions et frontières d'empaquetage diffèrent. Les tailles portent sur la paire chargeur/WASM de cette observation datée, hors fichiers compagnons, transferts HTTP observés, mémoire et performances. Les fichiers compactés sont des sorties de mesure. Les tailles ne ventilent pas le coût des extensions et ne préjugent pas des prochaines releases.
 
-## Points ouverts
-
-- **Q-sources** — Quels éléments restent à confirmer pour la version citée dans l’article ?
-  - **Exemple et runtime.** Réexécuter l’exemple documenté et vérifier les conditions précises des Workers et des VFS.
-  - **Écosystème et licences.** Vérifier les liens, les capacités attribuées aux projets amont et les notices de l’archive dans le cadre de C-licences.
-  - **Garanties de release.** Rattacher les affirmations de construction, de qualification et de publication aux preuves applicables, dont l’identité de l’archive et l’attestation si elle est citée.
-
-  La comparaison d’empreinte demeure celle des versions mesurées.
-- **Q-diffusion** — L'auteur décidera de la publication de l'article et de l'usage éventuel de chaque relais. La Capture consigne un état de travail et ne vaut pas autorisation d'exposition.
-
 ## Sources et provenance
 
 - **S-decisions — primaire, éditoriale.** Arbitrages de l'auteur en octobre–novembre 2026 et confirmation dans la mission de reprise. Fond, progression V4, proximité des API SQLite, usages embarqués, CAP sourcé, retrait de l'historique sqlite-vec et de la différenciation juridique, garanties et mesure comparative. Les échanges historiques n'ont pas de permalien public.
