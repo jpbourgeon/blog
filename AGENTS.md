@@ -54,10 +54,12 @@ sans rapport spécifique. Conserver les ressources et Captures encore référenc
 Une page n'a pas de preview `unlisted` native : utiliser une branche de revue.
 `unlisted` est accessible publiquement et ne doit pas être indexé.
 
-Le canon d'un contenu est regroupé sous `.42p/design/<identité>/`.
-Pour une page ou un article, l'identité stable est `page_<slug>` ou
-`article_<slug>`, avec `%2F` pour les séparateurs d'un slug imbriqué.
-Une unité système garde son identifiant propre. Créer uniquement les fichiers utiles.
+Le canon d'une unité est regroupé sous `.42p/design/<identité>/`.
+L'identité stable est `article_<slug>` pour un article, `page_<slug>` pour
+une page et `system_<slug>` pour une unité système. Pour les articles et les
+pages, encoder les séparateurs d'un slug imbriqué en `%2F`. Un slug système
+se compose de segments de lettres minuscules ASCII et de chiffres séparés
+par des tirets. Créer uniquement les fichiers utiles.
 
 - `rationale.md` contient la Capture courante.
 - `plan.md` contient le plan de référence et `plan.revision.md` celui d'une

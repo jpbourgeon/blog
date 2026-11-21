@@ -7,9 +7,9 @@ const body = '\n# Café\n\nDeux espaces  \n\n<Example value={1} />\n';
 const fields = `title: "Un café"
 slug: /test
 date: 2026-11-06
-rationale: .42p/design/topic/rationale.md
+rationale: .42p/design/article_topic/rationale.md
 rationaleContext:
-  - .42p/design/context/rationale.md
+  - .42p/design/page_context/rationale.md
 unknown:
   draft: true
   nested: [1, false, "2026-11-06", {other: value}]
@@ -76,19 +76,43 @@ test('ambiguous YAML, lossy values and malformed delimiters fail closed', async 
 
 test('provenance requires a valid sole main Capture and distinct context paths', async () => {
   assert.deepEqual(provenance(await article('')), {main: undefined, context: undefined});
-  assert.equal(provenance(await article(fields)).main, '.42p/design/topic/rationale.md');
-  assert.equal(provenance(await article(fields)).context?.[0], '.42p/design/context/rationale.md');
+  assert.equal(provenance(await article(fields)).main, '.42p/design/article_topic/rationale.md');
+  assert.equal(provenance(await article(fields)).context?.[0], '.42p/design/page_context/rationale.md');
   for (const value of [
-    'rationale: [.42p/design/topic/rationale.md]\n',
+    'rationale: [.42p/design/article_topic/rationale.md]\n',
     'rationale: .42p/design/../rationale.md\n',
-    'rationaleContext: [.42p/design/topic/rationale.md]\n',
-    fields.replace('design/context', 'design/topic'),
-    fields.replace('  - .42p/design/context/rationale.md',
-      '  - .42p/design/context/rationale.md\n  - .42p/design/context/rationale.md'),
+    'rationaleContext: [.42p/design/article_topic/rationale.md]\n',
+    fields.replace('design/page_context', 'design/article_topic'),
+    fields.replace('  - .42p/design/page_context/rationale.md',
+      '  - .42p/design/page_context/rationale.md\n  - .42p/design/page_context/rationale.md'),
   ]) {
     const markdown = await article(value);
     assert.throws(() => provenance(markdown));
   }
+});
+
+test('provenance accepts a canonical system Capture as the main or contextual reference', async () => {
+  const system = '.42p/design/system_editorial-workflow/rationale.md';
+  const main = await article(fields.replace('.42p/design/article_topic/rationale.md', system));
+  assert.equal(provenance(main).main, system);
+  const context = await article(fields.replace('.42p/design/page_context/rationale.md', system));
+  assert.deepEqual(provenance(context).context, [system]);
+});
+
+test('provenance requires a canonical identity for current Capture paths', async () => {
+  for (const identity of ['system-editorial-workflow', 'other_topic', 'article_', 'page_topics%2F',
+    'system_', 'system_Topic', 'system_two--words', 'system_topics%2Fintro']) {
+    const invalid = `.42p/design/${identity}/rationale.md`;
+    const main = await article(fields.replace('.42p/design/article_topic/rationale.md', invalid));
+    const context = await article(fields.replace('.42p/design/page_context/rationale.md', invalid));
+    assert.throws(() => provenance(main), /Invalid rationale in/);
+    assert.throws(() => provenance(context), /Invalid rationaleContext in/);
+  }
+
+  const path = '.42p/rationale-units/system-editorial-workflow/capture.md';
+  const historical = await article(`rationale: ${path}\n`);
+  assert.throws(() => provenance(historical), /Invalid rationale in/);
+  assert.equal(provenance(historical, true).main, path);
 });
 
 test('page draft projects to the native FR/EN page routes without exposure', async () => {

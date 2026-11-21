@@ -374,7 +374,7 @@ test('deployed pages, articles and unlisted previews must be withdrawn before de
 test('a never-deployed draft and its rationale may be deleted directly', async t => {
   const f = fixture(t);
   const paths = articlePair('temporary.md');
-  const capture = '.42p/design/temporary/rationale.md';
+  const capture = '.42p/design/article_temporary/rationale.md';
   f.write(capture, '# Temporary idea\n');
   for (const locale of locales) {
     f.write(paths[locale], '---\ntitle: Temporary\ndraft: true\nrationale: ' + capture + '\n---\n# Working copy\n');
@@ -387,7 +387,7 @@ test('a never-deployed draft and its rationale may be deleted directly', async t
 
 test('a shared rationale cannot be deleted while another document still references it', async t => {
   const f = fixture(t);
-  const capture = '.42p/design/shared/rationale.md';
+  const capture = '.42p/design/system_shared/rationale.md';
   const paths = articlePair('retained.md');
   f.write(capture, '# Shared knowledge\n');
   for (const locale of locales) {
@@ -404,7 +404,7 @@ test('a migrated historical PASS still binds the exact FR/EN content and Capture
   const paths = pagePair('about.md');
   const captures = {
     main: {old: '.42p/rationale-units/page_about/capture.md', current: '.42p/design/page_about/rationale.md'},
-    context: {old: '.42p/rationale-units/context/capture.md', current: '.42p/design/context/rationale.md'},
+    context: {old: '.42p/rationale-units/page_context/capture.md', current: '.42p/design/page_context/rationale.md'},
   };
   const fields = (layout: 'old' | 'current') => ({
     title: 'About',
@@ -445,9 +445,9 @@ test('a migrated historical PASS still binds the exact FR/EN content and Capture
   f.write(paths.en, '---\n' + stringify(fields('current')) + '---\n' + body + 'Changed\n');
   await assert.rejects(plan(f.commit(), deployed), /Published content differs from verified target/);
 
-  f.write('.42p/design/other/rationale.md', '# Other\n');
+  f.write('.42p/design/page_other/rationale.md', '# Other\n');
   for (const locale of locales) f.write(paths[locale], '---\n' +
-    stringify({...fields('current'), rationaleContext: ['.42p/design/other/rationale.md']}) + '---\n' + body);
+    stringify({...fields('current'), rationaleContext: ['.42p/design/page_other/rationale.md']}) + '---\n' + body);
   await assert.rejects(plan(f.commit(), deployed), /Published content differs from verified target/);
 });
 

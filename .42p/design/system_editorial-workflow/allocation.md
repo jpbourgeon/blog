@@ -1,4 +1,4 @@
-# Allocation — system-editorial-workflow
+# Allocation — system_editorial-workflow
 
 ## Source et portée
 
