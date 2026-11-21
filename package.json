@@ -7,7 +7,8 @@
     "serve": "docusaurus serve",
     "typecheck": "tsc --noEmit",
     "publication": "node --disable-warning=ExperimentalWarning scripts/publication/cli.mts",
-    "test:publication": "node --disable-warning=ExperimentalWarning --test scripts/publication/*.test.mts"
+    "test:publication": "node --disable-warning=ExperimentalWarning --test scripts/publication/*.test.mts",
+    "preflight": "node scripts/publication/preflight.mts"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
@@ -25,9 +26,11 @@
     "@docusaurus/types": "3.10.2",
     "@docusaurus/utils": "3.10.2",
     "@types/react": "19.2.17",
+    "chrome-launcher": "1.2.2",
+    "lighthouse": "13.6.0",
+    "pagefind": "1.5.2",
     "typescript": "5.9.3",
-    "yaml": "2.8.3",
-    "pagefind": "1.5.2"
+    "yaml": "2.8.3"
   },
   "engines": {
     "node": ">=26"

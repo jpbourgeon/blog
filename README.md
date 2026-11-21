@@ -51,11 +51,24 @@ Sur PR et push, GitHub Actions vérifie seulement le code et le build.
 
 La publication reste **manuelle**, depuis **Actions → Pages → Run workflow**
 sur `main` avec son SHA complet. Le mode `inspect` vérifie le commit sans
-déployer ; `publish` applique le contrôle indépendant puis déploie exactement
-l'artefact construit. Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
+déployer. Pour préparer l'autorisation, consulte le relevé du gate dans le
+run `inspect` du SHA cible. Il indique le dernier déploiement, les transitions
+éditoriales et le différentiel complet des fichiers suivis, y compris le
+code, la configuration et les ressources statiques.
+
+Les deux modes exécutent le gate, le build bilingue avec Pagefind et le
+préflight Lighthouse local sur l'artefact servi par Docusaurus. Le gate cible
+les routes FR/EN des contenus éditoriaux et des pages React ajoutés ou
+modifiés. Un changement de surcharge React localisée cible sa route EN,
+y compris lorsque sa suppression rétablit la page commune. Un retrait ajoute
+les accueils FR/EN. Un changement technique du site ajoute les accueils et un
+échantillon de pages et d'articles. Sans route affectée, le préflight journalise
+la sélection vide. Un audit inexécutable, une catégorie sans résultat, une
+redirection ou une réponse HTTP en échec bloque le workflow. Les quatre scores
+Lighthouse restent diagnostiques.
+Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
 changements publics depuis le dernier déploiement**, qu'ils proviennent d'une
-ou de plusieurs PR. Ni un PASS éditorial ni un build réussi n'accordent
-cette approbation.
+ou de plusieurs PR. Ce mode déploie l'artefact audité.
 
 `npm run publication -- prepare <fr> <en> [<baseline-fr> <baseline-en>]`
 calcule les identités du contenu candidat et de sa cible. Le compte rendu

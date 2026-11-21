@@ -1,5 +1,6 @@
+import {createMatcher, encodePath, fileToPath, GlobExcludeDefault} from '@docusaurus/utils';
 import {
-  type Document, articlePair, locales, normalize, pagePair, readDocument,
+  type Document, articlePair, documentPath, locales, normalize, pagePair, readDocument,
   requireThat, sha256, provenance, legacyCapturePath, legacyCapturePattern,
 } from './content.mts';
 import {type Snapshot} from './git.mts';
@@ -44,11 +45,22 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
   return location;
 }
 
+const englishRoot = '/blog/en/';
+const localeRoots = ['/blog/', englishRoot];
+const nativePage = /^(?:src\/pages|(?<localized>i18n\/en\/docusaurus-plugin-content-pages))\/(?<relative>.+\.[jt]sx?)$/;
+const excludedPage = createMatcher(GlobExcludeDefault);
+const siteInput = /^(?:src\/|static\/|i18n\/|blog\/|scripts\/pagefind|docusaurus\.config\.|package(?:-lock)?\.json$|tsconfig\.json$)/;
+
 export async function plan(target: Snapshot, deployed?: Snapshot) {
   const current = await inventory(target);
   const baseline = deployed ? await inventory(deployed, undefined, true) : undefined;
 
+  const changes = target.repo.changes(target, deployed);
   const classification: string[] = [];
+  const routes = new Set<string>();
+  const addPair = (pair: {fr: Document; en: Document}) => {
+    for (const locale of locales) routes.add(pair[locale].route);
+  };
   const exposed = new Set<string>();
   for (const [identity, pair] of current) {
     const document = pair.fr;
@@ -71,6 +83,7 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     }
 
     if (!deployed || locales.some(locale => deployed.blob(paths[locale]) !== target.blob(paths[locale]))) {
+      addPair(pair);
       classification.push(document.visibility === 'unlisted'
         ? 'Unlisted preview: ' + document.key
         : 'Public ' + document.kind + '/' + canonicalSlug(document));
@@ -92,8 +105,35 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
         withdrawn.en.visibility === 'draft' &&
         (previous.kind !== 'page' || locales.every(locale => target.blob(paths[locale]) === undefined)),
         'Exposed content must be withdrawn before deletion: ' + identity);
+      for (const route of localeRoots) routes.add(route);
       classification.push('Withdrawn ' + previous.kind + '/' + canonicalSlug(previous));
     }
   }
-  return classification.length ? classification : ['No public content changes'];
+  for (const {path, status} of changes) {
+    const page = nativePage.exec(path)?.groups;
+    if (!page || excludedPage(page.relative)) continue;
+    const {localized, relative} = page;
+    // Docusaurus only serves overrides for pages discovered in src/pages.
+    if (localized && !target.blob('src/pages/' + relative)) continue;
+    if (!localized && status !== 'A' && status !== 'M') continue;
+    const suffix = encodePath(fileToPath(relative)).replace(/^\/|\/$/g, '');
+    for (const root of localized ? [englishRoot] : localeRoots) routes.add(suffix ? root + suffix + '/' : root);
+  }
+  const technical = changes.some(({path}) =>
+    siteInput.test(path) && !documentPath(path) && !path.startsWith('src/drafts/'));
+  if (technical) {
+    for (const route of localeRoots) routes.add(route);
+    const pairs = [...current.values()].filter(({fr}) =>
+      fr.source === 'canonical' && fr.visibility !== 'draft');
+    const page = pairs.find(({fr}) => fr.kind === 'page');
+    const article = pairs.find(({fr}) => fr.kind === 'article' && fr.visibility === 'public');
+    if (page) addPair(page);
+    if (article) addPair(article);
+  }
+
+  return {
+    editorial: classification.length ? classification : ['No public content changes'],
+    changes,
+    preflight: [...routes],
+  };
 }
