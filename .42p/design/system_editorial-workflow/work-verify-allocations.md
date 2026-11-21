@@ -8,7 +8,7 @@ Travailler dans un **contexte distinct de celui de l'agent exécutant**. Ne cons
 ## 1. Établir le périmètre et les sources
 
 1. Lire la PR, son diff complet contre sa base, son historique, l'arbre du commit de tête et `AGENTS.md`. Identifier le **SHA exact du commit examiné** et la base de comparaison ; relever tout changement intervenant durant la revue.
-2. Lire **intégralement** la Capture `system-editorial-workflow` et son Allocation, en retrouvant leur emplacement réel dans le commit examiné : historiquement `.42p/rationale-units/system-editorial-workflow/{capture,allocation}.md`, ou `.42p/design/system-editorial-workflow/{rationale,allocation}.md` après migration. Ne pas inférer le contenu depuis le prompt ou l'ancien chemin.
+2. Lire **intégralement** la Capture `system_editorial-workflow` et son Allocation dans le commit examiné. Pour l'état courant, ouvrir [rationale.md](rationale.md) et [allocation.md](allocation.md). Les états de la PR #27 utilisent `.42p/design/system-editorial-workflow/{rationale,allocation}.md` après migration et `.42p/rationale-units/system-editorial-workflow/{capture,allocation}.md` avant migration. Ne pas inférer le contenu depuis le prompt ou l'ancien chemin.
 3. Pour chaque attribution, consulter dans la Capture le passage complet — contraintes, conditions, exceptions, frontières et dépendances, **y compris la prose hors handles**. Lire les skills, standards, règles de publication, scripts, tests, fichiers déplacés et références effectivement touchés. Consulter au besoin les versions antérieures pour vérifier les migrations.
 4. Si Capture, Allocation, décisions de l'auteur ou état du dépôt se contredisent, **ne pas arbitrer par préférence de l'agent**. Exposer le conflit et son incidence sur le verdict.
 
