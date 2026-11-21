@@ -4,10 +4,13 @@ import {createServer} from 'node:http';
 import {launch} from 'chrome-launcher';
 import lighthouse from 'lighthouse';
 import sirv from 'sirv';
+import {base, routesForPreflight} from './preflight-routes.mts';
 
-const base = '/blog/';
-const routes: unknown = JSON.parse(process.env.PREFLIGHT_ROUTES ?? 'null');
-assert(Array.isArray(routes) && routes.length > 0, 'Missing preflight routes from the publication gate');
+const plan = JSON.parse(process.env.PREFLIGHT_PLAN ?? 'null');
+assert(plan && Array.isArray(plan.routes) && plan.routes.length > 0 &&
+  Array.isArray(plan.unchangedEditorial) && typeof plan.scanArtifact === 'boolean',
+'Missing preflight plan from the publication gate');
+const routes = routesForPreflight('build', plan);
 for (const route of routes) {
   assert(typeof route === 'string' && route.startsWith(base) &&
     new URL(route, 'http://127.0.0.1').pathname === route, 'Invalid preflight route: ' + route);

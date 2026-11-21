@@ -7,6 +7,8 @@ import {parse} from 'yaml';
 type Step = {
   uses?: string;
   name?: string;
+  id?: string;
+  env?: Record<string, string>;
   run?: string;
   if?: string;
   with?: Record<string, string>;
@@ -39,6 +41,8 @@ test('only manual publish can upload and deploy the artifact that passed the pre
   assert.equal(gate.steps[upload].with?.path, 'build');
   assert.ok(!gate['continue-on-error'] && !gate.steps[preflight]['continue-on-error']);
   assert.equal(gate.steps[preflight].if, undefined);
+  assert.equal(gate.steps[preflight].env?.PREFLIGHT_PLAN,
+    '$' + '{{ steps.' + gate.steps[check].id + '.outputs.preflight }}');
 });
 
 test('manual deployment uses the selected SHA and stops if main has advanced', () => {

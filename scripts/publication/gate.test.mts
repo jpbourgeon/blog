@@ -10,6 +10,7 @@ import {pageDraftPair, pagePair, articlePair, type Pair, locales, standards, nor
 import {Repository} from './git.mts';
 import {identities, matchReview, readReview, reviewPath, revisionReviewPath, type Review} from './review.mts';
 import {plan as publicationPlan} from './gate.mts';
+import {routesForPreflight} from './preflight-routes.mts';
 
 async function plan(...args: Parameters<typeof publicationPlan>) {
   return (await publicationPlan(...args)).editorial;
@@ -256,6 +257,8 @@ test('a page with JSX requires a PASS for the exact reviewed source', async t =>
 test('the manual gate supplies FR/EN routes for all new pages and representative affected pages', async t => {
   const f = fixture(t);
   f.write('src/pages/retired.tsx', 'export default function Page() {}');
+  f.writePair(articlePair('preview.md'), 'Deployed preview', 'unlisted: true\n');
+  f.writePair(articlePair('spare.md'), 'Another deployed preview', 'unlisted: true\n');
   const deployed = f.commit();
   const pages = [pageDraftPair('one.md'), pageDraftPair('two.md')];
   for (const paths of pages) f.writePair(paths, 'Independent');
@@ -269,10 +272,17 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
       f.remove(paths[locale]);
     }
   }
+  const published = f.commit();
+  const editorialOnly = await publicationPlan(published, deployed);
+  assert.ok(editorialOnly.preflight.scanArtifact);
+  assert.ok(!editorialOnly.preflight.routes.includes('/blog/preview/'));
+
   f.write('src/pages/tools/index.tsx', 'export default function Page() {}');
   f.write('src/pages/_partial.tsx', 'export default function Page() {}');
   f.write('src/css/custom.css', 'main { margin: auto; }');
   f.remove('src/pages/retired.tsx');
+  f.write('static/legal-fr/index.html', '<main>Légal</main>');
+  f.write('static/legal-en.html', '<main>Legal</main>');
   f.commit();
 
   const output = join(f.repo.root, '.git', 'gate-output');
@@ -283,10 +293,22 @@ test('the manual gate supplies FR/EN routes for all new pages and representative
   });
   assert.match(report, /Public page\/one/);
   assert.match(report, /Public page\/two/);
-  const routes = JSON.parse(readFileSync(output, 'utf8').trim().replace(/^routes=/, ''));
+  const plan = JSON.parse(readFileSync(output, 'utf8').trim().replace(/^preflight=/, ''));
+  const artifact = [
+    'index.html', 'about/index.html', 'one/index.html', 'two/index.html',
+    'tools/index.html', 'tags/collection/index.html', 'legal-fr/index.html',
+    'legal-en.html', 'preview/index.html', 'spare/index.html', '404.html',
+  ];
+  for (const locale of ['', 'en/']) {
+    for (const file of artifact) f.write('.git/build/' + locale + file, '<main>Built</main>');
+  }
+  f.write('.git/build/mentions légales/index.html', '<main>Built</main>');
+  const routes = routesForPreflight(join(f.repo.root, '.git', 'build'), plan);
   assert.deepEqual(new Set(routes), new Set([
-    '/blog/', '/blog/about/', '/blog/one/', '/blog/two/', '/blog/tools/',
+    '/blog/', '/blog/about/', '/blog/one/', '/blog/two/', '/blog/tools/', '/blog/preview/',
+    '/blog/tags/collection/', '/blog/legal-fr/', '/blog/legal-en.html', '/blog/mentions%20l%C3%A9gales/',
     '/blog/en/', '/blog/en/about/', '/blog/en/one/', '/blog/en/two/', '/blog/en/tools/',
+    '/blog/en/preview/', '/blog/en/tags/collection/', '/blog/en/legal-fr/', '/blog/en/legal-en.html',
   ]));
 });
 

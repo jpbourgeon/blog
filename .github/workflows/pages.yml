@@ -86,7 +86,7 @@ jobs:
       - run: npm run build
       - name: Audit the built site locally with Lighthouse
         env:
-          PREFLIGHT_ROUTES: ${{ steps.review.outputs.routes }}
+          PREFLIGHT_PLAN: ${{ steps.review.outputs.preflight }}
         run: npm run preflight
       - name: Upload verified site
         if: inputs.mode == 'publish'

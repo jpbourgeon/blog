@@ -58,7 +58,9 @@ code, la configuration et les ressources statiques.
 
 Les deux modes exécutent le gate, le build bilingue avec Pagefind et le
 préflight Lighthouse local. Celui-ci audite les nouvelles pages, les contenus
-modifiés et les routes représentatives FR/EN. L'échec de l'audit ou un statut
+modifiés et les routes représentatives FR/EN. Lorsqu'un changement touche le
+site, il découvre aussi dans l'artefact les pages générées et les pages HTML
+statiques. L'échec de l'audit ou un statut
 HTTP invalide bloque le workflow. Les scores restent diagnostiques.
 Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
 changements publics depuis le dernier déploiement**, qu'ils proviennent d'une

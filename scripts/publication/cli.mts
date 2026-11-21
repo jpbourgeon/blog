@@ -46,13 +46,13 @@ if (command === 'prepare') {
 } else if (command === 'gate') {
   requireThat(args.length === 1, 'gate <deployed-sha|none>');
   const deployed = args[0] === 'none' ? undefined : repo.tree(args[0]);
-  const {editorial, changes, routes} = await plan(tree, deployed);
+  const {editorial, changes, preflight} = await plan(tree, deployed);
   console.log(`Publication review: ${deployed?.commit ?? 'none'} -> ${head}`);
   console.log(editorial.join('\n'));
   console.log('Tracked changes (including site code, configuration and static assets):');
   for (const {status, path} of changes) console.log(status + ' ' + JSON.stringify(path));
   if (!changes.length) console.log('No tracked changes');
   if (process.env.GITHUB_OUTPUT) {
-    appendFileSync(process.env.GITHUB_OUTPUT, 'routes=' + JSON.stringify(routes) + '\n');
+    appendFileSync(process.env.GITHUB_OUTPUT, 'preflight=' + JSON.stringify(preflight) + '\n');
   }
 } else throw new Error('Expected prepare, check, project or gate');
