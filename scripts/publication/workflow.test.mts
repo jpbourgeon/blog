@@ -78,7 +78,13 @@ test('manual deployment uses the selected SHA and stops if main has advanced', (
 
 test('the preflight requires a completed Lighthouse audit of the exact local route', () => {
   const url = 'http://127.0.0.1:8123/blog/en/';
-  const success = {finalDisplayedUrl: url, audits: {'http-status-code': {score: 1}}};
+  const categories = {
+    performance: {score: 0},
+    accessibility: {score: 0.8},
+    'best-practices': {score: 1},
+    seo: {score: 0.9},
+  };
+  const success = {finalDisplayedUrl: url, audits: {'http-status-code': {score: 1}}, categories};
   assert.doesNotThrow(() => requireSuccessfulAudit(url, success));
   assert.throws(() => requireSuccessfulAudit(url), /Lighthouse could not audit/);
   assert.throws(() => requireSuccessfulAudit(url, {...success, runtimeError: {message: 'Browser error'}}),
@@ -87,4 +93,8 @@ test('the preflight requires a completed Lighthouse audit of the exact local rou
     /Expected a successful response/);
   assert.throws(() => requireSuccessfulAudit(url, {...success, finalDisplayedUrl: url + 'other/'}),
     /Expected a successful response/);
+  assert.throws(() => requireSuccessfulAudit(url, {...success, categories: {...categories, performance: {score: null}}}),
+    /Lighthouse did not complete performance/);
+  assert.throws(() => requireSuccessfulAudit(url, {...success, categories: {}}),
+    /Lighthouse did not complete performance/);
 });

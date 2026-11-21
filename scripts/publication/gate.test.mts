@@ -144,6 +144,8 @@ test('a page revision with a shared Capture preserves the public PASS until prom
 
   const sealed = f.repo.tree(f.repo.text('rev-parse', 'HEAD'));
   const promotion = JSON.parse(publication(f.repo, 'project', prepared.report));
+  f.write(canonical.fr, deployed.read(canonical.fr).toString('utf8').replace('Public version', 'Unverified interim'));
+  await assert.rejects(plan(f.commit(), deployed), /Published content differs from verified target/);
   for (const {path, content} of promotion.write) f.write(path, content);
   for (const path of promotion.delete) f.remove(path);
   const promoted = f.commit();
@@ -218,9 +220,14 @@ test('the exact FR/EN Markdown/MDX projection requires an applicable PASS', asyn
     await assert.rejects(plan(f.commit(), published), /Published content differs from verified target/);
     f.write(path, bytes);
   }
+
+  f.remove(reviewPath(data.content));
+  const missingPass = f.commit();
+  for (const {path} of Object.values(projected)) assert.equal(missingPass.blob(path), published.blob(path));
+  await assert.rejects(plan(missingPass, published), /Missing .*design\/page_profile\/verification\.md/);
 });
 
-test('the gate emits new FR/EN routes and samples the site only for technical changes', async t => {
+test('the gate emits new and changed FR/EN routes and samples the site for technical changes', async t => {
   const f = fixture(t);
   const article = articlePair('reference.md');
   f.writePair(article, 'Published article');
@@ -228,6 +235,7 @@ test('the gate emits new FR/EN routes and samples the site only for technical ch
   f.report({...data, result: 'PASS'});
   for (const {path, bytes} of Object.values(projected)) f.write(path, bytes);
   f.writePair(articlePair('preview.md'), 'Unchanged preview', 'unlisted: true\n');
+  f.write('src/pages/search.tsx', 'export default function Search() { return null; }');
   const deployed = f.commit();
   assert.deepEqual((await publicationPlan(deployed, deployed)).preflight, []);
 
@@ -249,7 +257,7 @@ test('the gate emits new FR/EN routes and samples the site only for technical ch
   f.write('src/css/custom.css', 'main { margin: auto; }');
   f.write('src/pages/tools/index.tsx', 'export default function Page() {}');
   f.write('src/pages/_partial.tsx', 'export default function Partial() {}');
-  f.commit();
+  const technical = f.commit();
   const output = join(f.repo.root, '.git', 'gate-output');
   execFileSync(process.execPath, [publicationCli, 'gate', deployed.commit], {
     cwd: f.repo.root,
@@ -259,6 +267,13 @@ test('the gate emits new FR/EN routes and samples the site only for technical ch
   assert.match(record, /^preflight=/);
   assert.deepEqual(new Set(JSON.parse(record.slice('preflight='.length))), new Set([
     ...newRoutes, '/blog/tools/', '/blog/en/tools/',
+    '/blog/', '/blog/en/', '/blog/about/', '/blog/en/about/', '/blog/reference/', '/blog/en/reference/',
+  ]));
+
+  f.write('src/pages/search.tsx', 'export default function Search() { return "Search"; }');
+  const modifiedPage = await publicationPlan(f.commit(), technical);
+  assert.deepEqual(new Set(modifiedPage.preflight), new Set([
+    '/blog/search/', '/blog/en/search/',
     '/blog/', '/blog/en/', '/blog/about/', '/blog/en/about/', '/blog/reference/', '/blog/en/reference/',
   ]));
 });

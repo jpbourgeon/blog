@@ -5,7 +5,7 @@ import {setTimeout as delay} from 'node:timers/promises';
 import {fileURLToPath} from 'node:url';
 import {launch} from 'chrome-launcher';
 import lighthouse from 'lighthouse';
-import {requireSuccessfulAudit} from './preflight-check.mts';
+import {auditCategories, requireSuccessfulAudit} from './preflight-check.mts';
 
 const host = '127.0.0.1';
 const port = '8123';
@@ -56,7 +56,7 @@ try {
       const result = await lighthouse(url, {
         port: chrome.port,
         logLevel: 'error',
-        onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
+        onlyCategories: auditCategories,
       });
       const audit = result?.lhr;
       requireSuccessfulAudit(url, audit);

@@ -110,7 +110,7 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
   }
   for (const {path, status} of changes) {
     const relative = nativePage.exec(path)?.[1];
-    if (status !== 'A' || !relative || excludedPage(relative)) continue;
+    if ((status !== 'A' && status !== 'M') || !relative || excludedPage(relative)) continue;
     const suffix = encodePath(fileToPath(relative)).replace(/^\/|\/$/g, '');
     for (const root of localeRoots) routes.add(suffix ? root + suffix + '/' : root);
   }
