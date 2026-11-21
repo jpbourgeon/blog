@@ -22,9 +22,11 @@ Présenter la composition ciblée sans revendication d'exclusivité sur SQLite/W
 
 ## Exemple d'ouverture
 
-Pour l’ouverture « aussi simple que SQLite », montrer une véritable recherche de voisins en mémoire. Assembler l’[initialisation OO1][usage] et la [requête Float32][usage-l2] du guide figé, avec les fichiers du runtime servis sous `/sqlite/`, puis fermer la connexion.
+Pour l’ouverture « aussi simple que SQLite », montrer un cas concret : une application de dessin recherche, dans sa palette locale, les couleurs numériquement les plus proches d’une couleur choisie. Chaque couleur est représentée par un vecteur Float32 à trois composantes RGB : rouge corail `[230,57,70]`, rouge profond `[214,40,40]` et bleu acier `[69,123,157]`. La recherche porte sur `[220,50,60]` et classe les couleurs par distance euclidienne L2 : corail, rouge profond, puis bleu acier.
 
-Expliquer les trois opérations SQL. `vector_as_f32()` encode `[1,0]` et `[0,1]` en BLOB. `vector_init()` associe la colonne au type, à la dimension et à la métrique pour cette connexion, après l’enregistrement automatique de l’extension. `vector_full_scan()` effectue le balayage L2 exact pour la requête `[1,0]`. Résultat attendu dans l’ordre des distances : ligne 1 à 0, ligne 2 à √2 (environ 1,414214). La démonstration porte sur deux vecteurs numériques en mémoire, sans production d’embeddings, persistance ni mesure des performances.
+L'exemple utilise une table SQLite en mémoire contenant un nom de couleur et son vecteur. Montrer l'initialisation [SQLite OO1][usage], l'encodage avec `vector_as_f32()`, l'association de la colonne avec `vector_init()` (`type=FLOAT32,dimension=3,distance=L2`), puis la recherche avec `vector_full_scan()` comme dans le [guide Float32][usage-l2]. Les fichiers du runtime sont servis sous `/sqlite/` et la connexion est fermée à la fin. Un code bref et commenté doit suffire à rendre la requête et son résultat compréhensibles.
+
+L’exemple démontre une proximité numérique, pas une recherche sémantique ni une mesure fidèle à la perception humaine des couleurs : RGB/L2 est une simplification pédagogique, non un choix recommandé pour la colorimétrie exigeante. Aucune génération d’embeddings, synchronisation, persistance ou mesure de performances n'est requise.
 
 ## Garanties à documenter
 
