@@ -59,11 +59,13 @@ code, la configuration et les ressources statiques.
 Les deux modes exécutent le gate, le build bilingue avec Pagefind et le
 préflight Lighthouse local sur l'artefact servi par Docusaurus. Le gate cible
 les routes FR/EN des contenus éditoriaux et des pages React ajoutés ou
-modifiés. Un retrait ajoute les accueils FR/EN. Un changement technique du
-site ajoute les accueils et un échantillon de pages et d'articles. Sans route
-affectée, le préflight journalise la sélection vide. Un audit inexécutable,
-une catégorie sans résultat, une redirection ou une réponse HTTP en échec
-bloque le workflow. Les quatre scores Lighthouse restent diagnostiques.
+modifiés. Un changement de surcharge React localisée cible sa route EN,
+y compris lorsque sa suppression rétablit la page commune. Un retrait ajoute
+les accueils FR/EN. Un changement technique du site ajoute les accueils et un
+échantillon de pages et d'articles. Sans route affectée, le préflight journalise
+la sélection vide. Un audit inexécutable, une catégorie sans résultat, une
+redirection ou une réponse HTTP en échec bloque le workflow. Les quatre scores
+Lighthouse restent diagnostiques.
 Ne déclenche `publish` qu'après approbation explicite de **l'ensemble des
 changements publics depuis le dernier déploiement**, qu'ils proviennent d'une
 ou de plusieurs PR. Ce mode déploie l'artefact audité.

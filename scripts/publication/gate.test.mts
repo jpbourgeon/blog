@@ -271,11 +271,24 @@ test('the gate emits new and changed FR/EN routes and samples the site for techn
   ]));
 
   f.write('src/pages/search.tsx', 'export default function Search() { return "Search"; }');
-  const modifiedPage = await publicationPlan(f.commit(), technical);
-  assert.deepEqual(new Set(modifiedPage.preflight), new Set([
-    '/blog/search/', '/blog/en/search/',
-    '/blog/', '/blog/en/', '/blog/about/', '/blog/en/about/', '/blog/reference/', '/blog/en/reference/',
+  const shared = f.commit();
+  const sampleRoutes = ['/blog/', '/blog/en/', '/blog/about/', '/blog/en/about/',
+    '/blog/reference/', '/blog/en/reference/'];
+  assert.deepEqual(new Set((await publicationPlan(shared, technical)).preflight), new Set([
+    ...sampleRoutes, '/blog/search/', '/blog/en/search/',
   ]));
+
+  const override = 'i18n/en/docusaurus-plugin-content-pages/search.tsx';
+  const englishRoutes = new Set([...sampleRoutes, '/blog/en/search/']);
+  f.write(override, 'export default function Search() { return "English search"; }');
+  f.write('i18n/en/docusaurus-plugin-content-pages/orphan.tsx', 'export default function Orphan() {}');
+  const added = f.commit();
+  assert.deepEqual(new Set((await publicationPlan(added, shared)).preflight), englishRoutes);
+  f.write(override, 'export default function Search() { return "Updated English search"; }');
+  const updated = f.commit();
+  assert.deepEqual(new Set((await publicationPlan(updated, added)).preflight), englishRoutes);
+  f.remove(override);
+  assert.deepEqual(new Set((await publicationPlan(f.commit(), updated)).preflight), englishRoutes);
 });
 
 test('a changed standard invalidates a candidate seal while preserving the public PASS', async t => {

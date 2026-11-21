@@ -45,8 +45,9 @@ async function verifyPublished(target: Snapshot, published: Document, pair: {fr:
   return location;
 }
 
-const localeRoots = ['/blog/', '/blog/en/'];
-const nativePage = /^src\/pages\/(.+\.[jt]sx?)$/;
+const englishRoot = '/blog/en/';
+const localeRoots = ['/blog/', englishRoot];
+const nativePage = /^(?:src\/pages|(?<localized>i18n\/en\/docusaurus-plugin-content-pages))\/(?<relative>.+\.[jt]sx?)$/;
 const excludedPage = createMatcher(GlobExcludeDefault);
 const siteInput = /^(?:src\/|static\/|i18n\/|blog\/|scripts\/pagefind|docusaurus\.config\.|package(?:-lock)?\.json$|tsconfig\.json$)/;
 
@@ -109,10 +110,14 @@ export async function plan(target: Snapshot, deployed?: Snapshot) {
     }
   }
   for (const {path, status} of changes) {
-    const relative = nativePage.exec(path)?.[1];
-    if ((status !== 'A' && status !== 'M') || !relative || excludedPage(relative)) continue;
+    const page = nativePage.exec(path)?.groups;
+    if (!page || excludedPage(page.relative)) continue;
+    const {localized, relative} = page;
+    // Docusaurus only serves overrides for pages discovered in src/pages.
+    if (localized && !target.blob('src/pages/' + relative)) continue;
+    if (!localized && status !== 'A' && status !== 'M') continue;
     const suffix = encodePath(fileToPath(relative)).replace(/^\/|\/$/g, '');
-    for (const root of localeRoots) routes.add(suffix ? root + suffix + '/' : root);
+    for (const root of localized ? [englishRoot] : localeRoots) routes.add(suffix ? root + suffix + '/' : root);
   }
   const technical = changes.some(({path}) =>
     siteInput.test(path) && !documentPath(path) && !path.startsWith('src/drafts/'));
