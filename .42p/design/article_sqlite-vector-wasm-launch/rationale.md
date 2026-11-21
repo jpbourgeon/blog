@@ -22,25 +22,9 @@ Présenter la composition ciblée sans revendication d'exclusivité sur SQLite/W
 
 ## Exemple d'ouverture
 
-Pour l'ouverture « aussi simple que SQLite », montrer une véritable recherche de voisins. Assembler l'initialisation et la requête Float32 du [guide d'usage][usage], avec les fichiers du runtime servis ensemble sous `/sqlite/`. Les lignes de requête reprennent le guide.
+Pour l’ouverture « aussi simple que SQLite », montrer une véritable recherche de voisins en mémoire. Assembler l’[initialisation OO1][usage] et la [requête Float32][usage-l2] du guide figé, avec les fichiers du runtime servis sous `/sqlite/`, puis fermer la connexion.
 
-```js
-import sqlite3InitModule from '/sqlite/sqlite3.mjs';
-const sqlite3 = await sqlite3InitModule();
-const db = new sqlite3.oo1.DB(':memory:');
-
-db.exec('CREATE TABLE items(embedding BLOB)');
-db.exec("INSERT INTO items(rowid, embedding) VALUES(1, vector_as_f32('[1,0]')), (2, vector_as_f32('[0,1]'))");
-db.exec("SELECT vector_init('items', 'embedding', 'type=FLOAT32,dimension=2,distance=L2')");
-const neighbors = db.selectArrays(
-  "SELECT rowid, distance FROM vector_full_scan('items', 'embedding', '[1,0]', 2) ORDER BY distance"
-);
-console.log(neighbors);
-// [[1, 0], [2, approximately 1.414214]]
-db.close();
-```
-
-`vector_as_f32()` encode les deux vecteurs en BLOB. `vector_init()` associe la colonne au type, à la dimension et à la métrique sur cette connexion, après l'enregistrement automatique de l'extension. `vector_full_scan()` calcule les distances L2 à `[1,0]` par balayage exact. Les voisins sont la ligne 1 à distance 0 et la ligne 2 à distance √2. La démonstration porte sur deux vecteurs numériques en mémoire, sans production d'embeddings, persistance ni mesure des performances.
+Expliquer les trois opérations SQL. `vector_as_f32()` encode `[1,0]` et `[0,1]` en BLOB. `vector_init()` associe la colonne au type, à la dimension et à la métrique pour cette connexion, après l’enregistrement automatique de l’extension. `vector_full_scan()` effectue le balayage L2 exact pour la requête `[1,0]`. Résultat attendu dans l’ordre des distances : ligne 1 à 0, ligne 2 à √2 (environ 1,414214). La démonstration porte sur deux vecteurs numériques en mémoire, sans production d’embeddings, persistance ni mesure des performances.
 
 ## Garanties à documenter
 
@@ -62,7 +46,12 @@ En gzip normalisé, sqlite-vector-wasm dépasse SQLite officiel de 6,9 % et occu
 
 ## Points ouverts
 
-- **Q-sources** — Pour la version retenue dans l'article, exécuter à nouveau l'exemple documenté et vérifier les liens, les capacités attribuées aux projets amont, les conditions précises des Workers/VFS et les notices de l'archive dans le cadre de C-licences. Rattacher les affirmations de construction, qualification et publication à leurs preuves applicables, notamment l'identité de l'archive et l'attestation si elle est citée. La comparaison d'empreinte demeure celle des versions mesurées.
+- **Q-sources** — Quels éléments restent à confirmer pour la version citée dans l’article ?
+  - **Exemple et runtime.** Réexécuter l’exemple documenté et vérifier les conditions précises des Workers et des VFS.
+  - **Écosystème et licences.** Vérifier les liens, les capacités attribuées aux projets amont et les notices de l’archive dans le cadre de C-licences.
+  - **Garanties de release.** Rattacher les affirmations de construction, de qualification et de publication aux preuves applicables, dont l’identité de l’archive et l’attestation si elle est citée.
+
+  La comparaison d’empreinte demeure celle des versions mesurées.
 - **Q-diffusion** — L'auteur décidera de la publication de l'article et de l'usage éventuel de chaque relais. La Capture consigne un état de travail et ne vaut pas autorisation d'exposition.
 
 ## Sources et provenance
@@ -76,6 +65,7 @@ En gzip normalisé, sqlite-vector-wasm dépasse SQLite officiel de 6,9 % et occu
 
 [prior]: https://github.com/jpbourgeon/blog/blob/935bdb4134d4a31bbe90942015675ad670be6b08/.42p/design/article_sqlite-vector-wasm-launch/rationale.md
 [usage]: https://github.com/at-rama/sqlite-vector-wasm/blob/8dfeda79fcd14e2f43afa34f31ee53420a74ce24/docs/usage.md#host-and-initialize
+[usage-l2]: https://github.com/at-rama/sqlite-vector-wasm/blob/8dfeda79fcd14e2f43afa34f31ee53420a74ce24/docs/usage.md#float32-nearest-neighbors
 [inputs]: https://github.com/at-rama/sqlite-vector-wasm/blob/8dfeda79fcd14e2f43afa34f31ee53420a74ce24/docs/source-acquisition.md
 [build]: https://github.com/at-rama/sqlite-vector-wasm/blob/8dfeda79fcd14e2f43afa34f31ee53420a74ce24/docs/build.md
 [packaging]: https://github.com/at-rama/sqlite-vector-wasm/blob/8dfeda79fcd14e2f43afa34f31ee53420a74ce24/docs/packaging.md
