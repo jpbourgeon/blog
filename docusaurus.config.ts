@@ -63,7 +63,7 @@ export default {
     footer: {
       links: [
         {label: 'Mentions légales', to: '/about/#legal'},
-        {label: 'Flux RSS', href: '/rss.xml', prependBaseUrlToHref: true},
+        {label: 'Flux RSS', to: 'pathname:///rss.xml'},
       ],
     },
   } satisfies ThemeConfig,
