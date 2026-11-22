@@ -56,23 +56,19 @@ try {
 
 Trois opérations constituent l'essentiel : `vector_as_f32()` encode les valeurs, `vector_init()` décrit la colonne vectorielle pour la connexion en cours, et `vector_full_scan()` calcule les voisins. Il n'y a ni nouveau langage de requête ni abstraction JavaScript propriétaire à apprendre.
 
-Cet exemple est volontairement pédagogique. La distance euclidienne en RGB ne reproduit pas fidèlement la perception des couleurs. La base est en mémoire : l'exemple démontre la recherche de proximité, **pas** la persistance, la synchronisation ou une application local-first complète.
-
 ## 2. Une seule base, plusieurs façons d'interroger
 
-SQLite répond déjà aux questions structurées avec SQL et aux recherches textuelles avec FTS5. La recherche vectorielle ajoute une autre primitive : classer des valeurs numériques par proximité. Pour une recherche sémantique, ces valeurs peuvent représenter des embeddings fournis par l'application ; le runtime ne produit pas ces embeddings à sa place.
+SQLite répond déjà aux questions structurées avec SQL et aux recherches textuelles avec FTS5. La recherche vectorielle ajoute une autre primitive : classer des valeurs numériques par proximité. Pour une recherche sémantique, ces valeurs peuvent être des embeddings calculés par l'application.
 
-La combinaison ouvre des usages embarqués concrets : consulter des fiches d'intervention sans réseau, retrouver un passage dans une documentation téléchargée, ou explorer un catalogue dont la synchronisation est assurée ailleurs. Chaque cas peut combiner des filtres SQL, du plein texte et des voisins vectoriels. La réplication, la résolution des conflits et le classement hybride restent des responsabilités distinctes.
-
-Le bénéfice ne tient donc pas à une promesse de « base intelligente ». Il tient à la disponibilité de primitives complémentaires, utilisables sur les données locales avec l'outillage habituel de SQLite.
+La combinaison ouvre des usages embarqués concrets : consulter des fiches d'intervention sans réseau, retrouver un passage dans une documentation téléchargée, ou explorer un catalogue local. Chaque cas peut combiner des filtres SQL, du plein texte et des voisins vectoriels, dans une base familière aux développeurs.
 
 ## 3. Pourquoi cette distribution ?
 
-La recherche vectorielle autour de SQLite n'est pas nouvelle. [sqlite-vec](https://github.com/asg017/sqlite-vec) est une autre approche de cet espace ; [SQLite.ai](https://github.com/sqliteai/sqlite-wasm) propose déjà un WASM plus largement enrichi.
+SQLite dispose de plusieurs voies pour la recherche vectorielle : [sqlite-vec](https://github.com/asg017/sqlite-vec) propose une extension dédiée, tandis que [SQLite.ai](https://github.com/sqliteai/sqlite-wasm) distribue un WASM enrichi de plusieurs composants.
 
 Le choix de cette distribution est [SQLite-Vector](https://github.com/sqliteai/sqlite-vector), qui prend en charge notamment les vecteurs Float32 et les vecteurs binaires natifs avec distance de Hamming. Ce sont des capacités utiles pour manipuler aussi bien des représentations numériques continues que des signatures binaires.
 
-La différence recherchée n'est ni l'exclusivité de ces fonctions ni une meilleure performance supposée. C'est **la disponibilité d'une composition ciblée, préintégrée et qualifiée** : SQLite, SQLite-Vector et les composants WASM nécessaires au navigateur, sans devoir assembler et entretenir cette combinaison dans chaque projet. Les fonctions SQLite-Sync et SQLite-Memory ne sont pas incluses ; ce périmètre réduit aussi ce que la distribution doit suivre et vérifier.
+**La valeur de sqlite-vector-wasm est dans la composition** : SQLite, SQLite-Vector et les composants WASM du navigateur, préintégrés et qualifiés. Cette sélection écarte SQLite-Sync et SQLite-Memory pour concentrer la maintenance sur les fonctions utiles à ce runtime.
 
 ## 4. Rester au plus près de SQLite
 
@@ -80,21 +76,21 @@ Le contrat d'usage demeure celui de SQLite WASM : son API C accessible depuis Ja
 
 À la construction, SQLite-Vector est lié statiquement au runtime et ses fonctions sont enregistrées automatiquement sur chaque connexion. Le développeur n'a pas à charger manuellement une extension dans le navigateur. Il doit en revanche déclarer avec `vector_init()` les colonnes vectorielles utilisées par **chaque connexion** ; lors de la réouverture d'une base persistante, cette déclaration est à renouveler, sans recréer les données.
 
-Cette proximité avec les API natives limite la surface d'intégration spécifique au projet. Elle n'efface pas les contraintes du navigateur. Le paquet fournit notamment les chargeurs, le WASM et les fichiers compagnons des Workers et du stockage. Pour une nouvelle application, un **Worker dédié** évite d'exécuter les requêtes synchrones sur le fil d'interface.
+Cette proximité avec les API natives limite la surface d'intégration spécifique au projet. Le paquet fournit les chargeurs, le WASM et les fichiers compagnons des Workers et du stockage. Pour une nouvelle application, un **Worker dédié** évite d'exécuter les requêtes synchrones sur le fil d'interface.
 
-La persistance OPFS repose sur les VFS de SQLite et sur leurs prérequis : contexte sécurisé, exécution en Worker, parfois isolation cross-origin, Web Locks ou initialisation explicite selon le VFS. Le bundler doit également produire les fichiers compagnons et conserver leurs URL cohérentes. La [recette Vite documentée](https://at-rama.github.io/sqlite-vector-wasm/usage/#vite-production-build) correspond à une combinaison testée, non à une compatibilité universelle. Cette distribution cible le **navigateur**, pas Node.js, WASI ou un exécutable natif.
+Pour les projets Vite, une [recette de production documentée](https://at-rama.github.io/sqlite-vector-wasm/usage/#vite-production-build) montre comment intégrer le chargeur et faire émettre les fichiers compagnons. Le stockage persistant s'appuie sur les VFS OPFS de SQLite.
 
 ## 5. Construire, qualifier, puis maintenir
 
 Livrer un WASM qui démarre ne suffit pas à qualifier une distribution. Il faut savoir **ce qui a été construit**, **ce qui a été empaqueté** et **ce qui fonctionne dans l'archive effectivement livrée**.
 
-Le processus part de versions amont et d'empreintes enregistrées. La compilation conserve les interfaces SQLite retenues et intègre SQLite-Vector sans patcher ses sources pour les besoins du paquet. L'assemblage vérifie l'inventaire des fichiers et leurs empreintes, puis produit une archive avec son manifeste de runtime et les notices de licence. Ces enregistrements permettent de retracer la composition et de reconstruire une distribution fonctionnellement vérifiable ; ils ne prétendent pas garantir des octets identiques à chaque reconstruction.
+Le processus part de versions amont et d'empreintes enregistrées. La compilation conserve les interfaces SQLite retenues et intègre SQLite-Vector sans patcher ses sources pour les besoins du paquet. L'assemblage vérifie l'inventaire des fichiers et leurs empreintes, puis produit une archive avec son manifeste de runtime et les notices de licence. Ces enregistrements permettent de retracer la composition et de reconstruire une distribution fonctionnellement vérifiable.
 
 La qualification porte sur **l'archive finale**, extraite et exécutée dans un vrai navigateur. Elle contrôle les interfaces C/OO1, les surfaces de chargement, FTS5, la recherche Float32/L2 et les vecteurs binaires/Hamming. Pour les distances, les résultats attendus proviennent d'un calcul indépendant de l'extension, et non d'une seconde requête qui pourrait reproduire la même erreur.
 
-La persistance fait l'objet d'un scénario plus exigeant qu'un simple `COMMIT` réussi : écrire des données ordinaires et vectorielles, fermer proprement la connexion, terminer le Worker, démarrer un nouveau Worker à la même origine et rouvrir les données. Les VFS OPFS retenus sont exercés avec leurs prérequis observés. Ce test établit une reprise **après arrêt ordonné du runtime**, pas une garantie générale contre les crashs ou pour tous les navigateurs.
+La persistance fait l'objet d'un scénario plus exigeant qu'un simple `COMMIT` réussi : écrire des données ordinaires et vectorielles, fermer proprement la connexion, terminer le Worker, démarrer un nouveau Worker à la même origine et rouvrir les données. Les VFS OPFS retenus sont exercés avec leurs prérequis observés. Le test vérifie ainsi la **reprise après arrêt ordonné du runtime**, jusque dans les données vectorielles.
 
-Enfin, les évolutions amont sont suivies pour identifier des compositions candidates. Leur sélection et la décision de publier restent humaines, après qualification. **C'est une discipline de maintenance, pas une promesse de support illimité ni de mise à jour autonome.** Le [contrat de publication](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) relie la révision intégrée, l'archive acceptée et ses éléments de provenance.
+Enfin, les évolutions amont sont suivies pour identifier des compositions candidates. Leur sélection et la décision de publier restent humaines, après qualification. Le [contrat de publication](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) relie la révision intégrée, l'archive acceptée et ses éléments de provenance.
 
 ## 6. Quel coût pour cette composition ?
 
@@ -108,12 +104,12 @@ Le chargeur JavaScript est compacté selon le même protocole sans optimisation 
 | sqlite-vector-wasm | `0.3.2` | **517 404 octets** |
 | SQLite.ai WASM | `3.50.4-wasm.1.0.0-sync.1.2.0-vector.1.2.0-memory.1.3.6` | **583 616 octets** |
 
-Dans ce relevé, la paire ciblée est **6,9 % plus volumineuse** que celle de SQLite officiel et **11,3 % moins volumineuse** que celle de SQLite.ai. Mais les versions de SQLite, les fonctions embarquées, les chargeurs et les frontières d'empaquetage ne sont pas identiques. Il serait incorrect d'en déduire le coût marginal de SQLite-Vector, de SQLite-Sync ou de SQLite-Memory — ou d'attribuer à leur seule présence les écarts observés.
-
-Ces tailles ne représentent ni un téléchargement HTTP mesuré, ni la mémoire utilisée, ni la performance des requêtes, ni le poids complet d'une application. Elles caractérisent trois **distributions effectivement observées à une date donnée**. Le compromis est ailleurs : disposer des capacités nécessaires dans une composition suivie et qualifiée, sans embarquer par principe toutes les extensions possibles.
+Dans ce relevé, la paire ciblée est **6,9 % plus volumineuse** que celle de SQLite officiel et **11,3 % moins volumineuse** que celle de SQLite.ai. Les versions et fonctions embarquées diffèrent entre ces trois compositions. L'intérêt du choix ciblé apparaît dans cet équilibre : des capacités intégrées, une empreinte contenue et un ensemble maîtrisable à maintenir.
 
 ## 7. Essayer
 
 Le paquet est disponible sur [npm](https://www.npmjs.com/package/@at-rama/sqlite-vector-wasm), avec son [code source](https://github.com/at-rama/sqlite-vector-wasm), un [guide d'utilisation](https://at-rama.github.io/sqlite-vector-wasm/usage/) et une [démonstration navigateur](https://at-rama.github.io/sqlite-vector-wasm/demo/).
 
-Pour commencer, une table en mémoire et quelques vecteurs suffisent. Si l'application demande ensuite un stockage persistant, des Workers ou un bundler, les conditions et exemples correspondants sont documentés séparément : ce sont des choix d'intégration à vérifier dans son environnement, non des capacités à présumer.
+Pour commencer, une table en mémoire et quelques vecteurs suffisent. Le guide accompagne ensuite l'intégration dans un Worker, le stockage persistant et les builds Vite.
+
+**Périmètre et limites.** L'exemple RGB/L2 illustre une distance numérique, pas la perception humaine des couleurs ; sa base en mémoire ne démontre pas la persistance. La distribution cible le navigateur et fournit des primitives de requête : embeddings, synchronisation, résolution des conflits et recherche hybride relèvent de l'application. OPFS dépend des prérequis du VFS et de l'hébergement (contexte sécurisé, Worker et, selon le mode, isolation ou initialisation spécifique). Les tests de reprise concernent un arrêt ordonné, pas un crash. Enfin, les mesures du §6 comparent des paires chargeur/WASM de versions et périmètres différents : elles n'isolent pas le coût des extensions, les transferts HTTP ni les performances.
