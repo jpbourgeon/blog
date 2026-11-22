@@ -60,6 +60,11 @@ export default {
         {type: 'localeDropdown', position: 'right'},
       ],
     },
-    footer: {links: [{label: 'Mentions légales', to: '/about/#legal'}]},
+    footer: {
+      links: [
+        {label: 'Mentions légales', to: '/about/#legal'},
+        {label: 'Flux RSS', href: '/rss.xml', prependBaseUrlToHref: true},
+      ],
+    },
   } satisfies ThemeConfig,
 } satisfies Config;
