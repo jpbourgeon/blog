@@ -56,23 +56,19 @@ try {
 
 Three operations do most of the work: `vector_as_f32()` encodes the values, `vector_init()` describes the vector column for the current connection, and `vector_full_scan()` finds nearest neighbors. There is no replacement query language or project-specific JavaScript abstraction to learn.
 
-This is deliberately a teaching example. Euclidean distance in RGB does not faithfully model human color perception. The database is in memory: this demonstrates vector proximity search, **not** persistence, synchronization or a complete local-first application.
-
 ## 2. One database, several ways to query
 
-SQLite already answers structured questions through SQL and text-search questions through FTS5. Vector search adds another primitive: ranking numerical representations by proximity. For semantic search, those representations might be embeddings provided by the application; the runtime does not generate embeddings.
+SQLite already answers structured questions through SQL and text-search questions through FTS5. Vector search adds another primitive: ranking numerical representations by proximity. For semantic search, those representations can be embeddings computed by the application.
 
-Together, these capabilities support practical embedded uses: consulting maintenance records without connectivity, finding a passage in locally stored documentation, or exploring a catalog synchronized by another layer. An application can combine SQL filters, full-text search and vector neighbors. Replication, conflict resolution and hybrid ranking remain separate responsibilities.
-
-The value is therefore not a promise of an “intelligent database.” It is access to complementary querying primitives over local data, using SQLite's established tools.
+Together, these capabilities support practical embedded uses: consulting maintenance records without connectivity, finding a passage in locally stored documentation, or exploring a local catalog. An application can combine SQL filters, full-text search and vector neighbors in a database developers already know.
 
 ## 3. Why this distribution?
 
-Vector search around SQLite is not new. [sqlite-vec](https://github.com/asg017/sqlite-vec) takes another approach to this problem; [SQLite.ai](https://github.com/sqliteai/sqlite-wasm) already offers a broader WASM distribution.
+SQLite offers several approaches to vector search: [sqlite-vec](https://github.com/asg017/sqlite-vec) is a dedicated extension, while [SQLite.ai](https://github.com/sqliteai/sqlite-wasm) distributes a WASM runtime with several additional components.
 
 This package uses [SQLite-Vector](https://github.com/sqliteai/sqlite-vector), with capabilities including Float32 vectors and native binary vectors with Hamming distance. They cover both continuous numerical representations and compact binary signatures.
 
-The intended distinction is not exclusivity or an unproven performance advantage. It is **a focused, pre-integrated and qualified composition**: SQLite, SQLite-Vector and the browser WASM companions, without requiring each developer to assemble and maintain that combination. SQLite-Sync and SQLite-Memory are not bundled; that narrower scope also reduces what the distribution must track and verify.
+**sqlite-vector-wasm's value lies in its composition**: SQLite, SQLite-Vector and browser WASM companions, pre-integrated and qualified. It leaves out SQLite-Sync and SQLite-Memory to focus maintenance on the capabilities needed for this runtime.
 
 ## 4. Staying close to SQLite
 
@@ -80,21 +76,21 @@ The usage contract remains SQLite WASM's C API exposed to JavaScript and its OO1
 
 SQLite-Vector is linked statically at build time and its SQL functions are registered automatically for each connection. No manual extension loading is needed in the browser. However, `vector_init()` must describe the vector columns used by **each connection**. Reopening a persistent database requires this association again, not recreating its table or rows.
 
-Staying near native APIs limits the project's custom integration surface. It does not remove browser constraints. The package includes loaders, WASM and Worker/storage companions. For a new application, a **dedicated Worker** keeps synchronous database queries away from the UI thread.
+Staying near native APIs limits the project's custom integration surface. The package includes loaders, WASM and Worker/storage companions. For a new application, a **dedicated Worker** keeps synchronous database queries away from the UI thread.
 
-OPFS persistence uses SQLite's VFS implementations and their prerequisites: a secure context, a Worker and, depending on the VFS, cross-origin isolation, Web Locks or explicit initialization. Bundlers must also emit the companion assets and preserve their URLs. The documented [Vite recipe](https://at-rama.github.io/sqlite-vector-wasm/usage/#vite-production-build) describes a tested configuration, not universal compatibility. This distribution targets **browsers**, not Node.js, WASI or native executables.
+For Vite projects, the [documented production recipe](https://at-rama.github.io/sqlite-vector-wasm/usage/#vite-production-build) shows how to integrate the loader and emit the companion assets. Persistent storage uses SQLite's OPFS VFS implementations.
 
 ## 5. Build, qualify, then maintain
 
 A WASM file that starts is not enough to qualify a distribution. We need to establish **what was built**, **what was packaged** and **what works in the archive actually shipped**.
 
-The build starts from recorded upstream versions and digests. It preserves the selected SQLite interfaces and integrates SQLite-Vector without patching its sources for this package. Packaging checks the runtime file inventory and hashes, then creates an archive with a runtime manifest and license notices. These records support provenance and functionally verifiable reconstruction; they do not promise byte-identical rebuilds.
+The build starts from recorded upstream versions and digests. It preserves the selected SQLite interfaces and integrates SQLite-Vector without patching its sources for this package. Packaging checks the runtime file inventory and hashes, then creates an archive with a runtime manifest and license notices. These records support provenance and functionally verifiable reconstruction.
 
 Qualification runs against **the final extracted archive in a real browser**. It exercises C/OO1 interfaces, loading surfaces, FTS5, Float32/L2 search and binary/Hamming search. Expected distances are computed independently of the extension, rather than being accepted from another query that might reproduce the same error.
 
-Persistence is tested more thoroughly than by observing a successful `COMMIT`: write ordinary and vector data, close the connection cleanly, terminate the Worker, start a new Worker at the same origin and reopen the stored data. The selected OPFS VFSs are exercised under observed prerequisites. This establishes recovery **after an orderly runtime shutdown**, not general crash durability or cross-browser guarantees.
+Persistence is tested more thoroughly than by observing a successful `COMMIT`: write ordinary and vector data, close the connection cleanly, terminate the Worker, start a new Worker at the same origin and reopen the stored data. The selected OPFS VFSs are exercised under observed prerequisites. The test establishes **recovery after an orderly runtime shutdown**, including vector data.
 
-Upstream changes are monitored to identify candidate compositions. Human selection and publication decisions follow qualification. **This is a maintenance discipline, not a promise of unlimited support or autonomous upgrades.** The [publication contract](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) ties together the integrated revision, accepted archive and provenance records.
+Upstream changes are monitored to identify candidate compositions. Human selection and publication decisions follow qualification. The [publication contract](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) ties together the integrated revision, accepted archive and provenance records.
 
 ## 6. What is the footprint?
 
@@ -108,12 +104,12 @@ The JavaScript loader was compacted with the same settings, without semantic opt
 | sqlite-vector-wasm | `0.3.2` | **517,404 bytes** |
 | SQLite.ai WASM | `3.50.4-wasm.1.0.0-sync.1.2.0-vector.1.2.0-memory.1.3.6` | **583,616 bytes** |
 
-In this measurement, the focused pair is **6.9% larger** than official SQLite's and **11.3% smaller** than SQLite.ai's. But the SQLite versions, bundled features, loaders and packaging boundaries are different. These numbers cannot isolate the incremental footprint of SQLite-Vector, SQLite-Sync or SQLite-Memory, nor attribute the differences solely to their inclusion.
-
-They are not measured HTTP transfer sizes, runtime memory, query performance or complete application weights. They describe three **distributions observed on a specific date**. The actual trade-off is between the capabilities integrated, the surface that must be maintained and the needs deliberately left to the application.
+In this measurement, the focused pair is **6.9% larger** than official SQLite's and **11.3% smaller** than SQLite.ai's. The three compositions differ in versions and bundled capabilities. The focused choice offers a balance between integrated features, a contained footprint and a manageable maintenance surface.
 
 ## 7. Try it
 
 The package is on [npm](https://www.npmjs.com/package/@at-rama/sqlite-vector-wasm), alongside its [source repository](https://github.com/at-rama/sqlite-vector-wasm), [usage guide](https://at-rama.github.io/sqlite-vector-wasm/usage/) and [browser demo](https://at-rama.github.io/sqlite-vector-wasm/demo/).
 
-A small in-memory table is enough to begin. If the application later needs persistence, Workers or a bundler, the relevant examples and conditions are documented separately: those are integration choices to validate in the target environment, not capabilities to assume.
+A small in-memory table is enough to begin. The guide then covers Worker integration, persistent storage and Vite builds.
+
+**Scope and limitations.** The RGB/L2 example shows numerical distance, not human color perception; its in-memory database does not demonstrate persistence. The distribution targets browsers and provides query primitives: embeddings, synchronization, conflict resolution and hybrid ranking belong to the application. OPFS depends on VFS and hosting prerequisites (secure context, Worker and, depending on the mode, isolation or specific initialization). Restart tests cover orderly shutdown, not crashes. Finally, the measurements in §6 compare loader/WASM pairs with different versions and scopes: they do not isolate extension overhead, HTTP transfer sizes or performance.
