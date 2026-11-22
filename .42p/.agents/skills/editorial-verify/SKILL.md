@@ -22,6 +22,7 @@ verifiable product behavior, or other material publication requirements.
 
 Verify factual support, fidelity to the author's intent, both standards,
 bilingual semantic parity, links and technical publication readiness.
+For articles (including draft candidates), check that each FR/EN version has its native Docusaurus truncation marker after the introduction, and assess whether the preceding text is a useful standalone excerpt as well as a natural introduction. This editorial check complements the Docusaurus build enforcement for exposed articles; do not duplicate the mechanical check in the publication gate.
 When a main Capture exists, map every material component **Capture → content**
 (completeness) and **content → Capture** (no unsupported substantive additions),
 in both languages. Context Captures supply references, not additional coverage.
