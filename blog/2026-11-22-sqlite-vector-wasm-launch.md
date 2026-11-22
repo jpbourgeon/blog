@@ -1,11 +1,14 @@
 ---
-title: "SQLite et recherche vectorielle dans le navigateur, sans changer d'API"
-description: "Une distribution ciblée de SQLite et SQLite-Vector pour le navigateur : usage, intégration, garanties et empreinte mesurée."
-slug: sqlite-vector-wasm-launch
-date: 2026-11-22
-unlisted: true
-tags: [sqlite, wasm, local-first, vector-search]
-rationale: .42p/design/article_sqlite-vector-wasm-launch/rationale.md
+"date": 2026-11-22
+"description": "Une distribution ciblée de SQLite et SQLite-Vector pour le navigateur : usage, intégration, garanties et empreinte mesurée."
+"rationale": ".42p/design/article_sqlite-vector-wasm-launch/rationale.md"
+"slug": "sqlite-vector-wasm-launch"
+"tags":
+  - "sqlite"
+  - "wasm"
+  - "local-first"
+  - "vector-search"
+"title": "SQLite et recherche vectorielle dans le navigateur, sans changer d'API"
 ---
 
 Une application peut conserver des données dans le navigateur et néanmoins perdre une part de son utilité dès que le serveur devient inaccessible. Stocker localement ne suffit pas : il faut encore pouvoir interroger ces données, filtrer des enregistrements, rechercher du texte ou retrouver des éléments proches.

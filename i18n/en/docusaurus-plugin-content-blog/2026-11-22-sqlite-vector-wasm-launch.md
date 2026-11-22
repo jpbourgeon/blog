@@ -1,11 +1,14 @@
 ---
-title: "SQLite and vector search in the browser, without changing APIs"
-description: "A focused browser distribution of SQLite and SQLite-Vector: usage, integration, verification and measured footprint."
-slug: sqlite-vector-wasm-launch
-date: 2026-11-22
-unlisted: true
-tags: [sqlite, wasm, local-first, vector-search]
-rationale: .42p/design/article_sqlite-vector-wasm-launch/rationale.md
+"date": 2026-11-22
+"description": "A focused browser distribution of SQLite and SQLite-Vector: usage, integration, verification and measured footprint."
+"rationale": ".42p/design/article_sqlite-vector-wasm-launch/rationale.md"
+"slug": "sqlite-vector-wasm-launch"
+"tags":
+  - "sqlite"
+  - "wasm"
+  - "local-first"
+  - "vector-search"
+"title": "SQLite and vector search in the browser, without changing APIs"
 ---
 
 A browser application can keep its data locally yet lose much of its usefulness when the server becomes unreachable. Local storage alone is not enough: users must still be able to query records, filter them, search text and find nearby items.
