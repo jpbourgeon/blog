@@ -67,6 +67,8 @@ translation is preferable to literal translation. Use a single optional
 `rationale` (main Capture) and optional `rationaleContext`, identically
 in both locales. A Capture is not mandatory.
 
+For **articles**, place the native Docusaurus truncation marker immediately after the introduction in both locales (`<!-- truncate -->` for Markdown, `{/* truncate */}` for MDX). The introductory text must also stand on its own as the blog-list excerpt, without duplicating it or inventing a separate teaser.
+
 For **articles**, create paired `blog/` and `i18n/en/docusaurus-plugin-content-blog/`
 files with `draft: true`. For revisions, do not touch published originals:
 create a separate FR/EN temporary pair with distinct preview slugs.
