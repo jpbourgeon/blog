@@ -84,13 +84,15 @@ For Vite projects, the [documented production recipe](https://at-rama.github.io/
 
 A WASM file that starts is not enough to qualify a distribution. We need to establish **what was built**, **what was packaged** and **what works in the archive actually shipped**.
 
-The build starts from recorded upstream versions and digests. It preserves the selected SQLite interfaces and integrates SQLite-Vector without patching its sources for this package. Packaging checks the runtime file inventory and hashes, then creates an archive with a runtime manifest and license notices. These records support provenance and functionally verifiable reconstruction.
+The build starts from recorded upstream versions and digests. It preserves the selected SQLite interfaces and integrates SQLite-Vector without patching its sources for this package. Packaging checks the runtime file inventory and hashes, then creates an archive with a runtime manifest and license texts. Project-authored code and documentation are **Apache-2.0**; SQLite is **public domain**, SQLite-Vector is **Apache-2.0**, and the FP16 headers are **MIT**. The Emscripten runtime and incorporated libraries retain their respective licenses and notices, including MIT, Illinois/NCSA and the applicable LLVM and musl terms. These texts are shipped under `licenses/` with recorded origins; the project's license does not supersede upstream terms. These records support provenance and functionally verifiable reconstruction.
 
 Qualification runs against **the final extracted archive in a real browser**. It exercises C/OO1 interfaces, loading surfaces, FTS5, Float32/L2 search and binary/Hamming search. Expected distances are computed independently of the extension, rather than being accepted from another query that might reproduce the same error.
 
 Persistence is tested more thoroughly than by observing a successful `COMMIT`: write ordinary and vector data, close the connection cleanly, terminate the Worker, start a new Worker at the same origin and reopen the stored data. The selected OPFS VFSs are exercised under observed prerequisites. The test establishes **recovery after an orderly runtime shutdown**, including vector data.
 
-Upstream changes are monitored to identify candidate compositions. Human selection and publication decisions follow qualification. The [publication contract](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) ties together the integrated revision, accepted archive and provenance records.
+Upstream monitoring identifies candidate compositions. **Humans select the composition and merge it into `main`**. That merge triggers the build and qualification of the definitive archive; if every check passes, publication to npm and GitHub follows automatically. Earlier PR qualification does not replace acceptance of the post-merge archive. This is neither autonomous updating nor a commitment to a support period.
+
+**Release 0.4.0** provides a concrete evidence set: the distributed archive, `publication.json` (publication manifest and provenance), `attestation.json` (GitHub attestation binding the archive to its source revision) and `delivery.json` (delivery operations receipt). During review, the **npm archive's SHA-256** was checked against the manifest and GitHub metadata. The receipt records successful delivery; it is neither independent attestation nor human approval. The [publication contract](https://github.com/at-rama/sqlite-vector-wasm/blob/main/docs/publication.md) defines the scope of these records.
 
 ## 6. What is the footprint?
 
