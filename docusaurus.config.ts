@@ -22,7 +22,6 @@ export default {
       docs: false,
       blog: {
         routeBasePath: '/',
-        onUntruncatedBlogPosts: 'throw',
         blogTitle: 'Articles',
         blogDescription: 'Réflexions, pratiques et productions de jpbourgeon.',
         blogListComponent: '@site/src/components/BlogListPage',
