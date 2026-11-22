@@ -15,6 +15,8 @@ Une application peut conserver des données dans le navigateur et néanmoins per
 
 [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm) réunit SQLite, FTS5 et [SQLite-Vector](https://github.com/sqliteai/sqlite-vector) dans une distribution WebAssembly destinée au navigateur. Le parti pris est simple : **ajouter la recherche vectorielle à SQLite sans remplacer ses API**, tout en livrant une intégration que chaque application n'a pas à reconstruire.
 
+<!-- truncate -->
+
 ## 1. Chercher les voisins d'une couleur
 
 Imaginons la palette locale d'une application de dessin. Chaque couleur est un triplet RGB ; nous cherchons celles qui sont numériquement les plus proches de `[220, 50, 60]`.
