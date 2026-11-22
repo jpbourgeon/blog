@@ -15,8 +15,6 @@ A browser application can keep its data locally yet lose much of its usefulness 
 
 [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm) brings together SQLite, FTS5 and [SQLite-Vector](https://github.com/sqliteai/sqlite-vector) in a WebAssembly distribution for browsers. The design choice is straightforward: **add vector search to SQLite without replacing its APIs**, while shipping an integration that each application does not have to rebuild.
 
-<!-- truncate -->
-
 ## 1. Find the closest colors
 
 Consider a drawing application's local palette. Each color is an RGB triplet; we want to find the numerically closest colors to `[220, 50, 60]`.
