@@ -5,7 +5,7 @@ slug: sqlite-vector-wasm-launch
 date: 2026-11-22
 draft: true
 tags: [sqlite, wasm, local-first, vector-search]
-rationale: article_sqlite-vector-wasm-launch
+rationale: .42p/design/article_sqlite-vector-wasm-launch/rationale.md
 ---
 
 A browser application can keep its data locally yet lose much of its usefulness when the server becomes unreachable. Local storage alone is not enough: users must still be able to query records, filter them, search text and find nearby items.
