@@ -76,7 +76,7 @@ Le contrat d'usage demeure celui de SQLite WASM : son API C accessible depuis Ja
 
 À la construction, SQLite-Vector est lié statiquement au runtime et ses fonctions sont enregistrées automatiquement sur chaque connexion. Le développeur n'a pas à charger manuellement une extension dans le navigateur. Il doit en revanche déclarer avec `vector_init()` les colonnes vectorielles utilisées par **chaque connexion** ; lors de la réouverture d'une base persistante, cette déclaration est à renouveler, sans recréer les données.
 
-Cette proximité avec les API natives limite la surface d'intégration spécifique au projet. Le paquet fournit les chargeurs, le WASM et les fichiers compagnons des Workers et du stockage. Pour une nouvelle application, un **Worker dédié** évite d'exécuter les requêtes synchrones sur le fil d'interface.
+Cette proximité avec les API natives limite la surface d'intégration spécifique au projet. Le paquet fournit les chargeurs, le WASM et les fichiers compagnons des Workers et du stockage. Pour une nouvelle application, un **Worker dédié** évite d'exécuter les requêtes synchrones sur le thread principal.
 
 Pour les projets Vite, une [recette de production documentée](https://at-rama.github.io/sqlite-vector-wasm/usage/#vite-production-build) montre comment intégrer le chargeur et faire émettre les fichiers compagnons. Le stockage persistant s'appuie sur les VFS OPFS de SQLite.
 
@@ -84,7 +84,7 @@ Pour les projets Vite, une [recette de production documentée](https://at-rama.g
 
 Livrer un WASM qui démarre ne suffit pas à qualifier une distribution. Il faut savoir **ce qui a été construit**, **ce qui a été empaqueté** et **ce qui fonctionne dans l'archive effectivement livrée**.
 
-Le processus part de versions amont et d'empreintes enregistrées. La compilation conserve les interfaces SQLite retenues et intègre SQLite-Vector sans patcher ses sources pour les besoins du paquet. L'assemblage vérifie l'inventaire des fichiers et leurs empreintes, puis produit une archive avec son manifeste de runtime et les notices de licence. Ces enregistrements permettent de retracer la composition et de reconstruire une distribution fonctionnellement vérifiable.
+Le processus de publication de sqlite-vector-wasm part de versions amont et d'empreintes enregistrées. La compilation conserve les interfaces SQLite retenues et intègre SQLite-Vector sans patcher ses sources pour les besoins du paquet. L'assemblage vérifie l'inventaire des fichiers et leurs empreintes, puis produit une archive avec son manifeste de runtime et les notices de licence. Ces enregistrements permettent de retracer la composition et de reconstruire une distribution fonctionnellement vérifiable.
 
 La qualification porte sur **l'archive finale**, extraite et exécutée dans un vrai navigateur. Elle contrôle les interfaces C/OO1, les surfaces de chargement, FTS5, la recherche Float32/L2 et les vecteurs binaires/Hamming. Pour les distances, les résultats attendus proviennent d'un calcul indépendant de l'extension, et non d'une seconde requête qui pourrait reproduire la même erreur.
 
