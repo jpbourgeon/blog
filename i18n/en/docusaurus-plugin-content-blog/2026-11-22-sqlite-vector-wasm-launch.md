@@ -3,7 +3,7 @@ title: "SQLite and vector search in the browser, without changing APIs"
 description: "A focused browser distribution of SQLite and SQLite-Vector: usage, integration, verification and measured footprint."
 slug: sqlite-vector-wasm-launch
 date: 2026-11-22
-draft: true
+unlisted: true
 tags: [sqlite, wasm, local-first, vector-search]
 rationale: .42p/design/article_sqlite-vector-wasm-launch/rationale.md
 ---
