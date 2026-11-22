@@ -41,6 +41,23 @@ article {
   --ifm-link-decoration: underline;
 }
 
+/* Blog list titles are navigational headings, not inline prose links. */
+article header h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+article header h2 a:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+}
+
+article header h2 a:focus-visible {
+  text-decoration: underline;
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 4px;
+}
+
 /* Recharts follows the Docusaurus light/dark palette without a separate theme. */
 .editorial-chart {
   width: 100%;
