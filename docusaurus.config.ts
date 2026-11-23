@@ -17,6 +17,15 @@ export default {
     locales: ['fr', 'en'],
     localeConfigs: {fr: {label: 'Français'}, en: {label: 'English'}},
   },
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'google-site-verification',
+        content: 'w7WR26Va0FrdEUOchq87JIUhUP0aAnCekwrZyQg3EUI',
+      },
+    },
+  ],
   presets: [
     ['classic', {
       docs: false,
