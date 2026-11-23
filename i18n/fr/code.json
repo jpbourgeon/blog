@@ -1,0 +1,10 @@
+{
+  "theme.blog.tagTitle": {
+    "message": "Articles associés au tag « {tagName} »",
+    "description": "Titre de la page regroupant les articles d'un tag, indépendant du nombre d'articles"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Tous les tags",
+    "description": "Titre de la page d'index des tags"
+  }
+}
