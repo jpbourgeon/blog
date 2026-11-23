@@ -18,3 +18,9 @@ L'auteur seul décide de l'intérêt, de la position et de la publication.
 Les agents contrôlent fidélité et sources, jamais le mérite éditorial.
 Une évolution de position fait l'objet d'une publication ou d'une révision
 explicite ; elle ne réécrit pas silencieusement le passé.
+
+## Découvrabilité et diffusion
+
+Pour un article présentant un outil ou une production directement utilisable, rendre les ressources pour l'essayer ou l'examiner accessibles dès l'introduction, sans imposer de formule promotionnelle. Le reste de l'article conserve sa progression ; une invitation finale peut subsister si elle est utile.
+
+Sur le blog canonique, les tags natifs Docusaurus désignent les collections éditoriales : rattachement facultatif, normalement unique. Les mots-clés thématiques propres aux plateformes de republication relèvent de ces canaux, sans être répliqués automatiquement dans le frontmatter canonique. Le titre, la description et le contenu assurent la découvrabilité thématique.
