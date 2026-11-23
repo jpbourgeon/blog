@@ -4,16 +4,15 @@
 "rationale": ".42p/design/article_sqlite-vector-wasm-launch/rationale.md"
 "slug": "sqlite-vector-wasm-launch"
 "tags":
-  - "sqlite"
-  - "wasm"
-  - "local-first"
-  - "vector-search"
+  - "laidback"
 "title": "SQLite et recherche vectorielle dans le navigateur, sans changer d'API"
 ---
 
 Une application peut conserver des données dans le navigateur et néanmoins perdre une part de son utilité dès que le serveur devient inaccessible. Stocker localement ne suffit pas : il faut encore pouvoir interroger ces données, filtrer des enregistrements, rechercher du texte ou retrouver des éléments proches.
 
 [sqlite-vector-wasm](https://github.com/at-rama/sqlite-vector-wasm) réunit SQLite, FTS5 et [SQLite-Vector](https://github.com/sqliteai/sqlite-vector) dans une distribution WebAssembly destinée au navigateur. Le parti pris est simple : **ajouter la recherche vectorielle à SQLite sans remplacer ses API**, tout en livrant une intégration que chaque application n'a pas à reconstruire.
+
+[Essayer la démo](https://at-rama.github.io/sqlite-vector-wasm/demo/) · [Guide d'utilisation](https://at-rama.github.io/sqlite-vector-wasm/usage/) · [Code source sur GitHub](https://github.com/at-rama/sqlite-vector-wasm)
 
 <!-- truncate -->
 
