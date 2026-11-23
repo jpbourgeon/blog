@@ -41,18 +41,31 @@ article {
   --ifm-link-decoration: underline;
 }
 
-/* Blog list titles are navigational headings, not inline prose links. */
-article header h2 a {
-  color: inherit;
-  text-decoration: none;
+/* Keep list titles between the page heading and excerpt headings. */
+.blog-tags-post-list-page main > header > h1 {
+  font-size: 3rem;
 }
 
-article header h2 a:hover {
-  color: var(--ifm-color-primary);
-  text-decoration: underline;
+:is(.blog-list-page, .blog-tags-post-list-page) article > header > h2 {
+  font-size: 2.5rem;
 }
 
-article header h2 a:focus-visible {
+@media (max-width: 576px) {
+  .blog-tags-post-list-page main > header > h1 {
+    font-size: 2rem;
+  }
+
+  :is(.blog-list-page, .blog-tags-post-list-page) article > header > h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Use the theme link style for titles and retain the keyboard focus ring. */
+article > header > h2 > a {
+  --ifm-link-decoration: none;
+}
+
+article > header > h2 > a:focus-visible {
   text-decoration: underline;
   outline: 2px solid var(--ifm-color-primary);
   outline-offset: 4px;
