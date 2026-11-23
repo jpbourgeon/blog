@@ -1,0 +1,7 @@
+laidback:
+  label: LaiDBack
+  permalink: laidback
+  description: >-
+    Des composants sobres pour les applications local-first : stockage,
+    réplication et recherche embarquée. Une exploration des choix
+    d'architecture et de leurs compromis.
