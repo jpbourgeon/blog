@@ -20,6 +20,8 @@ Présenter la composition ciblée sans revendication d'exclusivité sur SQLite/W
 
 **C-licences** — Présenter les licences et notices vérifiées de notre distribution. L'ambiguïté des informations de licence sur SQLite.ai a conduit l'auteur à écarter cet argument comparatif. Seul un nouvel arbitrage de l'auteur peut rouvrir ce choix.
 
+**C-revision-cta-tags (23 novembre 2026)** — Pour la révision de l'article publié, ajouter avant `<!-- truncate -->` un accès direct à la démonstration, au guide et au code source, en conservant le §7 intégralement. Remplacer les quatre tags thématiques par le seul tag de collection `laidback` en FR et EN. Inscrire les conventions générales conditionnelles dans `standards/editorial.md`. Ne pas modifier le plan V4 historique ni les originaux publiés avant approbation, vérification et promotion.
+
 ## Exemple d'ouverture
 
 Pour l’ouverture « aussi simple que SQLite », montrer un cas concret : une application de dessin recherche, dans sa palette locale, les couleurs numériquement les plus proches d’une couleur choisie. Chaque couleur est représentée par un vecteur Float32 à trois composantes RGB : rouge corail `[230,57,70]`, rouge profond `[214,40,40]` et bleu acier `[69,123,157]`. La recherche porte sur `[220,50,60]` et classe les couleurs par distance euclidienne L2 : corail, rouge profond, puis bleu acier.
