@@ -1,0 +1,7 @@
+laidback:
+  label: LaiDBack
+  permalink: laidback
+  description: >-
+    Lean building blocks for local-first applications: storage,
+    replication, and embedded search. An exploration of architectural
+    choices and their trade-offs.
