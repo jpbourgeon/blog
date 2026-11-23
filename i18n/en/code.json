@@ -1,7 +1,25 @@
 {
-  "blog.empty": {"message": "No articles have been published yet."},
-  "search.title": {"message": "Search"},
-  "search.description": {"message": "Search articles and pages"},
-  "charts.category": {"message": "Category"},
-  "charts.value": {"message": "Value"}
+  "blog.empty": {
+    "message": "No articles have been published yet."
+  },
+  "search.title": {
+    "message": "Search"
+  },
+  "search.description": {
+    "message": "Search articles and pages"
+  },
+  "charts.category": {
+    "message": "Category"
+  },
+  "charts.value": {
+    "message": "Value"
+  },
+  "theme.blog.tagTitle": {
+    "message": "Posts tagged with \"{tagName}\"",
+    "description": "Title of the blog posts page for one tag, independent of post count"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "All tags",
+    "description": "Title of the tags index page"
+  }
 }
